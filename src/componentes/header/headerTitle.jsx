@@ -26,7 +26,6 @@ const titulos = {
 
 const matchingRoute = Object.keys(titulos).find((route) => {
   const regex = new RegExp(`^${route}$`)
-  return regex.test(location.pathname)
 })
 
 return titulos[matchingRoute] || 'Home'
