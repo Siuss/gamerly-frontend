@@ -1,13 +1,21 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import {Color} from "../../estilos/colores"
+/* import { useNavigation } from '@react-navigation/native' */
 
 
 
 export const HeaderTitle = ({ title }) => {
+
+  /* const navigation = useNavigation()
+
+  const handleNavigate = () => {
+    navigation.goBack()
+  } */
+
   return (
     <View style={styles.header}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity /* onPress={handleNavigate} */ style={styles.button}>
         <Text style={styles.buttonText}>{'<-'}</Text>
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
@@ -53,6 +61,6 @@ const styles = StyleSheet.create({
   button: {
     marginRight: 90,
   },
-});
+})
 
-export default HeaderTitle;
+export default HeaderTitle
