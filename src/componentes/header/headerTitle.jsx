@@ -16,6 +16,23 @@ export const HeaderTitle = ({ title }) => {
   );
 };
 
+const cambiarTitulo = () => {
+const titulos = {
+  '/home': 'Home',
+  '/figuritas': 'Mi Perfil',
+  '/jugadores': 'Reseñas',
+  '/jugadores/detalle/\\d+': 'Busqueda Avanzada',
+}
+
+const matchingRoute = Object.keys(titulos).find((route) => {
+  const regex = new RegExp(`^${route}$`)
+  return regex.test(location.pathname)
+})
+
+return titulos[matchingRoute] || 'Home'
+}
+const titulo = cambiarTitulo()
+
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
@@ -35,7 +52,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   button: {
-    marginRight: 100,
+    marginRight: 90,
   },
 });
 
