@@ -16,13 +16,15 @@ export default function Busqueda() {
 
 const styles = StyleSheet.create({
   container: {
-    width:300,
+    width:"60vw",
+    minWidth:300,
     height:50,
     margin:10,
     borderRadius:50,
     borderWidth:2,
     borderColor:Color.secundario,
     flexDirection:"row",
-    alignItems:"center"
+    alignItems:"center",
+    justifyContent:"space-between"
   }
 });
