@@ -1,48 +1,43 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import {Color} from "../../estilos/colores"
-/* import { Gradiente } from "../atomos/gradiente/Gradiente" */
-import { Ionicons } from '@expo/vector-icons';
-/* import { useNavigation } from '@react-navigation/native' */
+import { Color } from '../../estilos/colores'
+import { Ionicons } from '@expo/vector-icons'
+// import { useNavigation } from '@react-navigation/native'
 
+export const HeaderTitle = ({ title, onBackPress }) => {
+  // const navigation = useNavigation();
 
-
-export const HeaderTitle = ({ title }) => {
-
-  /* const navigation = useNavigation()
-
-  const handleNavigate = () => {
-    navigation.goBack()
-  } */
+  // const handleNavigate = () => {
+  //   navigation.goBack();
+  // };
 
   return (
     /* <Gradiente variante="gradienteHorizontal" style={styles.card}> */
     <View style={styles.header}>
-      <TouchableOpacity /* onPress={handleNavigate} */ style={styles.button}>
+      <TouchableOpacity onPress={onBackPress} style={styles.button}>
         <Ionicons name="arrow-back" size={24} color={Color.blanco} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
       <View style={{ flex: 1 }} />
     </View>
     /* </Gradiente> */
-  );
-};
-
+  )
+}
 
 const cambiarTitulo = () => {
-const titulos = {
-  '/home': 'Home',
-  '/figuritas': 'Mi Perfil',
-  '/jugadores': 'Reseñas',
-  '/jugadores/detalle/\\d+': 'Busqueda Avanzada',
-}
+  const titulos = {
+    '/home': 'Home',
+    '/perfil': 'Mi Perfil',
+    '/reseñas': 'Reseñas',
+    '/busquedaAvanzada': 'Búsqueda Avanzada',
+  };
 
-const matchingRoute = Object.keys(titulos).find((route) => {
-  const regex = new RegExp(`^${route}$`)
-})
+  const matchingRoute = Object.keys(titulos).find((route) => {
+    const regex = new RegExp(`^${route}$`)
+  });
 
-return titulos[matchingRoute] || 'Home'
-}
+  return titulos[matchingRoute] || 'Home'
+};
 const titulo = cambiarTitulo()
 
 const styles = StyleSheet.create({
@@ -54,10 +49,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    flex: 1, 
+    flex: 1,
     fontSize: 20,
     color: 'white',
-    textAlign: 'center', 
+    textAlign: 'center',
   },
   buttonText: {
     fontSize: 20,
@@ -66,6 +61,6 @@ const styles = StyleSheet.create({
   button: {
     marginRight: 85,
   },
-})
+});
 
 export default HeaderTitle
