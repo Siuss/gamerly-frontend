@@ -2,7 +2,8 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Color } from '../../estilos/colores'
 import { Ionicons } from '@expo/vector-icons'
-// import { useNavigation } from '@react-navigation/native'
+import { Gradiente } from "../atomos/gradiente/Gradiente"
+/* import { useNavigation } from '@react-navigation/native' */
 
 export const HeaderTitle = ({ title, onBackPress }) => {
   // const navigation = useNavigation();
@@ -12,15 +13,13 @@ export const HeaderTitle = ({ title, onBackPress }) => {
   // };
 
   return (
-    /* <Gradiente variante="gradienteHorizontal" style={styles.card}> */
-    <View style={styles.header}>
+      <Gradiente variante="gradienteHorizontal" style={styles.header}>
       <TouchableOpacity onPress={onBackPress} style={styles.button}>
         <Ionicons name="arrow-back" size={24} color={Color.blanco} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
       <View style={{ flex: 1 }} />
-    </View>
-    /* </Gradiente> */
+      </Gradiente>   
   )
 }
 
@@ -42,6 +41,7 @@ const titulo = cambiarTitulo()
 
 const styles = StyleSheet.create({
   header: {
+    backgroundColor: Color.primario,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Color.primario,
