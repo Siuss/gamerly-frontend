@@ -13,8 +13,10 @@
     "expo": "~50.0.14",
     "expo-linear-gradient": "^12.7.2",
     "expo-status-bar": "~1.11.1",
+    "framer-motion": "^11.1.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^5.1.0",
     "react-native": "0.73.6",
     "react-native-web": "~0.19.6"
   },
