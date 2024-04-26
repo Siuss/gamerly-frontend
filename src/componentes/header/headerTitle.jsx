@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import {Color} from "../../estilos/colores"
+/* import { Gradiente } from "../atomos/gradiente/Gradiente" */
+import { Ionicons } from '@expo/vector-icons';
 /* import { useNavigation } from '@react-navigation/native' */
 
 
@@ -14,15 +16,18 @@ export const HeaderTitle = ({ title }) => {
   } */
 
   return (
+    /* <Gradiente variante="gradienteHorizontal" style={styles.card}> */
     <View style={styles.header}>
       <TouchableOpacity /* onPress={handleNavigate} */ style={styles.button}>
-        <Text style={styles.buttonText}>{'<-'}</Text>
+        <Ionicons name="arrow-back" size={24} color={Color.blanco} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
       <View style={{ flex: 1 }} />
     </View>
+    /* </Gradiente> */
   );
 };
+
 
 const cambiarTitulo = () => {
 const titulos = {
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   button: {
-    marginRight: 90,
+    marginRight: 85,
   },
 })
 
