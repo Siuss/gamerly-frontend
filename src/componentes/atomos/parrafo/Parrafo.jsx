@@ -2,10 +2,15 @@ import { StyleSheet, Text } from "react-native";
 import { Color } from "../../../estilos/colores";
 
 export const Parrafo = (props) => {
+  const { style, ...restProps } = props;
   return (
     <Text
-    {...props}
-      style={[styles[props.variante], props.subrayado && styles.subrayado]}
+      style={[
+        styles[props.variante],
+        props.subrayado && styles.subrayado,
+        style,
+      ]}
+      {...restProps}
     >
       {props.children}
     </Text>
