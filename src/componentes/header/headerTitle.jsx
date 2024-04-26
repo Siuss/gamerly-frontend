@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   button: {
-    marginRight: 85,
+    marginRight: 16,
   },
 });
 
