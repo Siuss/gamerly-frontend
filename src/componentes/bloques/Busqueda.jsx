@@ -1,14 +1,17 @@
 import { StyleSheet, View } from "react-native";
+import { useState } from 'react';
 import BarraBusquedaBoton from "../atomos/barraBusquedaBoton/BarraBusquedaBoton";
 import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import BarraBusquedaFiltro from "../atomos/barraBusquedaFiltro/BarraBusquedaFiltro";
 import { Color } from "../../estilos/colores";
 
 export default function Busqueda() {
+  const [text, onChangeText] = useState('');
+
   return(
     <View style={styles.container}>
       <BarraBusquedaBoton/>
-      <BarraBusqueda/>
+      <BarraBusqueda text={text} onChangeText={onChangeText}/>
       <BarraBusquedaFiltro/>
     </View>
   )

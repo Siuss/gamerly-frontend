@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
+import { useState } from 'react';
 import { Color } from "../../../estilos/colores"
 
-export default function BarraBusqueda() {
-  const [text, onChangeText] = useState('');
-
+export default function BarraBusqueda(props) {
   return(
-    <TextInput style={styles.input} onChangeText={onChangeText} value={text} placeholder="Busqueda"/>
+    <TextInput style={styles.input} value={props.text} onChangeText={props.onChangeText} placeholder="Busqueda"/>
   )
 }
 
