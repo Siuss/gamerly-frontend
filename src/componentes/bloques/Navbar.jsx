@@ -23,49 +23,49 @@ const NavBar = (props) => {
         <Pressable
           style={({ pressed }) => [
             styles.botonDeNavegacion,
-            { backgroundColor: activeButton === 'home' || pressed ? Color.secundario : 'transparent' }
+            { backgroundColor: activeButton === 'home' || pressed ? Color.acento : 'transparent' }
           ]}
           onPress={() => handlePress('home')}
         >
           <Icons name="home"
             size={24}
-            color={Color.blanco}
+            color={activeButton === 'home' ? Color.neutro : Color.blanco}
           />
         </Pressable>
         <Pressable
           style={({ pressed }) => [
             styles.botonDeNavegacion,
-            { backgroundColor: activeButton === 'amigos' || pressed ? Color.secundario : 'transparent' }
+            { backgroundColor: activeButton === 'amigos' || pressed ? Color.acento : 'transparent' }
           ]}
           onPress={() => handlePress('amigos')}
         >
           <Icons name="addusergroup"
             size={24}
-            color={Color.blanco}
+            color={activeButton === 'amigos' ? Color.neutro : Color.blanco}
           />
         </Pressable>
         <Pressable
           style={({ pressed }) => [
             styles.botonDeNavegacion,
-            { backgroundColor: activeButton === 'comunidad' || pressed ? Color.secundario : 'transparent' }
+            { backgroundColor: activeButton === 'comunidad' || pressed ? Color.acento : 'transparent' }
           ]}
           onPress={() => handlePress('comunidad')}
         >
           <Icons name="earth"
             size={24}
-            color={Color.blanco}
+            color={activeButton === 'comunidad' ? Color.neutro : Color.blanco}
           />
         </Pressable>
         <Pressable
           style={({ pressed }) => [
             styles.botonDeNavegacion,
-            { backgroundColor: activeButton === 'perfil' || pressed ? Color.secundario : 'transparent' }
+            { backgroundColor: activeButton === 'perfil' || pressed ? Color.acento : 'transparent' }
           ]}
           onPress={() => handlePress('perfil')}
         >
           <Icons name="user"
             size={24}
-            color={Color.blanco}
+            color={activeButton === 'perfil' ? Color.neutro : Color.blanco}
           />
         </Pressable>
       </View>
@@ -85,15 +85,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 60,
-    gap:15,
+    gap:10,
   },
 
   botonDeNavegacion: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
-    borderRadius: 5,
+    borderRadius: 50,
   },
 });
 
 export default NavBar;
+

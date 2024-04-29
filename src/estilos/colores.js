@@ -1,4 +1,4 @@
-const acento = "#FFCAAC";
+const acento = "#34E4E4";
 const blanco = "#FFFFFF";
 const gris = "#79747E";
 const primario = "#4C007E";
