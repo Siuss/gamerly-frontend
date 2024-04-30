@@ -1,15 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { Color } from "../../estilos/colores";
+import { BotonFlotante } from "../atomos/botonFlotante/BotonFlotante";
 
 const jugadoresMock = [
   {
     foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
     nombreUsuario: "Nanami",
-    amigos: [
-      "aryastark89",
-      "solidfox",
-    ],
+    amigos: ["aryastark89", "solidfox"],
     plataforma: "PC",
     juego: "Terraria",
   },
