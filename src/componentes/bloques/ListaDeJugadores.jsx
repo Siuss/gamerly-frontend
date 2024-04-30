@@ -1,13 +1,14 @@
-import { StyleSheet, View} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Card } from "./Card";
 
 export const ListaDeJugadores = (props) => {
   const { style, ...restProps } = props;
 
   return (
-    <View style={[styles.container, style]} {...restProps}>
+    <View style={[styles.contenedor, style]} {...restProps}>
       {props.jugadores.map((jugador) => (
         <Card
+          key={jugador.nombreUsuario}
           style={styles.card}
           foto={jugador.foto}
           nombreUsuario={jugador.nombreUsuario}
@@ -21,7 +22,7 @@ export const ListaDeJugadores = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  contenedor: {
     display: "flex",
     flexDirection: "column",
     gap: "8px",

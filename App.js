@@ -2,4 +2,5 @@ import { BusquedaDeJugadores } from "./src/componentes/vistas/BusquedaDeJugadore
 
 export default function App() {
   return <BusquedaDeJugadores />;
+  
 }
