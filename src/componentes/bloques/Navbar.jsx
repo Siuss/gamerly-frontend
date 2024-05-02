@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
-import Icons from "@expo/vector-icons/AntDesign";
+import { MaterialIcons } from '@expo/vector-icons';
 import { Gradiente } from "../atomos/gradiente/Gradiente";
 import { Color } from "../../estilos/colores";
 
@@ -27,7 +27,7 @@ const NavBar = (props) => {
           ]}
           onPress={() => handlePress('home')}
         >
-          <Icons name="home"
+          <MaterialIcons name="home"
             size={24}
             color={activeButton === 'home' ? Color.neutro : Color.blanco}
           />
@@ -39,7 +39,7 @@ const NavBar = (props) => {
           ]}
           onPress={() => handlePress('amigos')}
         >
-          <Icons name="addusergroup"
+          <MaterialIcons name="group"
             size={24}
             color={activeButton === 'amigos' ? Color.neutro : Color.blanco}
           />
@@ -51,7 +51,7 @@ const NavBar = (props) => {
           ]}
           onPress={() => handlePress('comunidad')}
         >
-          <Icons name="earth"
+          <MaterialIcons name="groups"
             size={24}
             color={activeButton === 'comunidad' ? Color.neutro : Color.blanco}
           />
@@ -63,7 +63,7 @@ const NavBar = (props) => {
           ]}
           onPress={() => handlePress('perfil')}
         >
-          <Icons name="user"
+          <MaterialIcons name="person"
             size={24}
             color={activeButton === 'perfil' ? Color.neutro : Color.blanco}
           />
