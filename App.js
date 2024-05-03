@@ -15,6 +15,7 @@ const App = () => {
         amigos={["andylarquy", "solidfox"]}
       />
       <StatusBar style="auto" />
+        <NavBar/>
     </View>
       <AppRutas />
   );
