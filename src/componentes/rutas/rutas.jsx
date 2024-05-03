@@ -1,27 +1,56 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Resenias } from "../vistas/Reseñas";
-import { BusquedaDeJugadores } from "../vistas/BusquedaDeJugadores";
-import { HeaderTitle } from "../header/headerTitle";
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Resenias} from "../vistas/Reseñas";
+import {BusquedaDeJugadores} from "../vistas/BusquedaDeJugadores";
+import {HeaderTitle} from "../header/headerTitle";
+import NavBar from "../bloques/Navbar";
+import { View, StyleSheet } from 'react-native';
+
 
 const Stack = createStackNavigator();
+const titlesConfig = {
+    resenias: 'Reseñas',
+    busquedaDeJugadores: 'Busqueda Jugadores',
+
+};
 
 const AppRutas = () => {
-  const titulo = 'Busqueda Jugadores';
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="busquedaDeJugadores"
-        screenOptions={{
-          header: (props) => <HeaderTitle {...props} title={titulo}/>
-        }}
-      >
-        <Stack.Screen titulo="reseñas" name="resenias" component={Resenias} />
-        <Stack.Screen titulo="busquedaDeJugadores" name="busquedaDeJugadores" component={BusquedaDeJugadores} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    const titulo = 'Busqueda Jugadores';
+    return (
+        <View style={styles.container}>
+            <NavigationContainer style={styles.navigationContainer}>
+                <Stack.Navigator
+                    initialRouteName="busquedaDeJugadores"
+                    screenOptions={({ route }) => ({
+                        header: (props) => <HeaderTitle {...props} title={titlesConfig[route.name]} />
+                    })}
+                >
+                    <Stack.Screen titulo="reseñas" name="resenias" component={Resenias}/>
+                    <Stack.Screen titulo="busquedaDeJugadores" name="busquedaDeJugadores"
+                                  component={BusquedaDeJugadores}/>
+                </Stack.Navigator>
+                <NavBar style={styles.navBar}/>
+            </NavigationContainer>
+
+        </View>
+    );
 }
 
 export default AppRutas;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    navigationContainer: {
+        flex: 1,
+    },
+    navBar: {
+        height: 50,
+        backgroundColor: 'lightblue',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});
