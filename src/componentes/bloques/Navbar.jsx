@@ -3,6 +3,7 @@ import { View, Pressable, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Gradiente } from "../atomos/gradiente/Gradiente";
 import { Color } from "../../estilos/colores";
+import {useNavigation} from "@react-navigation/native";
 
 const NavBar = (props) => {
   const { style, ...restProps } = props;
@@ -12,6 +13,12 @@ const NavBar = (props) => {
     setActiveButton(buttonName);
     console.log("Pressed", buttonName);
   };
+  const navigation = useNavigation()
+
+  const handleNavigate = () => {
+    navigation.navigate('resenias');
+  };
+
 
   return (
     <Gradiente
@@ -49,7 +56,7 @@ const NavBar = (props) => {
             styles.botonDeNavegacion,
             { backgroundColor: activeButton === 'comunidad' || pressed ? Color.acento : 'transparent' }
           ]}
-          onPress={() => handlePress('comunidad')}
+          onPress={() => handleNavigate()}
         >
           <MaterialIcons name="groups"
             size={24}
