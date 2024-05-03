@@ -15,8 +15,9 @@ const NavBar = (props) => {
   };
   const navigation = useNavigation()
 
-  const handleNavigate = () => {
-    navigation.navigate('resenias');
+  const handleNavigate = (buttonName) => {
+    setActiveButton(buttonName);
+    navigation.navigate(buttonName);
   };
 
 
@@ -30,13 +31,13 @@ const NavBar = (props) => {
         <Pressable
           style={({ pressed }) => [
             styles.botonDeNavegacion,
-            { backgroundColor: activeButton === 'home' || pressed ? Color.acento : 'transparent' }
+            { backgroundColor: activeButton === 'busquedaDeJugadores' || pressed ? Color.acento : 'transparent' }
           ]}
-          onPress={() => handlePress('home')}
+          onPress={() => handleNavigate('busquedaDeJugadores')}
         >
           <MaterialIcons name="home"
             size={24}
-            color={activeButton === 'home' ? Color.neutro : Color.blanco}
+            color={activeButton === 'busquedaDeJugadores' ? Color.neutro : Color.blanco}
           />
         </Pressable>
         <Pressable
@@ -54,13 +55,13 @@ const NavBar = (props) => {
         <Pressable
           style={({ pressed }) => [
             styles.botonDeNavegacion,
-            { backgroundColor: activeButton === 'comunidad' || pressed ? Color.acento : 'transparent' }
+            { backgroundColor: activeButton === 'resenias' || pressed ? Color.acento : 'transparent' }
           ]}
-          onPress={() => handleNavigate()}
+          onPress={() => handleNavigate('resenias')}
         >
           <MaterialIcons name="groups"
             size={24}
-            color={activeButton === 'comunidad' ? Color.neutro : Color.blanco}
+            color={activeButton === 'resenias' ? Color.neutro : Color.blanco}
           />
         </Pressable>
         <Pressable
