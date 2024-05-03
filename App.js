@@ -2,8 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { Card } from "./src/componentes/bloques/Card";
 import Busqueda from "./src/componentes/bloques/Busqueda";
+import React from 'react';
+import AppRutas from './src/componentes/rutas/rutas'
 
-export default function App() {
+const App = () => {
   return (
     <View style={styles.container}>
       <Busqueda/>
@@ -14,14 +16,9 @@ export default function App() {
       />
       <StatusBar style="auto" />
     </View>
+      <AppRutas />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default App;
+
