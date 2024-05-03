@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { Color } from "../../estilos/colores";
+import { Parrafo } from "../atomos/parrafo/Parrafo";
+import Busqueda from "../bloques/Busqueda";
 
 const jugadoresMock = [
   {
@@ -32,6 +34,8 @@ const jugadoresMock = [
 export const BusquedaDeJugadores = (props) => {
   return (
     <View style={styles.container} {...props}>
+      <Busqueda/>
+      <Parrafo children="Jugadores sugeridos:"/>
       <ListaDeJugadores jugadores={jugadoresMock} />
     </View>
   );
@@ -41,5 +45,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Color.neutro,
     width: "100%",
+    height: "100%"
   },
 });

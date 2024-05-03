@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     borderColor:Color.secundario,
     flexDirection:"row",
     alignItems:"center",
+    alignSelf:"center",
     justifyContent:"space-between"
   }
 });

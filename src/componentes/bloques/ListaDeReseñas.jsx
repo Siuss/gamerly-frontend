@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: "8px",
     alignItems: "center",
+    padding: "8px"
   },
   card: {
     width: "80%",

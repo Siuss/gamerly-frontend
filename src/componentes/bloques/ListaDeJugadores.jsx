@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: "8px",
     alignItems: "center",
+    flexGrow: 1
   },
   card: {
     width: "80%",
