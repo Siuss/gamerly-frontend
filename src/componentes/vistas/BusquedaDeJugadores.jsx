@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useState } from 'react';
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { Color } from "../../estilos/colores";
-import { Parrafo } from "../atomos/parrafo/Parrafo";
 import Busqueda from "../bloques/Busqueda";
 
 const jugadoresMock = [
@@ -32,11 +32,12 @@ const jugadoresMock = [
 ];
 
 export const BusquedaDeJugadores = (props) => {
+  const [searchText, onChangeSearchText] = useState('')
+
   return (
     <View style={styles.container} {...props}>
-      <Busqueda/>
-      <Parrafo children="Jugadores sugeridos:"/>
-      <ListaDeJugadores jugadores={jugadoresMock} />
+      <Busqueda text={searchText} onChangeText={onChangeSearchText}/>
+      <ListaDeJugadores jugadores={jugadoresMock} searchText={searchText}/>
     </View>
   );
 };
