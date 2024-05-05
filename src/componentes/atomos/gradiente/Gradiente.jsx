@@ -9,6 +9,12 @@ const variantes = {
     start: { x: 0, y: 0 },
     end: { x: 1, y: 0 },
   },
+  gradienteVertical: {
+    colors: [Color.primario, Color.secundario],
+    locations: [0.47, 1],
+    start: { x: 0.5, y: 1 },
+    end: { x: 0.5, y: 0 },   
+  },
 };
 
 export const Gradiente = (props) => {

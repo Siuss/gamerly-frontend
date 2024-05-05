@@ -1,13 +1,17 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { useState } from 'react';
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { Color } from "../../estilos/colores";
-import { BotonFlotante } from "../atomos/botonFlotante/BotonFlotante";
+import Busqueda from "../bloques/Busqueda";
 
 const jugadoresMock = [
   {
     foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
     nombreUsuario: "Nanami",
-    amigos: ["aryastark89", "solidfox"],
+    amigos: [
+      "aryastark89",
+      "solidfox",
+    ],
     plataforma: "PC",
     juego: "Terraria",
   },
@@ -28,9 +32,12 @@ const jugadoresMock = [
 ];
 
 export const BusquedaDeJugadores = (props) => {
+  const [searchText, onChangeSearchText] = useState('')
+
   return (
     <View style={styles.container} {...props}>
-      <ListaDeJugadores jugadores={jugadoresMock} />
+      <Busqueda text={searchText} onChangeText={onChangeSearchText}/>
+      <ListaDeJugadores jugadores={jugadoresMock} searchText={searchText}/>
     </View>
   );
 };
@@ -39,5 +46,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Color.neutro,
     width: "100%",
+    height: "100%"
   },
 });

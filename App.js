@@ -1,6 +1,9 @@
-import { BusquedaDeJugadores } from "./src/componentes/vistas/BusquedaDeJugadores";
+import React from 'react';
+import AppRutas from './src/componentes/rutas/rutas'
 
-export default function App() {
-  return <BusquedaDeJugadores />;
-  
+const App = () => {
+  return <AppRutas />
 }
+
+export default App;
+
