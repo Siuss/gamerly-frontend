@@ -1,4 +1,4 @@
-import { StyleSheet, View} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Card } from "./Card";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 
@@ -45,7 +45,7 @@ export const ListaDeJugadores = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  contenedor: {
     display: "flex",
     flexDirection: "column",
     gap: "8px",

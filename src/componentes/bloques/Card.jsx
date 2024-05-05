@@ -21,8 +21,8 @@ export const Card = (props) => {
             <FotoDePerfil width={52} height={52} src={props.foto} />
             <View>
               <Parrafo variante="blancoM">{props.nombreUsuario}</Parrafo>
-              <Parrafo variante="blancoS">PC</Parrafo>
-              <Parrafo variante="blancoS">Terraria</Parrafo>
+              <Parrafo variante="blancoXS">{props.plataforma}</Parrafo>
+              <Parrafo variante="blancoXS">{props.juego}</Parrafo>
             </View>
           </View>
           <View style={styles.amigos}>
