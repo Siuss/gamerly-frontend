@@ -8,8 +8,6 @@ import { Gradiente } from "../atomos/gradiente/Gradiente"
 export const CardResenia = (props) => {
   const { style, ...restProps } = props;
 
-  var puntajeEstrellas = Array(props.puntaje)
-
   return (
     <Gradiente
       variante="gradienteVertical"
