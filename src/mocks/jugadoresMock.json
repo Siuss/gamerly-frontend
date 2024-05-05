@@ -1,0 +1,29 @@
+[
+    {
+        "id": "1",
+        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+        "nombreUsuario": "Nanami",
+        "amigos": ["aryastark89", "solidfox"],
+        "plataforma": "PC",
+        "juego": "Terraria",
+        "puntuacion": "3"
+    },
+    {
+        "id": "2",
+        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+        "nombreUsuario": "SilvinaPuerta27",
+        "amigos": ["amigo1"],
+        "plataforma": "XBOX",
+        "juego": "LOL",
+        "puntuacion": "2.5"
+    },
+    {
+        "id": "3",
+        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+        "nombreUsuario": "javyVent_7",
+        "amigos": [],
+        "plataforma": "XBOX",
+        "juego": "Call of Duty",
+        "puntuacion": "4.2"
+    }
+]

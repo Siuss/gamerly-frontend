@@ -1,25 +1,7 @@
-import {StyleSheet, View} from "react-native";
-import {ListaDeResenias} from "../bloques/ListaDeReseñas";
-import {Color} from "../../estilos/colores";
-
-
-const reseniasMock = [
-    {
-        nombre: "Nanami",
-        foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-        resenia: "Mal compañero",
-    },
-    {
-        nombre: "Nanami",
-        foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-        resenia: "Re toxico",
-    },
-    {
-        nombre: "Nanami",
-        foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-        resenia: "Manco, no podes jugar tan mal/",
-    },
-];
+import { StyleSheet, View } from "react-native";
+import { ListaDeResenias } from "../bloques/ListaDeReseñas";
+import { Color } from "../../estilos/colores";
+import reseniasMock from "../../mocks/reseniasMock.json"
 
 export const Resenias = (props) => {
     return (

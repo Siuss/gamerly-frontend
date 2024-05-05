@@ -32,7 +32,7 @@ export const Card = (props) => {
               numberOfLines={1}
               subrayado
             >
-              Amigos en comun:
+              {props.amigos.length > 0 ? "Amigos en comun:" : ""}
             </Parrafo>
             <Parrafo
               numberOfLines={1}
@@ -47,7 +47,7 @@ export const Card = (props) => {
           </View>
         </View>
         <View style={styles.contenidoDerecho}>
-          <Puntuacion puntuacion={3} />
+          <Puntuacion puntuacion={props.puntuacion} />
           <Icons
             style={styles.iconoFlecha}
             name="right"

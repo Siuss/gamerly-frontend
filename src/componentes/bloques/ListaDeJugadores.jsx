@@ -20,6 +20,7 @@ export const ListaDeJugadores = (props) => {
             plataforma={jugador.plataforma}
             juego={jugador.juego}
             amigos={jugador.amigos}
+            puntuacion={jugador.puntuacion}
           />
         ))}
       </View>
@@ -35,6 +36,7 @@ export const ListaDeJugadores = (props) => {
               plataforma={jugador.plataforma}
               juego={jugador.juego}
               amigos={jugador.amigos}
+              puntuacion={jugador.puntuacion}
             />
           ))}
         </View>

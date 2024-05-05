@@ -8,33 +8,28 @@ import {Gradiente} from "../atomos/gradiente/Gradiente"
 export const CardResenia = (props) => {
     const {style, ...restProps} = props;
 
-    return (
-        <Gradiente
-            variante="gradienteVertical"
-            style={[styles.card, style]}
-            {...restProps}
-        >
-            <View>
-                <View style={styles.contenidoArriva}>
-                    <Text style={styles.texto}>Reseña
-                        <Icons
-                            style={styles.iconoStar}
-                            name="star"
-                            size={14}
-                        ></Icons>
-                    </Text>
-                </View>
-                <View style={styles.contenidoAbajo}>
-                    <FotoDePerfil width={30} height={30} src={props.foto}/>
-                    <View>
-                        <Parrafo variante="blancoM" style={styles.textoResenia} maxWidth={240}>{props.resenia}</Parrafo>
-                    </View>
-                </View>
-            </View>
-        </Gradiente>
-    );
+  return (
+    <Gradiente
+      variante="gradienteVertical"
+      style={[styles.card, style]}
+      {...restProps}
+    >
+      <View>
+        <View style={styles.contenidoArriva}>
+          <Text style={styles.texto}>Reseña - {props.puntaje} 
+            <Icons style={styles.iconoStar} name="star"size={14}/> 
+          </Text>    
+        </View>
+        <View style={styles.contenidoAbajo}>
+          <FotoDePerfil width={30} height={30} src={props.foto} />
+          <View>
+            <Parrafo variante="blancoM" style={styles.textoResenia} maxWidth= {240}>{props.resenia}</Parrafo>
+          </View>
+        </View>
+      </View>
+    </Gradiente>
+  );
 };
-
 
 const styles = StyleSheet.create({
     card: {
