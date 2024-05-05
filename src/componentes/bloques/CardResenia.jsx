@@ -14,7 +14,7 @@ export const CardResenia = (props) => {
             style={[styles.card, style]}
             {...restProps}
         >
-            <View /* height={90} */>
+            <View>
                 <View style={styles.contenidoArriva}>
                     <Text style={styles.texto}>Reseña
                         <Icons
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         display: "flex",
         flexDirection:"row",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "flex-start"
     },
     contenidoAbajo: {
@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     iconoStar: {
         position: "absolute",
         marginLeft: 5,
-        marginTop : 0
+        marginTop : 3,
+        
     },
     textoResenia: {
         marginLeft: 10,
