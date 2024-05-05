@@ -12,9 +12,6 @@ export const HeaderTitle = ({ title }) => {
     navigation.goBack();
   };
 
-  /* const handleNavigate = () => {
-    navigation.navigate('resenias');
-  }; */
 
   return (
     <Gradiente variante="gradienteHorizontal" style={styles.header}>

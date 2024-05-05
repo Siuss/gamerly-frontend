@@ -7,8 +7,8 @@ export const FotoDePerfil = (props) => {
       width: props.width,
       height: props.height,
       borderRadius: 100,
-      borderWidth: 4,
-      borderColor: Color.acento,
+      borderWidth: 2,
+      borderColor: Color.rosa,
     },
   });
   
