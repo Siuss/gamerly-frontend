@@ -10,7 +10,7 @@ export const ListaDeJugadores = (props) => {
   return (
     <>
     {busquedaActiva ? 
-      <View style={[styles.container, style]} {...restProps}>
+      <View style={[styles.contenedor, style]} {...restProps}>
         {props.jugadores.filter(jugador => jugador.nombreUsuario.toUpperCase().includes(props.searchText.toUpperCase()))
         .map((jugador) => (
           <Card
@@ -26,7 +26,7 @@ export const ListaDeJugadores = (props) => {
     : 
       <>
         <Parrafo style={styles.text} variante="blancoM">Jugadores sugeridos:</Parrafo>
-        <View style={[styles.container, style]} {...restProps}>
+        <View style={[styles.contenedor, style]} {...restProps}>
           {props.jugadores.map((jugador) => (
             <Card
               style={styles.card}

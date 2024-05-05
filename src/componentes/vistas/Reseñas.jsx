@@ -13,7 +13,7 @@ const reseniasMock = [
   },
   {
     foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-    resenia: "Yo no soy quién para hablar mal de nadie pero Osvaldo es un irrespetuoso un tremendo hijo de puta, un ignorante mentiroso un avaro y malcriado, un jodido hinchapelotas un estúpido, un tarado, un sorete mal cagado Drogadicto y maricón",
+    resenia: "Manco, no podes jugar tan mal",
   },
 ];
 
