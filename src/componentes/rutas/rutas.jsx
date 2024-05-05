@@ -1,18 +1,20 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+
 import {Resenias} from "../vistas/Reseñas";
 import {BusquedaDeJugadores} from "../vistas/BusquedaDeJugadores";
 import {HeaderTitle} from "../header/headerTitle";
 import NavBar from "../bloques/Navbar";
 import { View, StyleSheet } from 'react-native';
+import { BusquedaAvanzada } from '../vistas/BusquedaAvanzada';
 
 
 const Stack = createStackNavigator();
 const titlesConfig = {
     resenias: 'Reseñas',
     busquedaDeJugadores: 'Busqueda Jugadores',
-
+    BusquedaAvanzada: 'Busqueda Avanzada',
 };
 
 const AppRutas = () => {
@@ -29,6 +31,7 @@ const AppRutas = () => {
                     <Stack.Screen titulo="reseñas" name="resenias" component={Resenias}/>
                     <Stack.Screen titulo="busquedaDeJugadores" name="busquedaDeJugadores"
                                   component={BusquedaDeJugadores}/>
+                    <Stack.Screen titulo="busquedaAvanzada" name="busquedaAvanzada" component={BusquedaAvanzada}/>
                 </Stack.Navigator>
                 <NavBar style={styles.navBar}/>
             </NavigationContainer>
