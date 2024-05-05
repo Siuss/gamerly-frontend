@@ -6,7 +6,7 @@ export const BusquedaAvanzada = (props) => {
   return (
     <View style={styles.container} {...props}>
       {/* TODO: Grupo de Atómos */}
-      <Text>Esto es Busqueda Avanzada</Text>
+      <Text>Esto es Búsqueda Avanzada</Text>
     </View>
   );
 };
