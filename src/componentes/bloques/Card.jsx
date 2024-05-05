@@ -60,7 +60,6 @@ export const Card = (props) => {
   );
 };
 
-//Cuando este en la card se cambia ancho y alto
 const styles = StyleSheet.create({
   amigos: {
     display: "flex",
@@ -71,7 +70,6 @@ const styles = StyleSheet.create({
     minWidth: "fit-content",
   },
   card: {
-    //TODO: Hacer gradiente
     backgroundColor: Color.primario,
     padding: 16,
     borderRadius: 10,

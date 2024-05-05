@@ -1,11 +1,13 @@
 import { StyleSheet, View} from "react-native"
 import { CardResenia } from "./CardResenia"
+import {CardFotoPerfil} from "./CardFotoPerfil";
 
 export const ListaDeResenias = (props) => {
-  const { style, ...restProps } = props;
+  const { style, foto, nombre, ...restProps } = props;
 
   return (
     <View style={[styles.container, style]} {...restProps}>
+      <CardFotoPerfil foto={foto} nombre={nombre} style={styles.card}/>
       {props.resenias.map((resenia) => (
         <CardResenia
           style={styles.card}
