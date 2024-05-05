@@ -1,17 +1,14 @@
 import { StyleSheet, View } from "react-native";
-import { useState } from 'react';
-import BarraBusquedaBoton from "../atomos/barraBusquedaBoton/BarraBusquedaBoton";
+import Icons from "@expo/vector-icons/AntDesign";
 import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import BarraBusquedaFiltro from "../atomos/barraBusquedaFiltro/BarraBusquedaFiltro";
 import { Color } from "../../estilos/colores";
 
-export default function Busqueda() {
-  const [text, onChangeText] = useState('');
-
+export default function Busqueda(props) {
   return(
     <View style={styles.container}>
-      <BarraBusquedaBoton/>
-      <BarraBusqueda text={text} onChangeText={onChangeText}/>
+      <Icons style={styles.icon} name="search1"/>
+      <BarraBusqueda text={props.text} onChangeText={props.onChangeText}/>
       <BarraBusquedaFiltro/>
     </View>
   )
@@ -30,5 +27,10 @@ const styles = StyleSheet.create({
     alignItems:"center",
     alignSelf:"center",
     justifyContent:"space-between"
-  }
+  },
+  icon: {
+    color:Color.secundario,
+    fontSize:20,
+    margin:12
+  },
 });
