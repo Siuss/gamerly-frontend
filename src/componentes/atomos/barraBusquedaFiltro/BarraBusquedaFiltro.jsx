@@ -10,15 +10,14 @@ export default function BarraBusquedaFiltro(props) {
 
   const navigation = useNavigation();
 
-  const handleNavigate = (buttonName) => {
-    console.log("Pressed", buttonName);
+  const handleNavigate = () => {
     navigation.navigate('busquedaAvanzada');
   };
 
 
   return(
     <Pressable style={styles.button} {...restProps}
-      onPress={() => handleNavigate('filter')}>
+      onPress={() => handleNavigate()}>
       {({pressed}) => (
         <> {pressed ? 
           <Icons style={styles.iconPressed} name="filter"/>
