@@ -18,9 +18,6 @@ export const HeaderTitle = ({ title }) => {
       <TouchableOpacity onPress={handleNavigateBack} style={styles.button}>
         <Ionicons name="arrow-back" size={24} color={Color.blanco} />
       </TouchableOpacity>
-      {/* <TouchableOpacity onPress={handleNavigate} style={styles.button}>
-        <Ionicons name="arrow-back" size={24} color={Color.blanco} />
-      </TouchableOpacity> */}
       <Text style={styles.title}>{title}</Text>
       <View style={{ flex: 1 }} />
     </Gradiente>   

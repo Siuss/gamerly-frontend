@@ -20,6 +20,11 @@ const NavBar = (props) => {
     navigation.navigate(buttonName);
   };
 
+  const handleNavigateResenia = (buttonName) => {
+    setActiveButton(buttonName);
+    navigation.navigate(buttonName, { id: "1"});
+  };
+
 
   return (
     <Gradiente
@@ -57,7 +62,7 @@ const NavBar = (props) => {
             styles.botonDeNavegacion,
             { backgroundColor: activeButton === 'resenias' || pressed ? Color.acento : 'transparent' }
           ]}
-          onPress={() => handleNavigate('resenias')}
+          onPress={() => handleNavigateResenia('resenias')}
         >
           <MaterialIcons name="groups"
             size={24}

@@ -5,9 +5,17 @@ import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Puntuacion } from "../atomos/puntuacion/Puntuacion";
 import Icons from "@expo/vector-icons/AntDesign";
 import { Gradiente } from "../atomos/gradiente/Gradiente";
+import {useNavigation} from "@react-navigation/native";
 
 export const Card = (props) => {
   const { style, ...restProps } = props;
+  const navigation = useNavigation()
+
+  const handleNavigate = () => {
+    navigation.navigate("resenias", { id: props.id });
+    console.log(props.id)
+  };
+  
 
   return (
     <Gradiente
@@ -53,10 +61,12 @@ export const Card = (props) => {
             name="right"
             size={14}
             color={Color.blanco}
+            onPress={() => handleNavigate()}
           ></Icons>
         </View>
       </View>
     </Gradiente>
+    
   );
 };
 
