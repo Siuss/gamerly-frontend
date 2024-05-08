@@ -14,16 +14,6 @@ import { useRoute } from "@react-navigation/native";
 import { ListaDePildoras } from "../bloques/ListaDePildoras";
 // import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const horariosIniciales = [
-    {mañana: false, tarde: false, noche: false}, // Lunes
-    {mañana: false, tarde: false, noche: false}, // Martes
-    {mañana: false, tarde: false, noche: false}, // Miercoles
-    {mañana: false, tarde: false, noche: false}, // Jueves
-    {mañana: false, tarde: false, noche: false}, // Viernes
-    {mañana: false, tarde: false, noche: false}, // Sabado
-    {mañana: false, tarde: false, noche: false}, // Domingo
-];
-
 export const VistaPerfil = () => {
     const route = useRoute();
     const { id } = route.params;
