@@ -18,9 +18,6 @@ export const HeaderTitle = ({ title }) => {
       <TouchableOpacity onPress={handleNavigateBack} style={styles.button}>
         <Ionicons name="arrow-back" size={24} color={Color.blanco} />
       </TouchableOpacity>
-      {/* <TouchableOpacity onPress={handleNavigate} style={styles.button}>
-        <Ionicons name="arrow-back" size={24} color={Color.blanco} />
-      </TouchableOpacity> */}
       <Text style={styles.title}>{title}</Text>
       <View style={{ flex: 1 }} />
     </Gradiente>   
@@ -38,10 +35,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    flex: 1,
     fontSize: 20,
     color: 'white',
-    textAlign: 'center',
+    display: "grid",
+    alignItems: "center",
+    paddingLeft: 20
   },
   buttonText: {
     fontSize: 20,
