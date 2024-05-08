@@ -33,7 +33,7 @@ export const Resenias = (props) => {
             <ListaDeResenias
                 id={id}
                 resenias={reseñasFiltradas}
-                foto={reseniasMock[0].foto}
+                foto={jugadorFiltrado.foto}
                 nombreUsuario={jugadorFiltrado.nombreUsuario}
             />
         </View>

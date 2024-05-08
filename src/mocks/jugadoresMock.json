@@ -10,20 +10,20 @@
     },
     {
         "id": "2",
-        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+        "foto": "https://pbs.twimg.com/media/Fn-6kqHaUAEuv2J.jpg",
         "nombreUsuario": "SilvinaPuerta27",
         "amigos": ["amigo1"],
-        "plataforma": "XBOX",
-        "juego": "LOL",
+        "plataforma": "PS4",
+        "juego": "Call of Duty",
         "puntuacion": "2.5"
     },
     {
         "id": "3",
-        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+        "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg",
         "nombreUsuario": "javyVent_7",
         "amigos": [],
         "plataforma": "XBOX",
-        "juego": "Call of Duty",
+        "juego": "Fortnite",
         "puntuacion": "4.2"
     }
 ]
