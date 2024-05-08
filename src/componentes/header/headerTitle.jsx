@@ -35,15 +35,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    flex: 1,
     fontSize: 20,
     color: 'white',
-    textAlign: 'center',
+    display: "grid",
+    alignItems: "center",
+    paddingLeft: 20
+  },
+  buttonText: {
+    fontSize: 20,
+    color: 'white',
     flexBasis: "80%"
   },
   button: {
     marginRight: 16,
   },
-})
+});
+
 
 export default HeaderTitle

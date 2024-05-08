@@ -16,13 +16,13 @@ const NavBar = (props) => {
   const navigation = useNavigation()
 
   const handleNavigate = (buttonName) => {
-    setActiveButton(buttonName);
     navigation.navigate(buttonName);
+    setActiveButton(buttonName);
   };
 
-  const handleNavigateResenia = (buttonName) => {
-    setActiveButton(buttonName);
+  const handleNavigateConId = (buttonName) => {
     navigation.navigate(buttonName, { id: "1"});
+    setActiveButton(buttonName);
   };
 
 
@@ -62,7 +62,7 @@ const NavBar = (props) => {
             styles.botonDeNavegacion,
             { backgroundColor: activeButton === 'resenias' || pressed ? Color.acento : 'transparent' }
           ]}
-          onPress={() => handleNavigateResenia('resenias')}
+          onPress={() => handleNavigateConId('resenias')}
         >
           <MaterialIcons name="groups"
             size={24}
@@ -72,13 +72,13 @@ const NavBar = (props) => {
         <Pressable
           style={({ pressed }) => [
             styles.botonDeNavegacion,
-            { backgroundColor: activeButton === 'perfil' || pressed ? Color.acento : 'transparent' }
+            { backgroundColor: activeButton === 'vistaPerfil' || pressed ? Color.acento : 'transparent' }
           ]}
-          onPress={() => handlePress('perfil')}
+          onPress={() => handleNavigateConId('miPerfil')}
         >
           <MaterialIcons name="person"
             size={24}
-            color={activeButton === 'perfil' ? Color.neutro : Color.blanco}
+            color={activeButton === 'vistaPerfil' ? Color.neutro : Color.blanco}
           />
         </Pressable>
       </View>
