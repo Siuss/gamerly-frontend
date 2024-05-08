@@ -67,13 +67,13 @@ const NavBar = (props) => {
         <Pressable
           style={({ pressed }) => [
             styles.botonDeNavegacion,
-            { backgroundColor: activeButton === 'perfil' || pressed ? Color.acento : 'transparent' }
+            { backgroundColor: activeButton === 'vistaPerfil' || pressed ? Color.acento : 'transparent' }
           ]}
-          onPress={() => handlePress('perfil')}
+          onPress={() => handleNavigate('miPerfil')}
         >
           <MaterialIcons name="person"
             size={24}
-            color={activeButton === 'perfil' ? Color.neutro : Color.blanco}
+            color={activeButton === 'vistaPerfil' ? Color.neutro : Color.blanco}
           />
         </Pressable>
       </View>
