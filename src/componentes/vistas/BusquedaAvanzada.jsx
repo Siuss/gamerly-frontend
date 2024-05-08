@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, Title } from "react-native";
+import Slider from '@react-native-community/slider';
 
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
@@ -114,6 +115,7 @@ export const BusquedaAvanzada = () => {
 
       <Parrafo variante="blancoM">Reseña</Parrafo>
       {/* TODO: Barra de RESEÑA */}
+      <Slider minimumValue={1} maximumValue={5} step={1} />
       
       <Divisor />
       <Parrafo variante="blancoM">Disponibilidad horaria</Parrafo>
