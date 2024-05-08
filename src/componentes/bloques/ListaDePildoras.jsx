@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     width: "fit-content",
     display:"flex",
     flexDirection:"row",
+    flexWrap: 'wrap',
     gap:10,
   },
 });

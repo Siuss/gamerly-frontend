@@ -106,6 +106,8 @@ export const BusquedaAvanzada = () => {
       <Parrafo variante="blancoM">Juevos en común</Parrafo>
       <BarraBusqueda text={searchText} onChangeText={onChangeSearchText}/>
       <ListaDePildoras items={juegos}/>
+      <Divisor />
+
       <Parrafo variante="blancoM">Reseña</Parrafo>
       {/* TODO: Barra de RESEÑA */}
       
@@ -115,8 +117,8 @@ export const BusquedaAvanzada = () => {
       <ListaDePildoras items={dias}/>
       <Parrafo variante="blancoM">Horario</Parrafo>
       <ListaDePildoras items={momentosDelDia}/>
+
       <Divisor />
-      {/* TODO: Botonera */}
       <BotonFlotante name="check" />
       <BotonFlotante name="close" />
     </View>
