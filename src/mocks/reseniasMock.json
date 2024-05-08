@@ -1,17 +1,44 @@
 [
-    {
+    {   
+        "idJugadorEmisor": "2",
+        "idJugadorReceptor": "1",
         "puntaje": "2",
         "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
         "resenia": "Mal compañero"
     },
-    {
+    {   
+        "idJugadorEmisor": "3",
+        "idJugadorReceptor": "1",
         "puntaje": "1",
         "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
         "resenia": "Re toxico"
     },
-    {
+    {   
+        "idJugadorEmisor": "1",
+        "idJugadorReceptor": "2",
         "puntaje": "1",
         "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
         "resenia": "Manco, no podes jugar tan mal"
+    },
+    {   
+        "idJugadorEmisor": "1",
+        "idJugadorReceptor": "3",
+        "puntaje": "4",
+        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+        "resenia": "buena persona"
+    },
+    {   
+        "idJugadorEmisor": "3",
+        "idJugadorReceptor": "2",
+        "puntaje": "5",
+        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+        "resenia": "excelente compañero"
+    },
+    {
+        "idJugadorEmisor": "3",
+        "idJugadorReceptor": "1",
+        "puntaje": "3",
+        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+        "resenia": "ni bueno ni malo"
     }
 ]
