@@ -96,6 +96,10 @@ const momentosDelDia = [
     id: 2,
     name: "Tarde",
   },
+  {
+    id: 3,
+    name: "Noche",
+  },
 ];
 
 export const BusquedaAvanzada = () => {
@@ -119,8 +123,10 @@ export const BusquedaAvanzada = () => {
       <ListaDePildoras items={momentosDelDia}/>
 
       <Divisor />
-      <BotonFlotante name="check" />
-      <BotonFlotante name="close" />
+      <View style={styles.botonera}>
+        <BotonFlotante name="check" />
+        <BotonFlotante name="close" />
+      </View>
     </View>
   );
 };
@@ -130,7 +136,14 @@ const styles = StyleSheet.create({
     backgroundColor: Color.neutro,
     width: "100%",
     height: "100%",
-
-    
   },
+  botonera:{
+    display: "flex",
+    position: 'fixed',
+    bottom: 96,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    padding: 10,
+  }
 });
