@@ -59,9 +59,7 @@ export const TablaHorarios = (props) => {
           <Parrafo style={styles.tituloFila} variante="blancoS">
             {dia}
           </Parrafo>
-          <Parrafo style={styles.tituloFila} variante="blancoS">
-            {props.horarios[index].mañana.toString()}
-          </Parrafo>
+         
           <Switch
             style={styles.switch}
             value={props.horarios[index].mañana}
@@ -93,8 +91,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     backgroundColor: Color.primario,
     rowGap: 16,
+    overflowX: "auto",
   },
   tituloFila: {
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "flex-end",
     width: 60,
   },
   switch: {
