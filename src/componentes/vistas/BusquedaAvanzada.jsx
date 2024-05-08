@@ -108,22 +108,41 @@ export const BusquedaAvanzada = () => {
   
   return (
     <View style={styles.container}>
-      <Parrafo variante="blancoM">Juevos en común</Parrafo>
-      <BarraBusqueda text={searchText} onChangeText={onChangeSearchText}/>
-      <ListaDePildoras items={juegos}/>
+      <View style={styles.espaciador}>
+        <Parrafo variante="blancoM">Juevos en común</Parrafo>
+        <View style={styles.espaciador}>
+          <BarraBusqueda text={searchText} onChangeText={onChangeSearchText}/>
+        </View>
+        <View style={styles.espaciador}>
+          <ListaDePildoras items={juegos}/>
+        </View>
+      </View>
       <Divisor />
-
-      <Parrafo variante="blancoM">Reseña</Parrafo>
-      {/* TODO: Barra de RESEÑA */}
-      <Slider minimumValue={1} maximumValue={5} step={1} />
-      
+      <View style={styles.espaciador}>
+        <View style={styles.espaciador}>
+          <Parrafo variante="blancoM">Reseña</Parrafo>
+        </View>
+        <View style={styles.espaciador}>
+          <Slider style={styles.input} minimumValue={1} maximumValue={5} step={1} />
+          <Parrafo style={styles.parrafoCentrado} variante="blancoM">3</Parrafo>
+        </View>
+      </View>
       <Divisor />
-      <Parrafo variante="blancoM">Disponibilidad horaria</Parrafo>
-      <Parrafo variante="blancoM">Días de la semana</Parrafo>
-      <ListaDePildoras items={dias}/>
-      <Parrafo variante="blancoM">Horario</Parrafo>
-      <ListaDePildoras items={momentosDelDia}/>
-
+        <View style={styles.espaciador}>
+          <Parrafo variante="blancoM">Disponibilidad horaria</Parrafo>
+        </View>
+        <View style={styles.espaciador}>
+          <Parrafo variante="blancoM">Días de la semana</Parrafo>
+          <View style={styles.espaciador}>
+            <ListaDePildoras items={dias}/>
+          </View>
+        </View>
+        <View style={styles.espaciador}>
+          <Parrafo variante="blancoM">Horario</Parrafo>
+          <View style={styles.espaciador}>
+            <ListaDePildoras items={momentosDelDia}/>
+          </View>
+        </View>
       <Divisor />
       <View style={styles.botonera}>
         <BotonFlotante name="check" />
@@ -138,14 +157,29 @@ const styles = StyleSheet.create({
     backgroundColor: Color.neutro,
     width: "100%",
     height: "100%",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
   },
   botonera:{
     display: "flex",
     position: 'fixed',
-    bottom: 96,
+    bottom: 66,
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
-    padding: 10,
-  }
+  },
+  input: {
+    width:"50vw",
+    minWidth:200,
+    height:50,
+    padding:15,
+    color:Color.primario,
+    fontSize:16
+  },
+  espaciador: {
+    paddingVertical: 3,
+  },
+  parrafoCentrado : {
+    textAlign: "center",
+  },
 });

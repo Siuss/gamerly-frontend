@@ -15,6 +15,8 @@ const Stack = createStackNavigator();
 const titlesConfig = {
     resenias: 'Reseñas',
     busquedaDeJugadores: 'Busqueda Jugadores',
+    miPerfil: 'Mi Perfil',
+    busquedaAvanzada: 'Busqueda Avanzada'
 
 };
 
