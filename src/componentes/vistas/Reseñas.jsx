@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { ListaDeResenias } from "../bloques/ListaDeReseñas";
 import { Color } from "../../estilos/colores";
 import reseniasMock from "../../mocks/reseniasMock.json";
+import jugadoresMock from "../../mocks/jugadoresMock.json";
 import { useRoute } from '@react-navigation/native';
 
 export const Resenias = (props) => {
@@ -16,7 +17,16 @@ export const Resenias = (props) => {
         return reseniasFiltradas;
     }
 
+    function obtenerjugadorPorId(id) {
+        const jugadorFiltrado = jugadoresMock.find((jugador) => {
+            return jugador.id === id;
+        });
+    
+        return jugadorFiltrado;
+    }
+
     const reseñasFiltradas = obtenerReseniasPorId(id);
+    const jugadorFiltrado = obtenerjugadorPorId(id);
 
     return (
         <View style={styles.container}>
@@ -24,7 +34,7 @@ export const Resenias = (props) => {
                 id={id}
                 resenias={reseñasFiltradas}
                 foto={reseniasMock[0].foto}
-                nombre={reseniasMock[0].nombre}
+                nombreUsuario={jugadorFiltrado.nombreUsuario}
             />
         </View>
     );

@@ -5,7 +5,7 @@ import {FotoDePerfil} from "../atomos/fotoDePerfil/FotoDePerfil";
 import {Parrafo} from "../atomos/parrafo/Parrafo";
 
 export const CardFotoPerfil = (props) => {
-    const {style, foto, nombre, ...restProps} = props;
+    const {style,nombreUsuario, ...restProps} = props;
     return (
         <Gradiente
             variante="gradienteVertical"
@@ -14,7 +14,7 @@ export const CardFotoPerfil = (props) => {
         >
             <View style={styles.contenidoArriba}>
                 <FotoDePerfil width={60} height={60} src={props.foto}/>
-                <Parrafo variante="blancoM" style={styles.textoUsuario} maxWidth= {240}>{props.nombre}</Parrafo>
+                <Parrafo variante="blancoM" style={styles.textoUsuario} maxWidth= {240}>{props.nombreUsuario}</Parrafo>
             </View>
         </Gradiente>
     )
