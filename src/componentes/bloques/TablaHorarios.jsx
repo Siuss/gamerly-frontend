@@ -62,18 +62,18 @@ export const TablaHorarios = (props) => {
          
           <Switch
             style={styles.switch}
-            value={props.horarios[index].mañana}
-            onChange={() => onSwitch(index, "mañana")}
+            value={props.horarios[index][0]}
+            onChange={() => onSwitch(index, 0)}
           />
           <Switch
             style={styles.switch}
-            value={props.horarios[index].tarde}
-            onChange={() => onSwitch(index, "tarde")}
+            value={props.horarios[index][1]}
+            onChange={() => onSwitch(index, 1)}
           />
           <Switch
             style={styles.switch}
-            value={props.horarios[index].noche}
-            onChange={() => onSwitch(index, "noche")}
+            value={props.horarios[index][2]}
+            onChange={() => onSwitch(index, 2)}
           />
         </View>
       ))}

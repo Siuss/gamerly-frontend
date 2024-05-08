@@ -5,9 +5,17 @@ import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Puntuacion } from "../atomos/puntuacion/Puntuacion";
 import Icons from "@expo/vector-icons/AntDesign";
 import { Gradiente } from "../atomos/gradiente/Gradiente";
+import {useNavigation} from "@react-navigation/native";
 
 export const Card = (props) => {
   const { style, ...restProps } = props;
+  const navigation = useNavigation()
+
+  const handleNavigate = () => {
+    navigation.navigate("resenias", { id: props.id });
+    console.log(props.id)
+  };
+  
 
   return (
     <Gradiente
@@ -32,7 +40,7 @@ export const Card = (props) => {
               numberOfLines={1}
               subrayado
             >
-              Amigos en comun:
+              {props.amigos.length > 0 ? "Amigos en comun:" : ""}
             </Parrafo>
             <Parrafo
               numberOfLines={1}
@@ -47,20 +55,21 @@ export const Card = (props) => {
           </View>
         </View>
         <View style={styles.contenidoDerecho}>
-          <Puntuacion puntuacion={3} />
+          <Puntuacion puntuacion={props.puntuacion} />
           <Icons
             style={styles.iconoFlecha}
             name="right"
             size={14}
             color={Color.blanco}
+            onPress={() => handleNavigate()}
           ></Icons>
         </View>
       </View>
     </Gradiente>
+    
   );
 };
 
-//Cuando este en la card se cambia ancho y alto
 const styles = StyleSheet.create({
   amigos: {
     display: "flex",
@@ -71,7 +80,6 @@ const styles = StyleSheet.create({
     minWidth: "fit-content",
   },
   card: {
-    //TODO: Hacer gradiente
     backgroundColor: Color.primario,
     padding: 16,
     borderRadius: 10,

@@ -15,11 +15,13 @@ export const ListaDeJugadores = (props) => {
         .map((jugador) => (
           <Card
             style={styles.card}
+            id={jugador.id}
             foto={jugador.foto}
             nombreUsuario={jugador.nombreUsuario}
             plataforma={jugador.plataforma}
             juego={jugador.juego}
             amigos={jugador.amigos}
+            puntuacion={jugador.puntuacion}
           />
         ))}
       </View>
@@ -30,11 +32,13 @@ export const ListaDeJugadores = (props) => {
           {props.jugadores.map((jugador) => (
             <Card
               style={styles.card}
+              id={jugador.id}
               foto={jugador.foto}
               nombreUsuario={jugador.nombreUsuario}
               plataforma={jugador.plataforma}
               juego={jugador.juego}
               amigos={jugador.amigos}
+              puntuacion={jugador.puntuacion}
             />
           ))}
         </View>
