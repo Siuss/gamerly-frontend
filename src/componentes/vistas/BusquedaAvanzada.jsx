@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Title } from "react-native";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import { Divisor } from "../atomos/divisor/Divisor";
+import { BotonFlotante } from '../atomos/botonFlotante/BotonFlotante';
 
 import { ListaDePildoras } from "../bloques/ListaDePildoras";
 
@@ -107,7 +108,7 @@ export const BusquedaAvanzada = () => {
       <ListaDePildoras items={juegos}/>
       <Parrafo variante="blancoM">Reseña</Parrafo>
       {/* TODO: Barra de RESEÑA */}
-      <BarraBusqueda text={searchText} onChangeText={onChangeSearchText}/>
+      
       <Divisor />
       <Parrafo variante="blancoM">Disponibilidad horaria</Parrafo>
       <Parrafo variante="blancoM">Días de la semana</Parrafo>
@@ -116,6 +117,8 @@ export const BusquedaAvanzada = () => {
       <ListaDePildoras items={momentosDelDia}/>
       <Divisor />
       {/* TODO: Botonera */}
+      <BotonFlotante name="check" />
+      <BotonFlotante name="close" />
     </View>
   );
 };
