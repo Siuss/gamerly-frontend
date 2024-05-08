@@ -69,7 +69,7 @@ const NavBar = (props) => {
             styles.botonDeNavegacion,
             { backgroundColor: activeButton === 'vistaPerfil' || pressed ? Color.acento : 'transparent' }
           ]}
-          onPress={() => handleNavigate('vistaPerfil')}
+          onPress={() => handleNavigate('miPerfil')}
         >
           <MaterialIcons name="person"
             size={24}

@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 const titlesConfig = {
     resenias: 'Reseñas',
     busquedaDeJugadores: 'Busqueda Jugadores',
-
+    miPerfil: 'Mi perfil'
 };
 
 const AppRutas = () => {
@@ -30,7 +30,7 @@ const AppRutas = () => {
                     <Stack.Screen titulo="reseñas" name="resenias" component={Resenias}/>
                     <Stack.Screen titulo="busquedaDeJugadores" name="busquedaDeJugadores"
                                   component={BusquedaDeJugadores}/>
-                    <Stack.Screen titulo="vistaPerfil" name="vistaPerfil" component={VistaPerfil}/>              
+                    <Stack.Screen titulo="miPerfil" name="miPerfil" component={VistaPerfil}/>
                 </Stack.Navigator>
                 <NavBar style={styles.navBar}/>
             </NavigationContainer>
