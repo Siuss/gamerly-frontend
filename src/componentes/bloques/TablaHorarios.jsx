@@ -59,23 +59,21 @@ export const TablaHorarios = (props) => {
           <Parrafo style={styles.tituloFila} variante="blancoS">
             {dia}
           </Parrafo>
-          <Parrafo style={styles.tituloFila} variante="blancoS">
-            {props.horarios[index].mañana.toString()}
-          </Parrafo>
+         
           <Switch
             style={styles.switch}
-            value={props.horarios[index].mañana}
-            onChange={() => onSwitch(index, "mañana")}
+            value={props.horarios[index][0]}
+            onChange={() => onSwitch(index, 0)}
           />
           <Switch
             style={styles.switch}
-            value={props.horarios[index].tarde}
-            onChange={() => onSwitch(index, "tarde")}
+            value={props.horarios[index][1]}
+            onChange={() => onSwitch(index, 1)}
           />
           <Switch
             style={styles.switch}
-            value={props.horarios[index].noche}
-            onChange={() => onSwitch(index, "noche")}
+            value={props.horarios[index][2]}
+            onChange={() => onSwitch(index, 2)}
           />
         </View>
       ))}
@@ -93,8 +91,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     backgroundColor: Color.primario,
     rowGap: 16,
+    overflowX: "auto",
   },
   tituloFila: {
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "flex-end",
     width: 60,
   },
   switch: {

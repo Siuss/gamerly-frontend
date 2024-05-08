@@ -1,34 +1,49 @@
 import { StyleSheet, View } from "react-native";
 import { ListaDeResenias } from "../bloques/ListaDeReseñas";
 import { Color } from "../../estilos/colores";
-
-const reseniasMock = [
-  {
-    foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-    resenia: "Mal compañero",
-  },
-  {
-    foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-    resenia: "Re toxico",
-  },
-  {
-    foto: "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-    resenia: "Manco, no podes jugar tan mal",
-  },
-];
+import reseniasMock from "../../mocks/reseniasMock.json";
+import jugadoresMock from "../../mocks/jugadoresMock.json";
+import { useRoute } from '@react-navigation/native';
 
 export const Resenias = (props) => {
-  return (
-    <View style={styles.container} {...props}>
-      <ListaDeResenias resenias={reseniasMock} />
-    </View>
-  );
+    const route = useRoute();
+    const { id } = route.params;
+
+    function obtenerReseniasPorId(id) {
+        const reseniasFiltradas = reseniasMock.filter((resenia) => {
+            return resenia.idJugadorReceptor === id;
+        });
+    
+        return reseniasFiltradas;
+    }
+
+    function obtenerjugadorPorId(id) {
+        const jugadorFiltrado = jugadoresMock.find((jugador) => {
+            return jugador.id === id;
+        });
+    
+        return jugadorFiltrado;
+    }
+
+    const reseñasFiltradas = obtenerReseniasPorId(id);
+    const jugadorFiltrado = obtenerjugadorPorId(id);
+
+    return (
+        <View style={styles.container}>
+            <ListaDeResenias
+                id={id}
+                resenias={reseñasFiltradas}
+                foto={jugadorFiltrado.foto}
+                nombreUsuario={jugadorFiltrado.nombreUsuario}
+            />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Color.neutro,
-    width: "100%",
-    height: "100%"
-  },
+    container: {
+        backgroundColor: Color.neutro,
+        width: "100%",
+        height: "100%",
+    },
 });

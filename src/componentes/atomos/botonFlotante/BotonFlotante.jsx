@@ -1,6 +1,6 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Color } from "../../../estilos/colores";
-import Icon from "@expo/vector-icons/MaterialIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 /* 
  Al usarlo es recomendable posicionarlo asi
@@ -13,14 +13,14 @@ import Icon from "@expo/vector-icons/MaterialIcons";
     right: 16
   },
 });
-
+ 
 */
 
 export const BotonFlotante = (props) => {
   const { style, ...restProps } = props;
   return (
     <TouchableOpacity style={[styles.boton, style]} {...restProps}>
-      <Icon name={props.name} color={Color.blanco} size={16} />
+       <MaterialIcons name={props.name} color={Color.blanco} size={16} />
     </TouchableOpacity>
   );
 };

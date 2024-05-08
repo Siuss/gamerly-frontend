@@ -8,13 +8,14 @@ import {HeaderTitle} from "../header/headerTitle";
 import NavBar from "../bloques/Navbar";
 import { View, StyleSheet } from 'react-native';
 import { BusquedaAvanzada } from '../vistas/BusquedaAvanzada';
+import { VistaPerfil } from '../vistas/VistaPerfil';
 
 
 const Stack = createStackNavigator();
 const titlesConfig = {
     resenias: 'Reseñas',
     busquedaDeJugadores: 'Busqueda Jugadores',
-    busquedaAvanzada: 'Búsqueda Avanzada',
+
 };
 
 const AppRutas = () => {
@@ -31,6 +32,7 @@ const AppRutas = () => {
                     <Stack.Screen titulo="reseñas" name="resenias" component={Resenias}/>
                     <Stack.Screen titulo="busquedaDeJugadores" name="busquedaDeJugadores"
                                   component={BusquedaDeJugadores}/>
+                    <Stack.Screen titulo="miPerfil" name="miPerfil" component={VistaPerfil}/>
                     <Stack.Screen titulo="busquedaAvanzada" name="busquedaAvanzada" component={BusquedaAvanzada}/>
                 </Stack.Navigator>
                 <NavBar style={styles.navBar}/>
