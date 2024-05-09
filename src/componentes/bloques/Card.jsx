@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Color } from "../../estilos/colores";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
@@ -6,24 +6,24 @@ import { Puntuacion } from "../atomos/puntuacion/Puntuacion";
 import Icons from "@expo/vector-icons/AntDesign";
 import { Gradiente } from "../atomos/gradiente/Gradiente";
 import {useNavigation} from "@react-navigation/native";
+import { rutas } from "../rutas/rutas";
 
 export const Card = (props) => {
   const { style, ...restProps } = props;
   const navigation = useNavigation()
 
-  const handleNavigate = () => {
-    navigation.navigate("resenias", { id: props.id });
-    console.log(props.id)
+  const handleCardClick = () => {
+    navigation.navigate(rutas.perfilJugador, { id: props.id });
   };
   
-
   return (
     <Gradiente
       variante="gradienteHorizontal"
       style={[styles.card, style]}
+      
       {...restProps}
     >
-      <View style={styles.contenido}>
+      <TouchableOpacity style={styles.contenido} onPress={handleCardClick}>
         <View style={styles.contenidoIzquierdo}>
           <View style={styles.datosPersonales}>
             <FotoDePerfil width={52} height={52} src={props.foto} />
@@ -61,10 +61,9 @@ export const Card = (props) => {
             name="right"
             size={14}
             color={Color.blanco}
-            onPress={() => handleNavigate()}
           ></Icons>
         </View>
-      </View>
+      </TouchableOpacity>
     </Gradiente>
     
   );

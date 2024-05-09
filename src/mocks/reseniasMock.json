@@ -2,42 +2,42 @@
     {   
         "idJugadorEmisor": "2",
         "idJugadorReceptor": "1",
-        "puntaje": "2",
+        "puntaje": 2,
         "foto": "https://pbs.twimg.com/media/Fn-6kqHaUAEuv2J.jpg",
         "resenia": "Mal compañero"
     },
     {   
         "idJugadorEmisor": "3",
         "idJugadorReceptor": "1",
-        "puntaje": "1",
+        "puntaje": 1,
         "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg",
         "resenia": "Re toxico"
     },
     {   
         "idJugadorEmisor": "1",
         "idJugadorReceptor": "2",
-        "puntaje": "1",
+        "puntaje": 1,
         "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-        "resenia": "Manco, no podes jugar tan mal"
+        "resenia": "Sos un bot amigo, no podes jugar tan mal"
     },
     {   
         "idJugadorEmisor": "1",
         "idJugadorReceptor": "3",
-        "puntaje": "4",
+        "puntaje": 4,
         "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
         "resenia": "buena persona"
     },
     {   
         "idJugadorEmisor": "3",
         "idJugadorReceptor": "2",
-        "puntaje": "5",
+        "puntaje": 5,
         "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg",
         "resenia": "excelente compañero"
     },
     {
         "idJugadorEmisor": "3",
         "idJugadorReceptor": "1",
-        "puntaje": "3",
+        "puntaje": 3,
         "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg",
         "resenia": "ni bueno ni malo"
     }

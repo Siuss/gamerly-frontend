@@ -14,6 +14,7 @@ export const ListaDeJugadores = (props) => {
         {props.jugadores.filter(jugador => jugador.nombreUsuario.toUpperCase().includes(props.searchText.toUpperCase()))
         .map((jugador) => (
           <Card
+            key={jugador.id}
             style={styles.card}
             id={jugador.id}
             foto={jugador.foto}
@@ -31,6 +32,7 @@ export const ListaDeJugadores = (props) => {
         <View style={[styles.contenedor, style]} {...restProps}>
           {props.jugadores.map((jugador) => (
             <Card
+              key={jugador.id}
               style={styles.card}
               id={jugador.id}
               foto={jugador.foto}
