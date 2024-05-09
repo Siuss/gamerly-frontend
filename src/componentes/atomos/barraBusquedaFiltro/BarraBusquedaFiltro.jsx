@@ -1,10 +1,23 @@
+import React, {useState} from 'react';
 import { StyleSheet, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import Icons from "@expo/vector-icons/AntDesign"
 import { Color } from "../../../estilos/colores";
 
-export default function BarraBusquedaFiltro() {
+export default function BarraBusquedaFiltro(props) {
+  const { style, ...restProps } = props;
+
+  const navigation = useNavigation();
+
+  const handleNavigate = () => {
+    navigation.navigate('busquedaAvanzada');
+  };
+
+
   return(
-    <Pressable style={styles.button}>
+    <Pressable style={styles.button} {...restProps}
+      onPress={() => handleNavigate()}>
       {({pressed}) => (
         <> {pressed ? 
           <Icons style={styles.iconPressed} name="filter"/>

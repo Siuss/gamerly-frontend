@@ -5,9 +5,9 @@ import { Pildora } from "../atomos/pildora/Pildora";
 export const ListaDePildoras = (props) => {
   const { style, ...restProps } = props;
   return (
-    <View style={[styles.contenedorPildoras, style]} {...restProps}>
+    <View style={styles.contenedorPildoras} {...restProps}>
       {props.items.map((item) => (
-        <Pildora style={styles.card}>{item}</Pildora>
+        <Pildora key={item.id}>{item.name}</Pildora>
       ))}
     </View>
   );
@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
     width: "fit-content",
     display:"flex",
     flexDirection:"row",
+    flexWrap: 'wrap',
     gap:10,
   },
 });
+

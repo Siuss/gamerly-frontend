@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
+import {useNavigation} from "@react-navigation/native";
+
 import { MaterialIcons } from '@expo/vector-icons';
 import { Gradiente } from "../atomos/gradiente/Gradiente";
 import { Color } from "../../estilos/colores";
-import {useNavigation} from "@react-navigation/native";
 
 const NavBar = (props) => {
   const { style, ...restProps } = props;

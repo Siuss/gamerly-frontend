@@ -1,11 +1,13 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+
 import {Resenias} from "../vistas/Reseñas";
 import {BusquedaDeJugadores} from "../vistas/BusquedaDeJugadores";
 import {HeaderTitle} from "../header/headerTitle";
 import NavBar from "../bloques/Navbar";
 import { View, StyleSheet } from 'react-native';
+import { BusquedaAvanzada } from '../vistas/BusquedaAvanzada';
 import { VistaPerfil } from '../vistas/VistaPerfil';
 
 
@@ -13,7 +15,9 @@ const Stack = createStackNavigator();
 const titlesConfig = {
     resenias: 'Reseñas',
     busquedaDeJugadores: 'Busqueda Jugadores',
-    miPerfil: 'Mi perfil'
+    miPerfil: 'Mi Perfil',
+    busquedaAvanzada: 'Busqueda Avanzada'
+
 };
 
 const AppRutas = () => {
@@ -31,6 +35,7 @@ const AppRutas = () => {
                     <Stack.Screen titulo="busquedaDeJugadores" name="busquedaDeJugadores"
                                   component={BusquedaDeJugadores}/>
                     <Stack.Screen titulo="miPerfil" name="miPerfil" component={VistaPerfil}/>
+                    <Stack.Screen titulo="busquedaAvanzada" name="busquedaAvanzada" component={BusquedaAvanzada}/>
                 </Stack.Navigator>
                 <NavBar style={styles.navBar}/>
             </NavigationContainer>
