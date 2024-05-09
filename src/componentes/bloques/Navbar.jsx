@@ -74,18 +74,18 @@ const NavBar = (props) => {
             styles.botonDeNavegacion,
             {
               backgroundColor:
-                activeButton === rutas.resenias || pressed
+                activeButton === rutas.comunidad || pressed
                   ? Color.acento
                   : "transparent",
             },
           ]}
-          onPress={() => handleNavigateConId(rutas.resenias)}
+          onPress={() => handleNavigateConId(rutas.comunidad)}
         >
           <MaterialIcons
             name="groups"
             size={24}
             color={
-              activeButton === rutas.resenias ? Color.neutro : Color.blanco
+              activeButton === rutas.comunidad ? Color.neutro : Color.blanco
             }
           />
         </Pressable>

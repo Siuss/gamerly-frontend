@@ -16,6 +16,7 @@ const titlesConfig = {
   busquedaDeJugadores: "Busqueda Jugadores",
   miPerfil: "Mi Perfil",
   busquedaAvanzada: "Busqueda Avanzada",
+  perfilJugador: "Perfil Jugador",
 };
 
 export const rutas = {
