@@ -3,11 +3,18 @@ import { View } from "react-native-web";
 import { Pildora } from "../atomos/pildora/Pildora";
 
 export const ListaDePildoras = (props) => {
-  const { style, ...restProps } = props;
+  const { style, conBorde, variante, ...restProps } = props;
   return (
     <View style={styles.contenedorPildoras} {...restProps}>
       {props.items.map((item) => (
-        <Pildora key={item.id}>{item.name}</Pildora>
+        <Pildora
+          key={item.id}
+          style={styles.card}
+          conBorde={conBorde}
+          variante={variante}
+        >
+          {item}
+        </Pildora>
       ))}
     </View>
   );
@@ -16,10 +23,9 @@ export const ListaDePildoras = (props) => {
 const styles = StyleSheet.create({
   contenedorPildoras: {
     width: "fit-content",
-    display:"flex",
-    flexDirection:"row",
-    flexWrap: 'wrap',
-    gap:10,
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
   },
 });
-

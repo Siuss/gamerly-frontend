@@ -1,59 +1,74 @@
 [
-    {
-        "id": "1",
-        "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-        "nombreUsuario": "Nanami",
-        "edad": "25",
-        "nacionalidad": "Argentina",
-        "genero": "Femenino",
-        "plataformas": ["PC"],
-        "juegos": ["Terraria", "League Of Legends"],
-        "horarios": [
-            [false, false, false],
-            [false, false, false],
-            [false, false, false],
-            [false, false, false],
-            [false, false, false],
-            [false, false, false],
-            [false, false, false]
-        ]
-    },
-    {
-        "id": "2",
-        "foto": "https://pbs.twimg.com/media/Fn-6kqHaUAEuv2J.jpg",
-        "nombreUsuario": "SilvinaPuerta27",
-        "edad": "31",
-        "nacionalidad": "Uruguay",
-        "genero": "Femenino",
-        "plataformas": ["PS4"],
-        "juegos": ["Call of Duty"],
-        "horarios": [
-            [false, true, true],
-            [false, true, true],
-            [false, true, true],
-            [false, true, true],
-            [false, true, true],
-            [false, true, true],
-            [false, true, true]
-        ]
-    },
-    {
-        "id": "3",
-        "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg",
-        "nombreUsuario": "javyVent_7",
-        "edad": "19",
-        "nacionalidad": "Argentina",
-        "genero": "Masculino",
-        "plataformas": ["XBOX"],
-        "juegos": ["Fortnite", "Call of Duty"],
-        "horarios": [
-            [false, true, false],
-            [true, false, true],
-            [false, true, false],
-            [true, false, true],
-            [false, true, false],
-            [true, false, true],
-            [false, true, false]
-        ]
+  {
+    "id": "1",
+    "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
+    "nombreUsuario": "Nanami",
+    "edad": "25",
+    "nacionalidad": "Argentina",
+    "genero": "Femenino",
+    "plataformas": ["PC"],
+    "juegos": ["Terraria", "League Of Legends"],
+    "horarios": [
+      [true, true, true],
+      [true, true, true],
+      [false, true, true],
+      [false, false, false],
+      [false, true, true],
+      [false, false, false],
+      [false, false, true]
+    ],
+    "ultimaResenia": {
+      "puntaje": 4,
+      "contenido": "Pedro dame clases por favor jugas re bien maestro capo idolo buque de guerra",
+      "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg"
     }
+  },
+  {
+    "id": "2",
+    "foto": "https://pbs.twimg.com/media/Fn-6kqHaUAEuv2J.jpg",
+    "nombreUsuario": "SilvinaPuerta27",
+    "edad": "31",
+    "nacionalidad": "Uruguay",
+    "genero": "Femenino",
+    "plataformas": ["PS4"],
+    "juegos": ["Call of Duty"],
+    "horarios": [
+      [false, true, true],
+      [false, true, true],
+      [false, true, true],
+      [false, true, true],
+      [false, true, true],
+      [false, true, true],
+      [false, true, true]
+    ],
+    "ultimaResenia": {
+      "puntaje": 2,
+      "contenido": "Mal compañero",
+      "foto": "https://pbs.twimg.com/media/Fn-6kqHaUAEuv2J.jpg"
+    }
+  },
+  {
+    "id": "3",
+    "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg",
+    "nombreUsuario": "javyVent_7",
+    "edad": "19",
+    "nacionalidad": "Argentina",
+    "genero": "Masculino",
+    "plataformas": ["XBOX"],
+    "juegos": ["Fortnite", "Call of Duty"],
+    "horarios": [
+      [false, true, false],
+      [true, false, true],
+      [false, true, false],
+      [true, false, true],
+      [false, true, false],
+      [true, false, true],
+      [false, true, false]
+    ],
+    "ultimaResenia": {
+      "puntaje": 1,
+      "contenido": "Re toxico",
+      "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg"
+    }
+  }
 ]

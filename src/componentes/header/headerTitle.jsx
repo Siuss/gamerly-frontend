@@ -15,11 +15,10 @@ export const HeaderTitle = ({ title }) => {
 
   return (
     <Gradiente variante="gradienteHorizontal" style={styles.header}>
-      <TouchableOpacity onPress={handleNavigateBack} style={styles.button}>
+      <TouchableOpacity onPress={handleNavigateBack} style={styles.boton}>
         <Ionicons name="arrow-back" size={24} color={Color.blanco} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
-      <View style={{ flex: 1 }} />
     </Gradiente>   
   );
 };
@@ -30,24 +29,18 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Color.primario,
     height: 60,
     paddingHorizontal: 20,
   },
+  boton: {
+    position: 'absolute',
+    left: 16
+  },
   title: {
     fontSize: 20,
     color: 'white',
-    display: "grid",
-    alignItems: "center",
-    paddingLeft: 20
-  },
-  buttonText: {
-    fontSize: 20,
-    color: 'white',
-    flexBasis: "80%"
-  },
-  button: {
-    marginRight: 16,
   },
 });
 

@@ -41,8 +41,6 @@ export const TablaHorarios = (props) => {
   };
 
   useEffect(() => {
-    console.log("effect");
-    console.log(props.horarios);
   }, [props.horarios]);
 
   return (

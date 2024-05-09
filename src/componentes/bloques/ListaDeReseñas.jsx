@@ -1,15 +1,20 @@
-import { StyleSheet, View} from "react-native"
-import { CardResenia } from "./CardResenia"
-import {CardFotoPerfil} from "./CardFotoPerfil";
+import { StyleSheet, View } from "react-native";
+import { CardResenia } from "./CardResenia";
+import { CardFotoPerfil } from "./CardFotoPerfil";
 
 export const ListaDeResenias = (props) => {
-  const { style,id, foto, nombreUsuario, ...restProps } = props;
+  const { style, id, foto, nombreUsuario, ...restProps } = props;
 
   return (
     <View style={[styles.container, style]} {...restProps}>
-      <CardFotoPerfil foto={foto} nombreUsuario={nombreUsuario} style={styles.card}/>
+      <CardFotoPerfil
+        foto={foto}
+        nombreUsuario={nombreUsuario}
+        style={styles.card}
+      />
       {props.resenias.map((resenia) => (
         <CardResenia
+          key={resenia.foto}
           style={styles.card}
           puntaje={resenia.puntaje}
           foto={resenia.foto}
@@ -26,7 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: "8px",
     alignItems: "center",
-    padding: "8px"
+    padding: "8px",
   },
   card: {
     width: "80%",

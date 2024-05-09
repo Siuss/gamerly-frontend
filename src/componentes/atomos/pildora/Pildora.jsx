@@ -4,15 +4,20 @@ import { View } from "react-native-web";
 import { Parrafo } from "../parrafo/Parrafo";
 
 export const Pildora = (props) => {
-  const { style, ...restProps } = props;
+  const { style, variante, conBorde, ...restProps } = props;
   return (
     <View
-      style={[styles.pildora,style,
+      style={[
+        styles.pildora,
+        styles[variante]?.pildora,
+        conBorde && styles.conBorde,
+        style,
       ]}
       {...restProps}
     >
-      <Parrafo variante="blancoS">{props.children}</Parrafo>
-      
+      <Parrafo variante="blancoS" style={styles[variante]?.parrafo}>
+        {props.children}
+      </Parrafo>
     </View>
   );
 };
@@ -22,9 +27,20 @@ const styles = StyleSheet.create({
     backgroundColor: Color.primario,
     color: Color.blanco,
     fontSize: 16,
-    width:"fit-content",
-    paddingHorizontal:24,
-    borderRadius:100,
+    width: "fit-content",
+    paddingHorizontal: 24,
+    borderRadius: 100,
   },
-  
+  conBorde: {
+    borderColor: Color.bordeBoton,
+    borderWidth: 1,
+  },
+  secundario: {
+    pildora: {
+      backgroundColor: Color.secundario,
+    },
+    parrafo: {
+      color: Color.neutro,
+    },
+  },
 });
