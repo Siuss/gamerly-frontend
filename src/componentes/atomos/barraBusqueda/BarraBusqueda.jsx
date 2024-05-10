@@ -1,20 +1,29 @@
-import { StyleSheet, TextInput } from 'react-native';
-import { useState } from 'react';
-import { Color } from "../../../estilos/colores"
+import { StyleSheet, TextInput, View } from "react-native";
+import { Color } from "../../../estilos/colores";
 
 export default function BarraBusqueda(props) {
-  return(
-    <TextInput style={styles.input} value={props.text} onChangeText={props.onChangeText} placeholder="Busqueda"/>
-  )
+  const {style, ...restProps} = props;
+
+  return (
+    <TextInput
+      style={[styles.input, style]}
+      value={props.text}
+      onChangeText={props.onChangeText}
+      placeholder="Busqueda"
+      {...restProps}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
+  contenedor: {
+    display: "flex",
+    justifyContent: "center",
+  },
   input: {
-    width:"50vw",
-    minWidth:200,
-    height:50,
-    padding:15,
-    color:Color.secundario,
-    fontSize:16
-  }
+    height: 50,
+    padding: 16,
+    color: Color.secundario,
+    fontSize: 16,
+  },
 });

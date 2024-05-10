@@ -49,14 +49,14 @@ export const PerfilJugador = (props) => {
 
         <Parrafo variante="blancoM">Plataforma:</Parrafo>
         <ListaDePildoras
-          items={perfilInfo.plataformas}
+          items={perfilInfo.plataformas.map((plataforma, index) => ({id: index, contenido: plataforma}))}
           conBorde
           variante="conBorde"
         />
 
         <Parrafo variante="blancoM">Juegos:</Parrafo>
         <ListaDePildoras
-          items={perfilInfo.juegos}
+          items={perfilInfo.juegos.map((juego, index) => ({id: index, contenido: juego}))}
           conBorde
           variante="conBorde"
         />
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
   contenedorBotones: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
     gap: 16,
   },
 });

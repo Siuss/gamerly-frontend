@@ -35,6 +35,16 @@ const styles = StyleSheet.create({
     borderColor: Color.bordeBoton,
     borderWidth: 1,
   },
+  deseleccionado: {
+    pildora: {
+      borderColor: Color.secundario,
+      borderWidth: 1,
+      backgroundColor: "transparent",
+    },
+    parrafo: {
+      color: Color.secundario,
+    },
+  },
   secundario: {
     pildora: {
       backgroundColor: Color.secundario,
