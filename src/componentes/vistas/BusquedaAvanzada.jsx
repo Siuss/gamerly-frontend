@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
-import { StyleSheet, View, Text, Title } from "react-native";
-import Slider from '@react-native-community/slider';
-
+import React, { useState } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
+import Slider from "@react-native-community/slider";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import { Divisor } from "../atomos/divisor/Divisor";
-import { BotonFlotante } from '../atomos/botonFlotante/BotonFlotante';
+import { Boton } from "../atomos/boton/Boton";
 
 import { ListaDePildoras } from "../bloques/ListaDePildoras";
 
@@ -17,104 +16,119 @@ import { Color } from "../../estilos/colores";
 const juegos = [
   {
     id: 1,
-    name: "League of Legends",
+    contenido: "League of Legends",
   },
   {
     id: 2,
-    name: "Dota 2",
+    contenido: "Dota 2",
   },
   {
     id: 3,
-    name: "Counter Strike",
+    contenido: "Counter Strike",
   },
   {
     id: 4,
-    name: "World of Warcraft",
+    contenido: "World of Warcraft",
   },
   {
     id: 5,
-    name: "Valorant"
+    contenido: "Valorant",
   },
   {
     id: 6,
-    name: "Rocket League"
+    contenido: "Rocket League",
   },
   {
     id: 7,
-    name: "Fortnite"
+    contenido: "Fortnite",
   },
   {
     id: 8,
-    name: "Apex Legends"
+    contenido: "Apex Legends",
   },
   {
     id: 9,
-    name: "PUBG"
+    contenido: "PUBG",
   },
   {
     id: 10,
-    name: "Hearthstone"
+    contenido: "Hearthstone",
   },
 ];
 
 const dias = [
   {
     id: 1,
-    name: "Lunes",
+    juega: true,
+    contenido: "Lunes",
   },
   {
     id: 2,
-    name: "Martes",
+    juega: false,
+    contenido: "Martes",
   },
   {
     id: 3,
-    name: "Miercoles",
+    juega: true,
+    contenido: "Miercoles",
   },
   {
     id: 4,
-    name: "Jueves",
+    juega: false,
+    contenido: "Jueves",
   },
   {
     id: 5,
-    name: "Viernes",
+    juega: false,
+    contenido: "Viernes",
   },
   {
     id: 6,
-    name: "Sabado",
+    juega: false,
+    contenido: "Sabado",
   },
   {
     id: 7,
-    name: "Domingo",
+    juega: false,
+    contenido: "Domingo",
   },
 ];
 
 const momentosDelDia = [
   {
     id: 1,
-    name: "Mañana",
+    juega: true,
+    contenido: "Mañana",
   },
   {
     id: 2,
-    name: "Tarde",
+    contenido: "Tarde",
   },
   {
     id: 3,
-    name: "Noche",
+    juega: true,
+    contenido: "Noche",
   },
 ];
 
 export const BusquedaAvanzada = () => {
   const [searchText, onChangeSearchText] = useState("");
-  
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.espaciador}>
         <Parrafo variante="blancoM">Juevos en común</Parrafo>
         <View style={styles.espaciador}>
-          <BarraBusqueda text={searchText} onChangeText={onChangeSearchText}/>
+          <BarraBusqueda
+            style={styles.barraBusqueda}
+            text={searchText}
+            onChangeText={onChangeSearchText}
+          />
         </View>
         <View style={styles.espaciador}>
-          <ListaDePildoras items={juegos}/>
+          <ListaDePildoras
+            items={juegos}
+          />
         </View>
       </View>
       <Divisor />
@@ -123,32 +137,51 @@ export const BusquedaAvanzada = () => {
           <Parrafo variante="blancoM">Reseña</Parrafo>
         </View>
         <View style={styles.espaciador}>
-          <Slider style={styles.input} minimumValue={1} maximumValue={5} step={1} />
-          <Parrafo style={styles.parrafoCentrado} variante="blancoM">3</Parrafo>
+          <View style={styles.contenedorSlider}>
+            <Slider
+              style={styles.input}
+              minimumValue={1}
+              maximumValue={5}
+              step={1}
+            />
+          </View>
+          <Parrafo style={styles.parrafoCentrado} variante="blancoM">
+            3
+          </Parrafo>
         </View>
       </View>
       <Divisor />
+      <View style={styles.espaciador}>
+        <Parrafo variante="blancoM">Disponibilidad horaria</Parrafo>
+      </View>
+      <View style={styles.espaciador}>
+        <Parrafo variante="blancoM">Días de la semana</Parrafo>
         <View style={styles.espaciador}>
-          <Parrafo variante="blancoM">Disponibilidad horaria</Parrafo>
+          <ListaDePildoras
+            items={dias.map((dia) => ({
+              ...dia,
+              variante: dia.juega ? "" : "deseleccionado",
+            }))}
+          />
         </View>
+      </View>
+      <View style={styles.espaciador}>
+        <Parrafo variante="blancoM">Horario</Parrafo>
         <View style={styles.espaciador}>
-          <Parrafo variante="blancoM">Días de la semana</Parrafo>
-          <View style={styles.espaciador}>
-            <ListaDePildoras items={dias}/>
-          </View>
+          <ListaDePildoras
+            items={momentosDelDia.map((momento) => ({
+              ...momento,
+              variante: momento.juega ? "" : "deseleccionado",
+            }))}
+          />
         </View>
-        <View style={styles.espaciador}>
-          <Parrafo variante="blancoM">Horario</Parrafo>
-          <View style={styles.espaciador}>
-            <ListaDePildoras items={momentosDelDia}/>
-          </View>
-        </View>
+      </View>
       <Divisor />
       <View style={styles.botonera}>
-        <BotonFlotante name="check" />
-        <BotonFlotante name="close" />
+        <Boton variante="acento">Aplicar</Boton>
+        <Boton variante="primario">Limpiar</Boton>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -160,26 +193,26 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 20,
   },
-  botonera:{
+  barraBusqueda: {
+    padding: 0,
+  },
+  botonera: {
     display: "flex",
-    position: 'fixed',
-    bottom: 66,
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
+    marginTop: 32,
+  },
+  contenedorSlider: {
+    padding: 16,
   },
   input: {
-    width:"50vw",
-    minWidth:200,
-    height:50,
-    padding:15,
-    color:Color.primario,
-    fontSize:16
+    width: "100%",
   },
   espaciador: {
     paddingVertical: 3,
   },
-  parrafoCentrado : {
+  parrafoCentrado: {
     textAlign: "center",
   },
 });

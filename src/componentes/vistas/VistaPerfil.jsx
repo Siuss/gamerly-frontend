@@ -94,14 +94,14 @@ export const VistaPerfil = () => {
             Mis Plataformas
           </Parrafo>
           <View style={styles.pildora1}>
-            <ListaDePildoras items={perfilInfo.plataformas} />
+            <ListaDePildoras items={perfilInfo.plataformas.map((plataforma, index) => ({id: index, contenido: plataforma}))} />
           </View>
 
           <Parrafo variante="grisS" style={styles.descripcionplataformas}>
             Mis Juegos
           </Parrafo>
           <View style={styles.pildora1}>
-            <ListaDePildoras items={perfilInfo.juegos} />
+            <ListaDePildoras items={perfilInfo.juegos.map((juego, index) => ({id: index, contenido: juego}))} />
           </View>
           <View style={styles.conatainerEditarJuego}>
             <Parrafo variante="grisS" style={styles.descripcionplataformas}>

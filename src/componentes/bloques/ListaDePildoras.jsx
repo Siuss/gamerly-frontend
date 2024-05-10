@@ -11,9 +11,9 @@ export const ListaDePildoras = (props) => {
           key={item.id}
           style={styles.card}
           conBorde={conBorde}
-          variante={variante}
+          variante={item.variante || variante}
         >
-          {item}
+          {item.contenido}
         </Pildora>
       ))}
     </View>

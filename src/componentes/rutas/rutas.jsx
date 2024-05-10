@@ -74,10 +74,12 @@ export default AppRutas;
 
 const styles = StyleSheet.create({
   container: {
+    display:  'flex',
     flex: 1,
     flexDirection: "column",
   },
   navigationContainer: {
+    display:  'flex',
     flex: 1,
   },
   navBar: {

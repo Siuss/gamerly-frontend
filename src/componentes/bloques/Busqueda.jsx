@@ -5,32 +5,31 @@ import BarraBusquedaFiltro from "../atomos/barraBusquedaFiltro/BarraBusquedaFilt
 import { Color } from "../../estilos/colores";
 
 export default function Busqueda(props) {
-  return(
+  return (
     <View style={styles.container}>
-      <Icons style={styles.icon} name="search1"/>
-      <BarraBusqueda text={props.text} onChangeText={props.onChangeText}/>
-      <BarraBusquedaFiltro/>
+      <Icons style={styles.icon} name="search1" />
+      <BarraBusqueda text={props.text} onChangeText={props.onChangeText} />
+      <BarraBusquedaFiltro />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width:"60vw",
-    minWidth:300,
-    height:50,
-    margin:10,
-    borderRadius:50,
-    borderWidth:2,
-    borderColor:Color.secundario,
-    flexDirection:"row",
-    alignItems:"center",
-    alignSelf:"center",
-    justifyContent:"space-between"
+    width: "100%",
+    height: 50,
+    margin: 10,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: Color.secundario,
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
+    justifyContent: "space-between",
   },
   icon: {
-    color:Color.secundario,
-    fontSize:20,
-    margin:12
+    color: Color.secundario,
+    fontSize: 20,
+    margin: 12,
   },
 });

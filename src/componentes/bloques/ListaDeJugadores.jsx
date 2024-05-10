@@ -56,13 +56,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: "8px",
     alignItems: "center",
-    padding: "8px"
+    paddingVertical: 8,
   },
   card: {
-    width: "80%",
+    width: "100%",
   },
   text: {
-    width: "80%",
-    alignSelf: "center"
+
+    alignSelf: "flex-start"
   }
 });
