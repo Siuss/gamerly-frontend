@@ -9,6 +9,9 @@ import { View, StyleSheet } from "react-native";
 import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada";
 import { VistaPerfil } from "../vistas/VistaPerfil";
 import { PerfilJugador } from "../vistas/PerfilJugador";
+import { Login } from "../vistas/Login";
+import { Inicio } from "../vistas/Inicio";
+import { Registro } from "../vistas/Registro";
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -29,20 +32,37 @@ export const rutas = {
 };
 
 const AppRutas = () => {
-  const titulo = "Busqueda Jugadores";
-
   return (
     <View style={styles.container}>
       <NavigationContainer style={styles.navigationContainer}>
         <Stack.Navigator
-          initialRouteName="busquedaDeJugadores"
+          initialRouteName="inicio"
           screenOptions={({ route }) => ({
             header: (props) => (
               <HeaderTitle {...props} title={titlesConfig[route.name]} />
             ),
           })}
         >
-          <Stack.Screen titulo="reseñas" name="resenias" component={Resenias} />
+          <Stack.Screen
+            titulo="reseñas"
+            name="resenias"
+            component={Resenias}
+          />
+          <Stack.Screen
+            name="inicio"
+            component={Inicio}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="registro"
+            component={Registro}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             titulo="perfilJugador"
             name="perfilJugador"
@@ -74,12 +94,12 @@ export default AppRutas;
 
 const styles = StyleSheet.create({
   container: {
-    display:  'flex',
+    display: 'flex',
     flex: 1,
     flexDirection: "column",
   },
   navigationContainer: {
-    display:  'flex',
+    display: 'flex',
     flex: 1,
   },
   navBar: {

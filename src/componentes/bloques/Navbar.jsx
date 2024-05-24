@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Pressable, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Gradiente } from "../atomos/gradiente/Gradiente";
 import { Color } from "../../estilos/colores";
@@ -11,6 +11,7 @@ const NavBar = (props) => {
   const [activeButton, setActiveButton] = useState(rutas.busquedaDeJugadores);
 
   const navigation = useNavigation();
+  const state = useNavigationState(state => state);
 
   const handleNavigate = (buttonName) => {
     navigation.navigate(buttonName);
@@ -21,6 +22,14 @@ const NavBar = (props) => {
     navigation.navigate(buttonName, { id: "1" });
     setActiveButton(buttonName);
   };
+
+  const currentRouteName = state?.routes?.[state.index]?.name;
+
+  console.log('Ruta actual:', currentRouteName);
+
+  if (currentRouteName === 'login' || currentRouteName === 'registro' || currentRouteName === 'inicio') {
+    return null;
+  }
 
   return (
     <Gradiente
