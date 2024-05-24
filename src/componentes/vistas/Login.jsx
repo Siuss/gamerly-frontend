@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   },
   passwordContainer: {
     width: '90%',
+    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: '#ccc',
