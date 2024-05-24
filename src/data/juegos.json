@@ -1,0 +1,42 @@
+[
+    {
+       "id":1,
+       "contenido":"League of Legends"
+    },
+    {
+       "id":2,
+       "contenido":"Dota 2"
+    },
+    {
+       "id":3,
+       "contenido":"Counter Strike"
+    },
+    {
+       "id":4,
+       "contenido":"World of Warcraft"
+    },
+    {
+       "id":5,
+       "contenido":"Valorant"
+    },
+    {
+       "id":6,
+       "contenido":"Rocket League"
+    },
+    {
+       "id":7,
+       "contenido":"Fortnite"
+    },
+    {
+       "id":8,
+       "contenido":"Apex Legends"
+    },
+    {
+       "id":9,
+       "contenido":"PUBG"
+    },
+    {
+       "id":10,
+       "contenido":"Hearthstone"
+    }
+ ]

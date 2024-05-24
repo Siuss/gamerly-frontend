@@ -3,7 +3,7 @@ import { View } from "react-native-web";
 import { Pildora } from "../atomos/pildora/Pildora";
 
 export const ListaDePildoras = (props) => {
-  const { style, conBorde, variante, ...restProps } = props;
+  const { style, conBorde, variante, onPress, ...restProps } = props;
   return (
     <View style={styles.contenedorPildoras} {...restProps}>
       {props.items.map((item) => (
@@ -12,6 +12,7 @@ export const ListaDePildoras = (props) => {
           style={styles.card}
           conBorde={conBorde}
           variante={item.variante || variante}
+          onPress={() => onPress(item)}
         >
           {item.contenido}
         </Pildora>

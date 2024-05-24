@@ -1,12 +1,12 @@
 import { StyleSheet, Text } from "react-native";
 import { Color } from "../../../estilos/colores";
-import { View } from "react-native-web";
+import { TouchableOpacity } from "react-native-web";
 import { Parrafo } from "../parrafo/Parrafo";
 
 export const Pildora = (props) => {
   const { style, variante, conBorde, ...restProps } = props;
   return (
-    <View
+    <TouchableOpacity
       style={[
         styles.pildora,
         styles[variante]?.pildora,
@@ -18,7 +18,7 @@ export const Pildora = (props) => {
       <Parrafo variante="blancoS" style={styles[variante]?.parrafo}>
         {props.children}
       </Parrafo>
-    </View>
+    </TouchableOpacity>
   );
 };
 
