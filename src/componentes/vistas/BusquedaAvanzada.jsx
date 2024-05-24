@@ -5,130 +5,117 @@ import { Parrafo } from "../atomos/parrafo/Parrafo";
 import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import { Divisor } from "../atomos/divisor/Divisor";
 import { Boton } from "../atomos/boton/Boton";
-
+import { useNavigation } from "@react-navigation/native";
 import { ListaDePildoras } from "../bloques/ListaDePildoras";
-
+import juegosData from "../.././data/juegos.json";
 import { Color } from "../../estilos/colores";
+import dias from "../../data/dias.json";
+import momentosDelDia from "../../data/momentosDelDia.json";
+import {rutas} from "../rutas/rutas"
 
-// import dias from "../../data/dias.json";
-// import momentosDelDia from "../../data/momentosDelDia.json";
-
-const juegos = [
-  {
-    id: 1,
-    contenido: "League of Legends",
-  },
-  {
-    id: 2,
-    contenido: "Dota 2",
-  },
-  {
-    id: 3,
-    contenido: "Counter Strike",
-  },
-  {
-    id: 4,
-    contenido: "World of Warcraft",
-  },
-  {
-    id: 5,
-    contenido: "Valorant",
-  },
-  {
-    id: 6,
-    contenido: "Rocket League",
-  },
-  {
-    id: 7,
-    contenido: "Fortnite",
-  },
-  {
-    id: 8,
-    contenido: "Apex Legends",
-  },
-  {
-    id: 9,
-    contenido: "PUBG",
-  },
-  {
-    id: 10,
-    contenido: "Hearthstone",
-  },
-];
-
-const dias = [
-  {
-    id: 1,
-    juega: true,
-    contenido: "Lunes",
-  },
-  {
-    id: 2,
+const filtrosIniciales = {
+  juegos: [],
+  momentosDelDia: momentosDelDia.map((contenido, index) => ({
+    contenido,
     juega: false,
-    contenido: "Martes",
-  },
-  {
-    id: 3,
-    juega: true,
-    contenido: "Miercoles",
-  },
-  {
-    id: 4,
+    id: index,
+  })),
+  dias: dias.map((contenido, index) => ({
+    contenido,
     juega: false,
-    contenido: "Jueves",
-  },
-  {
-    id: 5,
-    juega: false,
-    contenido: "Viernes",
-  },
-  {
-    id: 6,
-    juega: false,
-    contenido: "Sabado",
-  },
-  {
-    id: 7,
-    juega: false,
-    contenido: "Domingo",
-  },
-];
-
-const momentosDelDia = [
-  {
-    id: 1,
-    juega: true,
-    contenido: "Mañana",
-  },
-  {
-    id: 2,
-    contenido: "Tarde",
-  },
-  {
-    id: 3,
-    juega: true,
-    contenido: "Noche",
-  },
-];
+    id: index,
+  })),
+  resenia: undefined,
+};
 
 export const BusquedaAvanzada = () => {
-  const [searchText, onChangeSearchText] = useState("");
+  const navigation = useNavigation();
+  const { params: filtrosParam } = navigation.getState().routes[0];
+
+  const [searchText, setSearchText] = useState("");
+  const [filtros, setFiltros] = useState({
+    ...filtrosIniciales,
+    ...filtrosParam,
+  });
+
+  const handleEnter = (event) => {
+    if (event.target.value.length < 3) return;
+    const juego = juegosData.find((juego) =>
+      juego.contenido.toLowerCase().includes(event.target.value.toLowerCase())
+    );
+
+    if (!juego) return;
+
+    setSearchText("");
+
+    const juegos = filtros.juegos;
+
+    if (juegos.some((_juego) => _juego.id === juego.id)) return;
+
+    juegos.push(juego);
+
+    setFiltros((prevFiltros) => ({ ...prevFiltros, juegos }));
+  };
+
+  const handleJuegoRemove = (juegoABorrar) => {
+    const juegos = filtros.juegos.filter(
+      (juego) => juego.id !== juegoABorrar.id
+    );
+
+    setFiltros((prevFiltros) => ({ ...prevFiltros, juegos }));
+  };
+
+  const handleDiaToggle = (diaBuscado) => {
+    const dias = filtros.dias.map((momento) => {
+      if (momento.id === diaBuscado.id) {
+        return { ...momento, juega: !momento.juega };
+      } else {
+        return momento;
+      }
+    });
+
+    setFiltros((prevFiltros) => ({ ...prevFiltros, dias }));
+  };
+
+  const handleMomentoToggle = (momentoBuscado) => {
+    const momentos = filtros.momentosDelDia.map((momento) => {
+      if (momento.id === momentoBuscado.id) {
+        return { ...momento, juega: !momento.juega };
+      } else {
+        return momento;
+      }
+    });
+
+    setFiltros((prevFiltros) => ({ ...prevFiltros, momentosDelDia: momentos }));
+  };
+
+  const handleReseniaChange = (reseniaRaw) => {
+    const resenia = reseniaRaw === 0 ? undefined : reseniaRaw
+    setFiltros((prevFiltros) => ({ ...prevFiltros, resenia }));
+  };
+
+  const handleLimpiar = () => {
+    setFiltros(filtrosIniciales)
+  }
+
+  const handleAplicar = () => {
+    navigation.navigate(rutas.busquedaDeJugadores, filtros)
+  }
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Juevos en común</Parrafo>
+        <Parrafo variante="blancoM">Juegos en común</Parrafo>
         <View style={styles.espaciador}>
           <BarraBusqueda
             style={styles.barraBusqueda}
             text={searchText}
-            onChangeText={onChangeSearchText}
+            onChangeText={setSearchText}
+            onSubmitEditing={handleEnter}
           />
         </View>
         <View style={styles.espaciador}>
-          <ListaDePildoras
-            items={juegos}
-          />
+          <ListaDePildoras onPress={handleJuegoRemove} items={filtros.juegos} />
         </View>
       </View>
       <Divisor />
@@ -139,14 +126,15 @@ export const BusquedaAvanzada = () => {
         <View style={styles.espaciador}>
           <View style={styles.contenedorSlider}>
             <Slider
+              onValueChange={handleReseniaChange}
               style={styles.input}
-              minimumValue={1}
+              minimumValue={0}
               maximumValue={5}
               step={1}
             />
           </View>
           <Parrafo style={styles.parrafoCentrado} variante="blancoM">
-            3
+            {filtros.resenia || 0}
           </Parrafo>
         </View>
       </View>
@@ -158,7 +146,8 @@ export const BusquedaAvanzada = () => {
         <Parrafo variante="blancoM">Días de la semana</Parrafo>
         <View style={styles.espaciador}>
           <ListaDePildoras
-            items={dias.map((dia) => ({
+            onPress={handleDiaToggle}
+            items={filtros.dias.map((dia) => ({
               ...dia,
               variante: dia.juega ? "" : "deseleccionado",
             }))}
@@ -169,7 +158,8 @@ export const BusquedaAvanzada = () => {
         <Parrafo variante="blancoM">Horario</Parrafo>
         <View style={styles.espaciador}>
           <ListaDePildoras
-            items={momentosDelDia.map((momento) => ({
+            onPress={handleMomentoToggle}
+            items={filtros.momentosDelDia.map((momento) => ({
               ...momento,
               variante: momento.juega ? "" : "deseleccionado",
             }))}
@@ -178,8 +168,8 @@ export const BusquedaAvanzada = () => {
       </View>
       <Divisor />
       <View style={styles.botonera}>
-        <Boton variante="acento">Aplicar</Boton>
-        <Boton variante="primario">Limpiar</Boton>
+        <Boton variante="acento"  onPress={handleAplicar}>Aplicar</Boton>
+        <Boton variante="primario" onPress={handleLimpiar}>Limpiar</Boton>
       </View>
     </ScrollView>
   );
