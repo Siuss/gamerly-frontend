@@ -10,7 +10,7 @@ export const BusquedaDeJugadores = (props) => {
   const navigation = useNavigation();
   const { params: filtrosParam } = navigation.getState().routes[0];
   const [searchText, onChangeSearchText] = useState("");
-  const [jugadores, setJugadores] = useState("");
+  const [jugadores, setJugadores] = useState([]);
 
   const filtros = useMemo(
     () => ({ ...filtrosParam, nombre: searchText }),
