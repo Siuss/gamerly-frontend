@@ -5,9 +5,9 @@ import { LinearGradient } from "expo-linear-gradient";
 const variantes = {
   gradienteHorizontal: {
     colors: [Color.primario, Color.secundario],
-    locations: [0.47, 1],
-    start: { x: 0, y: 0 },
-    end: { x: 1, y: 0 },
+    locations: [0.57, 1],
+    start: { x: 0, y: 0.8 },
+    end: { x: 0.8, y: 1 },
   },
   gradienteVertical: {
     colors: [Color.primario, Color.secundario],

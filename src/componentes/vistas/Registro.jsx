@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { Color } from "../../estilos/colores";
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
 export const Registro = () => {
   const [nombre, setNombre] = useState('');
@@ -11,10 +12,10 @@ export const Registro = () => {
   const [contrasena, setContrasena] = useState('');
   const [aceptoTerminos, setAceptoTerminos] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigation = useNavigation();
 
   const handleRegistro = () => {
-    // Aquí puedes realizar la lógica de registro con los datos ingresados
-    // Por ejemplo, enviar los datos a un servidor
+    navigation.navigate("login");
   };
 
   const clearInput = (setState) => {

@@ -16,6 +16,10 @@ export const Login = () => {
     navigation.navigate("registro");
   };
 
+  const recuperar = () => {
+    navigation.navigate("recuperarContrasena");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -43,7 +47,7 @@ export const Login = () => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.forgotPasswordContainer} onPress={() => {}}>
-        <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
+        <Text style={styles.forgotPasswordText} onPress={recuperar}>¿Olvidaste tu contraseña?</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={iniciarSesion}>

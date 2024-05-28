@@ -6,7 +6,7 @@ import Icons from "@expo/vector-icons/AntDesign";
 export const Puntuacion = (props) => {
   return (
     <View style={styles.puntuacion}>
-      <Parrafo variante="blancoXS">{props.puntuacion}</Parrafo>
+      <Parrafo variante="blancoXS">{props.puntuacion} / 5</Parrafo>
       <Icons name="star" size={14} color={Color.blanco}></Icons>
     </View>
   );

@@ -20,7 +20,7 @@ export const Parrafo = (props) => {
 const styles = StyleSheet.create({
   blancoXS: {
     color: Color.blanco,
-    fontSize: 11,
+    fontSize: 12,
   },
   blancoS: {
     color: Color.blanco,

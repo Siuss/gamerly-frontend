@@ -56,12 +56,6 @@ export const Card = (props) => {
         </View>
         <View style={styles.contenidoDerecho}>
           <Puntuacion puntuacion={props.puntuacion} />
-          <Icons
-            style={styles.iconoFlecha}
-            name="right"
-            size={14}
-            color={Color.blanco}
-          ></Icons>
         </View>
       </TouchableOpacity>
     </Gradiente>
@@ -99,10 +93,5 @@ const styles = StyleSheet.create({
   },
   contenidoDerecho: {
     position: "relative",
-  },
-  iconoFlecha: {
-    position: "absolute",
-    right: 0,
-    top: "40%",
   },
 });

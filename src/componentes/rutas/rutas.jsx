@@ -12,6 +12,7 @@ import { PerfilJugador } from "../vistas/PerfilJugador";
 import { Login } from "../vistas/Login";
 import { Inicio } from "../vistas/Inicio";
 import { Registro } from "../vistas/Registro";
+import { RecuperarContrasena } from "../vistas/RecuperarContrasena";
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -56,6 +57,11 @@ const AppRutas = () => {
           <Stack.Screen
             name="login"
             component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="recuperarContrasena"
+            component={RecuperarContrasena}
             options={{ headerShown: false }}
           />
           <Stack.Screen

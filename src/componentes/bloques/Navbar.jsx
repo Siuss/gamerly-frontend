@@ -27,7 +27,7 @@ const NavBar = (props) => {
 
   console.log('Ruta actual:', currentRouteName);
 
-  if (currentRouteName === 'login' || currentRouteName === 'registro' || currentRouteName === 'inicio') {
+  if (currentRouteName === 'recuperarContrasena' || currentRouteName === 'login' || currentRouteName === 'registro' || currentRouteName === 'inicio') {
     return null;
   }
 

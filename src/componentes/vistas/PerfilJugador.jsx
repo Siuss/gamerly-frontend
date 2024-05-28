@@ -5,7 +5,6 @@ import { Pildora } from "../atomos/pildora/Pildora";
 import { CardFotoPerfil } from "../bloques/CardFotoPerfil";
 import { ListaDePildoras } from "../bloques/ListaDePildoras";
 import { Color } from "../../estilos/colores";
-import { Gradiente } from "../atomos/gradiente/Gradiente";
 import perfilMock from "../../mocks/perfilUsuariosMock.json";
 import diasDeLaSemana from "../../data/dias.json";
 import momentos from "../../data/momentosDelDia.json";
@@ -40,7 +39,7 @@ export const PerfilJugador = (props) => {
         nombreUsuario={perfilInfo.nombreUsuario}
         foto={perfilInfo.foto}
       />
-      <Gradiente style={styles.cardDetalles} variante="gradienteVertical">
+      <View style={styles.cardDetalles}>
         <Parrafo variante="blancoM">
           Nacionalidad: {perfilInfo.nacionalidad}
         </Parrafo>
@@ -92,9 +91,9 @@ export const PerfilJugador = (props) => {
               )
           )}
         </View>
-      </Gradiente>
+      </View>
       <View style={styles.contenedorBotones}>
-        <Boton style={styles.boton} variante="acento">
+        <Boton style={styles.boton} variante="gris">
           Añadir amigo
         </Boton>
         <Boton
@@ -129,6 +128,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     gap: 8,
+    backgroundColor: Color.primario,
   },
   pildora: {
     marginBottom: 8,

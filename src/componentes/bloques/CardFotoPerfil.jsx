@@ -8,7 +8,7 @@ export const CardFotoPerfil = (props) => {
   const { style, nombreUsuario, foto, ...restProps } = props;
   return (
     <Gradiente
-      variante="gradienteVertical"
+      variante="gradienteHorizontal"
       style={[styles.card, style]}
       {...restProps}
     >

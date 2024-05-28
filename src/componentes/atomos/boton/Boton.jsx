@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
   acento: {
     backgroundColor: Color.acento,
   },
+  gris: {
+    backgroundColor: "#606D5D",
+  },
   primario: {
     backgroundColor: Color.primario,
   },

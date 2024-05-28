@@ -9,8 +9,7 @@ export const CardResenia = (props) => {
   const { style, puntaje, foto, resenia, ...restProps } = props;
 
   return (
-    <Gradiente
-      variante="gradienteVertical"
+    <View
       style={[styles.card, style]}
       {...restProps}
     >
@@ -32,7 +31,7 @@ export const CardResenia = (props) => {
           </Parrafo>
         </View>
       </View>
-    </Gradiente>
+    </View>
   );
 };
 
