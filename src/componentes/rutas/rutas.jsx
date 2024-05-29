@@ -13,6 +13,7 @@ import { Login } from "../vistas/Login";
 import { Inicio } from "../vistas/Inicio";
 import { Registro } from "../vistas/Registro";
 import { RecuperarContrasena } from "../vistas/RecuperarContrasena";
+import { Amigos } from "../vistas/Amigos"
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -21,6 +22,7 @@ const titlesConfig = {
   miPerfil: "Mi Perfil",
   busquedaAvanzada: "Busqueda Avanzada",
   perfilJugador: "Perfil Jugador",
+  amigos: "Amigos"
 };
 
 export const rutas = {
@@ -58,6 +60,11 @@ const AppRutas = () => {
             name="login"
             component={Login}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            titulo="Amigos"
+            name="amigos"
+            component={Amigos}
           />
           <Stack.Screen
             name="recuperarContrasena"
