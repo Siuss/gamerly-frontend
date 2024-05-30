@@ -1,26 +1,30 @@
-import { TouchableOpacity, StyleSheet } from "react-native";
+import React from "react";
+import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Color } from "../../../estilos/colores";
 import { Parrafo } from "../parrafo/Parrafo";
 
 export const Boton = (props) => {
-  const { style, variante = "primario", ...restProps } = props;
+  const { style, textStyle, variante = "primario", ...restProps } = props;
   return (
     <TouchableOpacity
       style={[styles.boton, styles[variante], style]}
       {...restProps}
     >
-      <Parrafo variante="blancoS" subrayado={variante == 'link'}>{props.children}</Parrafo>
+      <Text style={[styles.texto, textStyle]}>{props.children}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   boton: {
-    color: Color.blanco,
     borderRadius: 100,
     paddingVertical: 8,
     paddingHorizontal: 32,
     width: "fit-content",
+  },
+  texto: {
+    color: Color.blanco,
+    fontSize: 16,
   },
   acento: {
     backgroundColor: Color.acento,
@@ -30,6 +34,9 @@ const styles = StyleSheet.create({
   },
   primario: {
     backgroundColor: Color.primario,
+  },
+  secundario: {
+    backgroundColor: Color.secundario,
   },
   link: {
     // Vacio a proposito, si hace falta mas adelante se pueden agregar estilos
