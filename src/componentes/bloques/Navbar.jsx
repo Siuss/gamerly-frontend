@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Pressable, StyleSheet } from "react-native";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -8,10 +8,23 @@ import { rutas } from "../rutas/rutas";
 
 const NavBar = (props) => {
   const { style, ...restProps } = props;
-  const [activeButton, setActiveButton] = useState(rutas.busquedaDeJugadores);
-
   const navigation = useNavigation();
   const state = useNavigationState(state => state);
+
+  const currentRouteName = state?.routes?.[state.index]?.name;
+
+  useEffect(() => {
+    if (
+        currentRouteName === rutas.miPerfil ||
+        currentRouteName === rutas.perfilJugador
+    ) {
+      setActiveButton(rutas.miPerfil);
+    } else {
+      setActiveButton(currentRouteName);
+    }
+  }, [currentRouteName]);
+
+  const [activeButton, setActiveButton] = useState(currentRouteName);
 
   const handleNavigate = (buttonName) => {
     navigation.navigate(buttonName);
@@ -23,103 +36,104 @@ const NavBar = (props) => {
     setActiveButton(buttonName);
   };
 
-  const currentRouteName = state?.routes?.[state.index]?.name;
-
-  console.log('Ruta actual:', currentRouteName);
-
-  if (currentRouteName === 'recuperarContrasena' || currentRouteName === 'login' || currentRouteName === 'registro' || currentRouteName === 'inicio') {
+  if (
+      currentRouteName === 'recuperarContrasena' ||
+      currentRouteName === 'login' ||
+      currentRouteName === 'registro' ||
+      currentRouteName === 'inicio'
+  ) {
     return null;
   }
 
   return (
-    <Gradiente
-      variante="gradienteHorizontal"
-      style={[styles.navBar, style]}
-      {...restProps}
-    >
-      <View style={styles.contenido}>
-        <Pressable
-          style={({ pressed }) => [
-            styles.botonDeNavegacion,
-            {
-              backgroundColor:
-                activeButton === rutas.busquedaDeJugadores || pressed
-                  ? Color.acento
-                  : "transparent",
-            },
-          ]}
-          onPress={() => handleNavigate(rutas.busquedaDeJugadores)}
-        >
-          <MaterialIcons
-            name="home"
-            size={24}
-            color={
-              activeButton === rutas.busquedaDeJugadores
-                ? Color.neutro
-                : Color.blanco
-            }
-          />
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => [
-            styles.botonDeNavegacion,
-            {
-              backgroundColor:
-                activeButton === rutas.amigos || pressed
-                  ? Color.acento
-                  : "transparent",
-            },
-          ]}
-          onPress={() => handleNavigateConId(rutas.amigos)}
-        >
-          <MaterialIcons
-            name="group"
-            size={24}
-            color={activeButton === rutas.amigos ? Color.neutro : Color.blanco}
-          />
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => [
-            styles.botonDeNavegacion,
-            {
-              backgroundColor:
-                activeButton === rutas.comunidad || pressed
-                  ? Color.acento
-                  : "transparent",
-            },
-          ]}
-          onPress={() => handleNavigateConId(rutas.comunidad)}
-        >
-          <MaterialIcons
-            name="groups"
-            size={24}
-            color={
-              activeButton === rutas.comunidad ? Color.neutro : Color.blanco
-            }
-          />
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => [
-            styles.botonDeNavegacion,
-            {
-              backgroundColor:
-                activeButton === rutas.miPerfil || pressed
-                  ? Color.acento
-                  : "transparent",
-            },
-          ]}
-          onPress={() => handleNavigateConId(rutas.miPerfil)}
-        >
-          <MaterialIcons
-            name="person"
-            size={24}
-            color={
-              activeButton === rutas.miPerfil ? Color.neutro : Color.blanco
-            }
-          />
-        </Pressable>
-      </View>
-    </Gradiente>
+      <Gradiente
+          variante="gradienteHorizontal"
+          style={[styles.navBar, style]}
+          {...restProps}
+      >
+        <View style={styles.contenido}>
+          <Pressable
+              style={({ pressed }) => [
+                styles.botonDeNavegacion,
+                {
+                  backgroundColor:
+                      activeButton === rutas.busquedaDeJugadores || pressed
+                          ? Color.acento
+                          : "transparent",
+                },
+              ]}
+              onPress={() => handleNavigate(rutas.busquedaDeJugadores)}
+          >
+            <MaterialIcons
+                name="home"
+                size={24}
+                color={
+                  activeButton === rutas.busquedaDeJugadores
+                      ? Color.neutro
+                      : Color.blanco
+                }
+            />
+          </Pressable>
+          <Pressable
+              style={({ pressed }) => [
+                styles.botonDeNavegacion,
+                {
+                  backgroundColor:
+                      activeButton === rutas.amigos || pressed
+                          ? Color.acento
+                          : "transparent",
+                },
+              ]}
+              onPress={() => handleNavigateConId(rutas.amigos)}
+          >
+            <MaterialIcons
+                name="group"
+                size={24}
+                color={activeButton === rutas.amigos ? Color.neutro : Color.blanco}
+            />
+          </Pressable>
+          <Pressable
+              style={({ pressed }) => [
+                styles.botonDeNavegacion,
+                {
+                  backgroundColor:
+                      activeButton === rutas.comunidad || pressed
+                          ? Color.acento
+                          : "transparent",
+                },
+              ]}
+              onPress={() => handleNavigateConId(rutas.comunidad)}
+          >
+            <MaterialIcons
+                name="groups"
+                size={24}
+                color={
+                  activeButton === rutas.comunidad ? Color.neutro : Color.blanco
+                }
+            />
+          </Pressable>
+          <Pressable
+              style={({ pressed }) => [
+                styles.botonDeNavegacion,
+                {
+                  backgroundColor:
+                      activeButton === rutas.miPerfil || pressed
+                          ? Color.acento
+                          : "transparent",
+                },
+              ]}
+              onPress={() => handleNavigateConId(rutas.miPerfil)}
+          >
+            <MaterialIcons
+                name="person"
+                size={24}
+                color={
+                  activeButton === rutas.miPerfil ? Color.neutro : Color.blanco
+                }
+            />
+          </Pressable>
+        </View>
+      </Gradiente>
   );
 };
 
