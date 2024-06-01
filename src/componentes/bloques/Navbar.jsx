@@ -7,44 +7,45 @@ import { Color } from "../../estilos/colores";
 import { rutas } from "../rutas/rutas";
 
 const NavBar = (props) => {
-  const { style, ...restProps } = props;
-  const navigation = useNavigation();
-  const state = useNavigationState(state => state);
+    const { style, ...restProps } = props;
+    const navigation = useNavigation();
+    const state = useNavigationState(state => state);
 
-  const currentRouteName = state?.routes?.[state.index]?.name;
+    const currentRouteName = state?.routes?.[state.index]?.name;
 
-  useEffect(() => {
-    if (
-        currentRouteName === rutas.miPerfil ||
-        currentRouteName === rutas.perfilJugador
-    ) {
-      setActiveButton(rutas.miPerfil);
-    } else {
-      setActiveButton(currentRouteName);
+    useEffect(() => {
+        if (
+            currentRouteName === rutas.miPerfil ||
+            currentRouteName === rutas.perfilJugador
+        ) {
+            setActiveButton(rutas.miPerfil);
+        } else {
+            setActiveButton(currentRouteName);
+        }
+    }, [currentRouteName]);
+
+    const [activeButton, setActiveButton] = useState(currentRouteName);
+
+    const handleNavigate = (buttonName) => {
+        navigation.navigate(buttonName);
+        setActiveButton(buttonName);
+    };
+
+    const handleNavigateConId = (buttonName) => {
+        navigation.navigate(buttonName, { id: "1" });
+        setActiveButton(buttonName);
+    };
+
+    const routesToHideNavBar = [
+        'recuperarContrasena',
+        'login',
+        'registro',
+        'inicio'
+    ];
+
+    if (routesToHideNavBar.includes(currentRouteName)) {
+        return null;
     }
-  }, [currentRouteName]);
-
-  const [activeButton, setActiveButton] = useState(currentRouteName);
-
-  const handleNavigate = (buttonName) => {
-    navigation.navigate(buttonName);
-    setActiveButton(buttonName);
-  };
-
-  const handleNavigateConId = (buttonName) => {
-    navigation.navigate(buttonName, { id: "1" });
-    setActiveButton(buttonName);
-  };
-
-  if (
-      currentRouteName === 'recuperarContrasena' ||
-      currentRouteName === 'login' ||
-      currentRouteName === 'registro' ||
-      currentRouteName === 'inicio'
-  ) {
-    return null;
-  }
-
   return (
       <Gradiente
           variante="gradienteHorizontal"

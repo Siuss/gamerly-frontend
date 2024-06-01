@@ -61,6 +61,9 @@ export const VistaPerfil = () => {
     navigation.navigate("resenias", { id });
   };
 
+  const handleLogout = () => {
+    navigation.navigate("loading");
+  }
   return (
     <View style={styles.container}>
       <ScrollView
@@ -130,7 +133,7 @@ export const VistaPerfil = () => {
           <Divisor />
           <Boton variante="transparente">Eliminar Cuenta</Boton>
           <Divisor />
-          <Boton variante="transparente">Cerrar Sesion</Boton>
+          <Boton variante="transparente" onPress={handleLogout}>Cerrar Sesion</Boton>
           <Divisor />
         </View>
       </ScrollView>

@@ -24,7 +24,8 @@
     "react-icons": "^5.1.0",
     "react-native": "0.73.6",
     "react-native-screens": "^3.31.1",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
