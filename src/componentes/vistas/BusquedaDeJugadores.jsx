@@ -5,9 +5,13 @@ import { Color } from "../../estilos/colores";
 import Busqueda from "../bloques/Busqueda";
 import { useNavigation } from "@react-navigation/native";
 import { BusquedaService } from "../../services/BusquedaService";
+import useNavBarStore from "../../hooks/useNavbarStore";
+
 
 export const BusquedaDeJugadores = (props) => {
   const navigation = useNavigation();
+  const setShowNavBar = useNavBarStore((state) => state.setShowNavBar);
+
   const { params: filtrosParam } = navigation.getState().routes[0];
   const [searchText, onChangeSearchText] = useState("");
   const [jugadores, setJugadores] = useState([]);
@@ -18,6 +22,8 @@ export const BusquedaDeJugadores = (props) => {
   );
 
   useEffect(() => {
+      setShowNavBar(true)
+
     const buscar = async () => {
       const jugadoresEncontrados = await BusquedaService.busquedaAvanzada(filtros);
       setJugadores(jugadoresEncontrados);

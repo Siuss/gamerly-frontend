@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Color } from "../../estilos/colores";
 import { useNavigation } from "@react-navigation/native";
 import gamerlyImagen from "../foto/WhatsApp Image 2024-05-24 at 01.35.43.jpeg";
+
 
 export const Inicio = () => {
     const navigation = useNavigation();

@@ -12,9 +12,13 @@ import { ListaDePildoras } from "../bloques/ListaDePildoras";
 import { CardResenia } from "../bloques/CardResenia";
 import { Boton } from "../atomos/boton/Boton";
 import { useNavigation } from "@react-navigation/native";
+import { SesionService } from "../../services/SesionService"
+import useNavBarStore from "../../hooks/useNavbarStore";
+
 // import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export const VistaPerfil = () => {
+  const setShowNavBar = useNavBarStore((state) => state.setShowNavBar);
   const route = useRoute();
   const { id } = route.params;
 
@@ -59,10 +63,17 @@ export const VistaPerfil = () => {
 
   const handleVerMasClick = () => {
     navigation.navigate("resenias", { id });
+    setShowNavBar(false)
   };
 
   const handleLogout = () => {
+    setShowNavBar(false)
     navigation.navigate("loading");
+  }
+
+  const handleEliminarCuenta = async () => {
+    await SesionService.eliminarCuenta(id);
+    handleLogout();
   }
   return (
     <View style={styles.container}>
@@ -97,14 +108,14 @@ export const VistaPerfil = () => {
             Mis Plataformas
           </Parrafo>
           <View style={styles.pildora1}>
-            <ListaDePildoras items={perfilInfo.plataformas.map((plataforma, index) => ({id: index, contenido: plataforma}))} />
+            <ListaDePildoras items={perfilInfo.plataformas.map((plataforma, index) => ({ id: index, contenido: plataforma }))} />
           </View>
 
           <Parrafo variante="grisS" style={styles.descripcionplataformas}>
             Mis Juegos
           </Parrafo>
           <View style={styles.pildora1}>
-            <ListaDePildoras items={perfilInfo.juegos.map((juego, index) => ({id: index, contenido: juego}))} />
+            <ListaDePildoras items={perfilInfo.juegos.map((juego, index) => ({ id: index, contenido: juego }))} />
           </View>
           <View style={styles.conatainerEditarJuego}>
             <Parrafo variante="grisS" style={styles.descripcionplataformas}>
@@ -131,7 +142,7 @@ export const VistaPerfil = () => {
         </View>
         <View style={styles.botonesSesion}>
           <Divisor />
-          <Boton variante="transparente">Eliminar Cuenta</Boton>
+          <Boton variante="transparente" onPress={handleEliminarCuenta}>Eliminar Cuenta</Boton>
           <Divisor />
           <Boton variante="transparente" onPress={handleLogout}>Cerrar Sesion</Boton>
           <Divisor />
