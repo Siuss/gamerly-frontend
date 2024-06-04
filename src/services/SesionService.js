@@ -2,7 +2,19 @@ import axios from "axios";
 import { BASE_URL } from "./requestConfig"
 
 const SesionEndpoints = {
-    ELIMINAR_CUENTA: "/usuarios/"
+    ELIMINAR_CUENTA: "/usuarios/",
+    LOGIN: "/login"
+}
+
+const login = async (credenciales) => {
+    const response = await axios.post(
+        `${BASE_URL}${SesionEndpoints.LOGIN}`,
+        credenciales
+    );
+
+    console.log(response)
+
+    return response.data;
 }
 
 const eliminarCuenta = async (id) => {
@@ -13,4 +25,4 @@ const eliminarCuenta = async (id) => {
     return response.data;
 }
 
-export const SesionService = { eliminarCuenta }
+export const SesionService = { eliminarCuenta, login }

@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Color } from "../../estilos/colores";
 import { useNavigation } from "@react-navigation/native";
+import { SesionService } from "../../services/SesionService"
+import { Toast } from 'toastify-react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [credenciales, setCredenciales] = useState({ email: "", password: "" });
   const navigation = useNavigation();
 
-  const iniciarSesion = () => {
-    navigation.navigate("busquedaDeJugadores");
+  const handleCredencialesChange = (campo, valor) => {
+    setCredenciales({ ...credenciales, [campo]: valor })
+  }
+
+  useEffect(() => {
+    const rellenarEmail = async () =>{
+      const usuario = JSON.parse(await AsyncStorage.getItem("usuario"))
+      if(!usuario) return
+      
+      handleCredencialesChange("email", usuario.email)
+    }
+
+    rellenarEmail()
+  }, [])
+
+  const iniciarSesion = async () => {
+    try {
+      const usuario = await SesionService.login(credenciales)
+      await AsyncStorage.setItem("usuario", JSON.stringify(usuario))
+      navigation.navigate("busquedaDeJugadores");
+    } catch (error) {
+      Toast.error(error.response.data.message)
+    }
   };
 
   const registro = () => {
@@ -25,12 +51,15 @@ export const Login = () => {
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={[styles.input, { color: Color.secundario }]}
-        placeholder="Usuario"
+        onChangeText={(value) => handleCredencialesChange("email", value)}
+        placeholder="Email"
         placeholderTextColor={Color.secundario}
+        value={credenciales.email}
       />
       <View style={styles.passwordContainer}>
         <TextInput
           style={[styles.passwordInput, { color: Color.secundario }]}
+          onChangeText={(value) => handleCredencialesChange("password", value)}
           placeholder="Contraseña"
           placeholderTextColor={Color.secundario}
           secureTextEntry={!passwordVisible}
@@ -46,7 +75,7 @@ export const Login = () => {
           />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.forgotPasswordContainer} onPress={() => {}}>
+      <TouchableOpacity style={styles.forgotPasswordContainer} onPress={() => { }}>
         <Text style={styles.forgotPasswordText} onPress={recuperar}>¿Olvidaste tu contraseña?</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
@@ -101,7 +130,7 @@ const styles = StyleSheet.create({
   },
   eyeIcon: {
     padding: 8,
-    color: Color.secundario 
+    color: Color.secundario
   },
   forgotPasswordContainer: {
     width: '90%',
