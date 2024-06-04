@@ -15,6 +15,8 @@ import { RecuperarContrasena } from "../vistas/RecuperarContrasena";
 import { Amigos } from "../vistas/Amigos";
 import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
+import ToastManager from 'toastify-react-native'
+
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -45,6 +47,7 @@ const AppRutas = () => {
 
   return (
       <View style={styles.container}>
+        <ToastManager />
         <NavigationContainer style={styles.navigationContainer}>
           <Stack.Navigator
               initialRouteName="loading"
