@@ -36,10 +36,10 @@ export const rutas = {
 };
 
 const AppRutas = () => {
+  const setShowNavBar = useNavBarStore((state) => state.setShowNavBar);
   const showNavBar = useNavBarStore((state) => state.showNavBar);
   const excludeLoading = useNavBarStore((state) => state.excludeLoading);
   useEffect(() => {
-
     excludeLoading();
   }, [excludeLoading]);
 
@@ -56,7 +56,8 @@ const AppRutas = () => {
                         showBackButton={route.name !== rutas.busquedaDeJugadores}
                     />
                 ),
-                headerShown: ({ route }) => route.name !== "loading",
+                headerShown: ({ route }) =>  route.name !== "loading"
+              
               })}
           >
             <Stack.Screen
@@ -110,8 +111,8 @@ const AppRutas = () => {
                 component={BusquedaAvanzada}
             />
           </Stack.Navigator>
-          <NavBar style={styles.navBar} />
-        </NavigationContainer>
+          {showNavBar ? <NavBar style={styles.navBar} /> : "asdasd"}
+         </NavigationContainer>
       </View>
   );
 };
