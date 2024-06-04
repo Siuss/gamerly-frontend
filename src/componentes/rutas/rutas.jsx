@@ -111,7 +111,7 @@ const AppRutas = () => {
                 component={BusquedaAvanzada}
             />
           </Stack.Navigator>
-          {showNavBar ? <NavBar style={styles.navBar} /> : "asdasd"}
+          {showNavBar && <NavBar style={styles.navBar} />}
          </NavigationContainer>
       </View>
   );
