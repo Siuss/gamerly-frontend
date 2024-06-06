@@ -1,0 +1,25 @@
+[
+    {
+        "foto": "https://i.imgur.com/R7PCIZc.png",
+        "juego": "League of Legends",
+        "plataforma": "PC"
+    },
+
+    {
+        "foto": "https://i.imgur.com/PYOxUoo.jpeg",
+        "juego": "Overcooked",
+        "plataforma": "PC"
+    },
+
+    {
+        "foto": "https://i.imgur.com/ZVvFwmu.jpeg",
+        "juego": "Phasmophobia",
+        "plataforma": "PC"
+    },
+
+    {
+        "foto": "https://i.imgur.com/KGSQrPY.jpeg",
+        "juego": "Stardew Valley",
+        "plataforma": "PC"
+    }
+]

@@ -16,7 +16,7 @@ import { Amigos } from "../vistas/Amigos";
 import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
 import ToastManager from 'toastify-react-native'
-
+import { Comunidad } from "../vistas/Comunidad"
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -26,6 +26,7 @@ const titlesConfig = {
   busquedaAvanzada: "Busqueda Avanzada",
   perfilJugador: "Perfil Jugador",
   amigos: "Amigos",
+  comunidad: "Comunidad"
 };
 
 export const rutas = {
@@ -35,6 +36,7 @@ export const rutas = {
   perfilJugador: "perfilJugador",
   resenias: "resenias",
   miPerfil: "miPerfil",
+
 };
 
 const AppRutas = () => {
@@ -46,77 +48,75 @@ const AppRutas = () => {
   }, [excludeLoading]);
 
   return (
-      <View style={styles.container}>
-        <ToastManager />
-        <NavigationContainer style={styles.navigationContainer}>
-          <Stack.Navigator
-              initialRouteName="loading"
-              screenOptions={({ route, navigation }) => ({
-                header: (props) => (
-                    <HeaderTitle
-                        {...props}
-                        title={titlesConfig[route.name]}
-                        showBackButton={route.name !== rutas.busquedaDeJugadores}
-                    />
-                ),
-                headerShown: ({ route }) =>  route.name !== "loading"
-              
-              })}
-          >
-            <Stack.Screen
-                titulo="reseñas"
-                name="resenias"
-                component={Resenias}
-            />
-            <Stack.Screen
-                name="loading"
-                component={Inicio}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name="login"
-                component={Login}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                titulo="Amigos"
-                name="amigos"
-                component={Amigos}
-            />
-            <Stack.Screen
-                name="recuperarContrasena"
-                component={RecuperarContrasena}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name="registro"
-                component={Registro}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                titulo="perfilJugador"
-                name="perfilJugador"
-                component={PerfilJugador}
-            />
-            <Stack.Screen
-                titulo="busquedaDeJugadores"
-                name="busquedaDeJugadores"
-                component={BusquedaDeJugadores}
-            />
-            <Stack.Screen
-                titulo="miPerfil"
-                name="miPerfil"
-                component={VistaPerfil}
-            />
-            <Stack.Screen
-                titulo="busquedaAvanzada"
-                name="busquedaAvanzada"
-                component={BusquedaAvanzada}
-            />
-          </Stack.Navigator>
-          {showNavBar && <NavBar style={styles.navBar} />}
-         </NavigationContainer>
-      </View>
+    <View style={styles.container}>
+      <NavigationContainer style={styles.navigationContainer}>
+        <Stack.Navigator
+          initialRouteName="inicio"
+          screenOptions={({ route }) => ({
+            header: (props) => (
+              <HeaderTitle {...props} title={titlesConfig[route.name]} />
+            ),
+          })}
+        >
+          <Stack.Screen
+            titulo="reseñas"
+            name="resenias"
+            component={Resenias}
+          />
+          <Stack.Screen
+            name="inicio"
+            component={Inicio}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            titulo="Amigos"
+            name="amigos"
+            component={Amigos}
+          />
+          <Stack.Screen
+            name="recuperarContrasena"
+            component={RecuperarContrasena}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="registro"
+            component={Registro}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            titulo="perfilJugador"
+            name="perfilJugador"
+            component={PerfilJugador}
+          />
+          <Stack.Screen
+            titulo="busquedaDeJugadores"
+            name="busquedaDeJugadores"
+            component={BusquedaDeJugadores}
+          />
+          <Stack.Screen
+            titulo="miPerfil"
+            name="miPerfil"
+            component={VistaPerfil}
+          />
+          <Stack.Screen
+            titulo="busquedaAvanzada"
+            name="busquedaAvanzada"
+            component={BusquedaAvanzada}
+          />
+           <Stack.Screen
+            titulo="comunidad"
+            name="comunidad"
+            component={Comunidad}
+          />
+        </Stack.Navigator>
+        <NavBar style={styles.navBar} />
+      </NavigationContainer>
+    </View>
   );
 };
 
