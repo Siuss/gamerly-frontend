@@ -16,7 +16,7 @@ import { Amigos } from "../vistas/Amigos";
 import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
 import ToastManager from 'toastify-react-native'
-import{ComunidadPage} from "../vistas/comunidadPage"
+import { Comunidad } from "../vistas/Comunidad"
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -26,7 +26,7 @@ const titlesConfig = {
   busquedaAvanzada: "Busqueda Avanzada",
   perfilJugador: "Perfil Jugador",
   amigos: "Amigos",
-  comunidad: "ComunidadPage"
+  comunidad: "Comunidad"
 };
 
 export const rutas = {
@@ -111,7 +111,7 @@ const AppRutas = () => {
            <Stack.Screen
             titulo="comunidad"
             name="comunidad"
-            component={ComunidadPage}
+            component={Comunidad}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
