@@ -17,8 +17,8 @@ export const Card = (props) => {
   };
 
   return (
-      <Gradiente
-          variante="gradienteHorizontal"
+      <View
+
           style={[styles.card, style]}
 
           {...restProps}
@@ -58,7 +58,7 @@ export const Card = (props) => {
             <Puntuacion puntuacion={props.puntuacion} />
           </View>
         </TouchableOpacity>
-      </Gradiente>
+      </View>
 
   );
 };
