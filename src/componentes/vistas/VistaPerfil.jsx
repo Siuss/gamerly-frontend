@@ -68,7 +68,7 @@ export const VistaPerfil = () => {
 
   const handleLogout = () => {
     setShowNavBar(false)
-    navigation.navigate("loading");
+    navigation.navigate("login");
   }
 
   const handleEliminarCuenta = async () => {

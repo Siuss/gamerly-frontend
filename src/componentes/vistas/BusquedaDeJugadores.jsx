@@ -7,7 +7,6 @@ import { useNavigation } from "@react-navigation/native";
 import { BusquedaService } from "../../services/BusquedaService";
 import useNavBarStore from "../../hooks/useNavbarStore";
 
-
 export const BusquedaDeJugadores = (props) => {
   const navigation = useNavigation();
   const setShowNavBar = useNavBarStore((state) => state.setShowNavBar);
