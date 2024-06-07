@@ -25,7 +25,7 @@ export const BusquedaDeJugadores = (props) => {
       setShowNavBar(true)
 
     const buscar = async () => {
-      const jugadoresEncontrados = await BusquedaService.busquedaAvanzada(filtros);
+      const jugadoresEncontrados = await BusquedaService.busquedaAvanzada();
       setJugadores(jugadoresEncontrados);
     };
 
