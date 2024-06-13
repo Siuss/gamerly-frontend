@@ -3,7 +3,6 @@ import { Color } from "../../estilos/colores";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Puntuacion } from "../atomos/puntuacion/Puntuacion";
-import Icons from "@expo/vector-icons/AntDesign";
 import {useNavigation} from "@react-navigation/native";
 import { rutas } from "../rutas/rutas";
 
