@@ -116,6 +116,7 @@ const AppRutas = () => {
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
       </NavigationContainer>
+      <ToastManager />
     </View>
   );
 };

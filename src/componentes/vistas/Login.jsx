@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SesionService } from "../../services/SesionService"
 import { Toast } from 'toastify-react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AxiosError } from 'axios';
 
 
 export const Login = () => {
@@ -34,6 +35,12 @@ export const Login = () => {
       await AsyncStorage.setItem("usuario", JSON.stringify(usuario))
       navigation.navigate("busquedaDeJugadores");
     } catch (error) {
+      if(error instanceof AxiosError){
+        Toast.error(
+          'Error de red intentelo mas tarde'
+        )
+
+      }
       Toast.error(error.response.data.message)
     }
   };
@@ -79,7 +86,7 @@ export const Login = () => {
         <Text style={styles.forgotPasswordText} onPress={recuperar}>¿Olvidaste tu contraseña?</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={iniciarSesion}>
+        <TouchableOpacity style={[styles.button, (!credenciales.email || !credenciales.password) && styles.deshabilitado]} onPress={iniciarSesion} disabled={!credenciales.email || !credenciales.password}>
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={registro}>
@@ -103,6 +110,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 32,
     color: Color.blanco,
+  },
+  deshabilitado: {
+    opacity: 0.6
   },
   input: {
     width: '90%',

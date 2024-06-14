@@ -12,8 +12,6 @@ const login = async (credenciales) => {
         credenciales
     );
 
-    console.log(response)
-
     return response.data;
 }
 
@@ -24,5 +22,7 @@ const eliminarCuenta = async (id) => {
 
     return response.data;
 }
+
+//const registrarUsuario = async (datosNuevoUsuario) => {}
 
 export const SesionService = { eliminarCuenta, login }

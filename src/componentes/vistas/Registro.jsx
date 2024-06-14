@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import { Color } from "../../estilos/colores";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+//import { SessionService } from "../../services/SesionService"
 
 export const Registro = () => {
   const [nombre, setNombre] = useState('');
@@ -14,7 +15,9 @@ export const Registro = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
 
-  const handleRegistro = () => {
+  const handleRegistro = async () => {
+    //const datosNuevoUsuario = { nombre, fechaNacimiento, nacionalidad, email, contrasena }
+    //await SessionService.registrarUsuario(datosNuevoUsuario)
     navigation.navigate("login");
   };
 
@@ -65,32 +68,32 @@ export const Registro = () => {
         )}
       </View>
       <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-          />
-          {email !== '' && (
-            <TouchableOpacity onPress={() => clearInput(setEmail)} style={styles.inputIcon}>
-              <Ionicons name="close" size={24} color={Color.secundario} />
-            </TouchableOpacity>
-          )}
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        {email !== '' && (
+          <TouchableOpacity onPress={() => clearInput(setEmail)} style={styles.inputIcon}>
+            <Ionicons name="close" size={24} color={Color.secundario} />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            secureTextEntry={!showPassword}
-            value={contrasena}
-            onChangeText={setContrasena}
-          />
-          <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.inputIcon}
-          >
-            <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color={Color.secundario} />
-          </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Contraseña"
+          secureTextEntry={!showPassword}
+          value={contrasena}
+          onChangeText={setContrasena}
+        />
+        <TouchableOpacity
+          onPress={() => setShowPassword(!showPassword)}
+          style={styles.inputIcon}
+        >
+          <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color={Color.secundario} />
+        </TouchableOpacity>
       </View>
       <View style={styles.checkboxContainer}>
         <TouchableOpacity
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
   checkboxInnerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    
+
   },
   checkboxSquare: {
     width: 20,
