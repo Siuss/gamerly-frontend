@@ -93,11 +93,12 @@ export const PerfilJugador = (props) => {
         </View>
       </View>
       <View style={styles.contenedorBotones}>
-        <Boton style={styles.boton} textStyle={{ color: 'black' }} variante="secundario">
+        <Boton style={styles.boton} textStyle={styles.textoBoton} variante="secundario">
           Añadir amigo
         </Boton>
         <Boton
           style={styles.boton}
+          textStyle={styles.textoBoton}
           variante="primario"
           onPress={handleOnVerReseniasClick}
         >
@@ -154,5 +155,10 @@ const styles = StyleSheet.create({
   },
   boton: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textoBoton: {
+    textAlign: "center",
   },
 });
