@@ -16,7 +16,7 @@ import { Amigos } from "../vistas/Amigos";
 import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
 import ToastManager from 'toastify-react-native'
-import { Comunidad } from "../vistas/Comunidad"
+import { Juegos } from "../vistas/Juegos"
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -26,13 +26,13 @@ const titlesConfig = {
   busquedaAvanzada: "Busqueda Avanzada",
   perfilJugador: "Perfil Jugador",
   amigos: "Amigos",
-  comunidad: "Comunidad"
+  juegos: "Juegos",
 };
 
 export const rutas = {
   amigos: "amigos",
   busquedaDeJugadores: "busquedaDeJugadores",
-  comunidad: "comunidad",
+  juegos: "juegos",
   perfilJugador: "perfilJugador",
   resenias: "resenias",
   miPerfil: "miPerfil",
@@ -94,9 +94,9 @@ const AppRutas = () => {
             component={PerfilJugador}
           />
           <Stack.Screen
-            titulo="busquedaDeJugadores"
-            name="busquedaDeJugadores"
-            component={BusquedaDeJugadores}
+            titulo={rutas.juegos}
+            name={rutas.juegos}
+            component={Juegos}
           />
           <Stack.Screen
             titulo="miPerfil"
@@ -109,9 +109,9 @@ const AppRutas = () => {
             component={BusquedaAvanzada}
           />
            <Stack.Screen
-            titulo="comunidad"
-            name="comunidad"
-            component={Comunidad}
+            titulo={rutas.busquedaDeJugadores}
+            name={rutas.busquedaDeJugadores}
+            component={BusquedaDeJugadores}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />

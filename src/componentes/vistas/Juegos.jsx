@@ -1,16 +1,18 @@
 import { StyleSheet, ScrollView } from "react-native";
-import { CardComunidad } from "../bloques/CardComunidad";
+import { CardJuegos } from "../bloques/CardJuegos";
 import { Color } from "../../estilos/colores";
-import comunidades from "../../mocks/comunidadMock.json"
+import juegos from "../../mocks/comunidadMock.json"
+import Busqueda from "../bloques/Busqueda" 
 
-export const Comunidad = () => {
+export const Juegos = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {comunidades.map((comunidad) => <CardComunidad
-        key={comunidad.juego}
-        foto={comunidad.foto}
-        juego={comunidad.juego}
-        plataforma={comunidad.plataforma}
+      <Busqueda mostrarFiltro={false}></Busqueda>
+      {juegos.map((juego) => <CardJuegos
+        key={juego.juego}
+        foto={juego.foto}
+        juego={juego.juego}
+        plataforma={juego.plataforma}
       />)}
     </ScrollView>
   );

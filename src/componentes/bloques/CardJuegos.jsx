@@ -5,7 +5,7 @@ import { Gradiente } from "../atomos/gradiente/Gradiente"
 import { Boton } from "../atomos/boton/Boton"
 import { Parrafo } from "../atomos/parrafo/Parrafo"
 
-export const CardComunidad = (props) => {
+export const CardJuegos = (props) => {
   const { style, foto, juego, plataforma } = props;
 
   return (
@@ -19,10 +19,6 @@ export const CardComunidad = (props) => {
           <Parrafo variante="blancoS">{plataforma}</Parrafo>
         </View>
         <Boton variante="acento">Unirme</Boton>
-
-        {/* <TouchableOpacity style={styles.boton}>
-          <Text style={styles.botonTexto}>Unirme</Text>
-           </TouchableOpacity> */}
       </View>
     </View>
   );
