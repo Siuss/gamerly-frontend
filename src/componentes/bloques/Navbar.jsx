@@ -47,12 +47,12 @@ const NavBar = (props) => {
         return null;
     }
   return (
-      <Gradiente
-          variante="gradienteHorizontal"
-          style={[styles.navBar, style]}
-          {...restProps}
-      >
-        <View style={styles.contenido}>
+      // <Gradiente
+      //     variante="gradienteHorizontal"
+      //     style={[styles.navBar, style]}
+      //     {...restProps}
+      // >
+        <View style={[styles.navBar, styles.contenido]} {...restProps}>
           <Pressable
               style={({ pressed }) => [
                 styles.botonDeNavegacion,
@@ -134,7 +134,7 @@ const NavBar = (props) => {
             />
           </Pressable>
         </View>
-      </Gradiente>
+      // </Gradiente>
   );
 };
 
