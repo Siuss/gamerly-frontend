@@ -49,9 +49,6 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: "stretch"
   },
-  gradiente: {
-    height: "100%"
-  },
   botonTexto: {
     color: "white",
     fontWeight: "bold",
