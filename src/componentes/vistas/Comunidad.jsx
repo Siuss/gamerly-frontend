@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView } from "react-native";
 import { CardComunidad } from "../bloques/CardComunidad";
 import { Color } from "../../estilos/colores";
 
-import { obtenerComunidades } from "../../servicios/ServicioComunidad";
+import { obtenerComunidades } from "../../services/ComunidadesService";
 import comunidades from "../../mocks/comunidadMock.json"; // (debe eliminarse)
 
 const datosEstáticos = comunidades;
