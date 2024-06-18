@@ -3,7 +3,6 @@ import { Color } from "../../estilos/colores";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import Icons from "@expo/vector-icons/AntDesign";
-import { Gradiente } from "../atomos/gradiente/Gradiente";
 
 export const CardResenia = (props) => {
   const { style, puntaje, foto, resenia, ...restProps } = props;

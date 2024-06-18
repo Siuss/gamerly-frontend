@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Color } from '../../estilos/colores';
 import { Ionicons } from '@expo/vector-icons';
-import { Gradiente } from "../atomos/gradiente/Gradiente";
 import { useNavigation } from '@react-navigation/native';
 
 export const HeaderTitle = ({ title, showBackButton }) => {
@@ -13,14 +12,14 @@ export const HeaderTitle = ({ title, showBackButton }) => {
   };
 
   return (
-      <Gradiente variante="gradienteHorizontal" style={styles.header}>
+      <View style={styles.header}>
         {showBackButton && (
             <TouchableOpacity onPress={handleNavigateBack} style={styles.boton}>
               <Ionicons name="arrow-back" size={24} color={Color.blanco} />
             </TouchableOpacity>
         )}
         <Text style={styles.title}>{title}</Text>
-      </Gradiente>
+      </View>
   );
 };
 
