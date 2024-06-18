@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, Pressable, StyleSheet } from "react-native";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Gradiente } from "../atomos/gradiente/Gradiente";
 import { Color } from "../../estilos/colores";
 import { rutas } from "../rutas/rutas";
 
@@ -47,12 +46,7 @@ const NavBar = (props) => {
         return null;
     }
   return (
-      <Gradiente
-          variante="gradienteHorizontal"
-          style={[styles.navBar, style]}
-          {...restProps}
-      >
-        <View style={styles.contenido}>
+        <View style={[styles.navBar, styles.contenido]} {...restProps}>
           <Pressable
               style={({ pressed }) => [
                 styles.botonDeNavegacion,
@@ -134,7 +128,6 @@ const NavBar = (props) => {
             />
           </Pressable>
         </View>
-      </Gradiente>
   );
 };
 

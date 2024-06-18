@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View, ImageBackground } from "react-native";
 import { Color } from "../../estilos/colores";
-import { Gradiente } from "../atomos/gradiente/Gradiente"
 import { Boton } from "../atomos/boton/Boton"
 import { Parrafo } from "../atomos/parrafo/Parrafo"
 
@@ -11,7 +10,6 @@ export const CardComunidad = (props) => {
   return (
     <View style={[styles.card, style]}>
       <ImageBackground style={styles.image} source={{ uri: foto }}>
-        <Gradiente style={styles.gradiente} variante="gradienteVerticalComunidad" />
       </ImageBackground>
       <View style={styles.contenido}>
         <View style={styles.detalles}>
@@ -19,10 +17,6 @@ export const CardComunidad = (props) => {
           <Parrafo variante="blancoS">{plataforma}</Parrafo>
         </View>
         <Boton variante="acento">Unirme</Boton>
-
-        {/* <TouchableOpacity style={styles.boton}>
-          <Text style={styles.botonTexto}>Unirme</Text>
-           </TouchableOpacity> */}
       </View>
     </View>
   );
@@ -54,9 +48,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 150,
     alignSelf: "stretch"
-  },
-  gradiente: {
-    height: "100%"
   },
   botonTexto: {
     color: "white",
