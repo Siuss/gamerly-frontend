@@ -3,7 +3,30 @@ import { CardComunidad } from "../bloques/CardComunidad";
 import { Color } from "../../estilos/colores";
 import comunidades from "../../mocks/comunidadMock.json"
 
+const datosEstáticos = comunidades;
+
 export const Comunidad = () => {
+  const [comunidades, setComunidades] = useState([]);
+
+  useEffect(() => {
+    const cargarComunidades = async () => {
+      try {
+        const datos = await obtenerComunidades();
+        if (datos.length > 0) {
+          setComunidades(datos);
+        } else {
+          // Aquí cargarías los datos estáticos de comunidades
+          setComunidades(datosEstáticos);
+        }
+      } catch (error) {
+        console.error('Error al cargar comunidades:', error);
+        setComunidades(datosEstáticos);
+      }
+    };
+
+    cargarComunidades();
+  }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {comunidades.map((comunidad) => <CardComunidad
