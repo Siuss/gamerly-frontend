@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView } from "react-native";
 import { CardComunidad } from "../bloques/CardComunidad";
 import { Color } from "../../estilos/colores";
-import comunidades from "../../mocks/comunidadMock.json"
+
+import { obtenerComunidades } from "../../servicios/ServicioComunidad";
+import comunidades from "../../mocks/comunidadMock.json"; // (debe eliminarse)
 
 const datosEstáticos = comunidades;
 
