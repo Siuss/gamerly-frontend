@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView } from "react-native";
 import { CardComunidad } from "../bloques/CardComunidad";
 import { Color } from "../../estilos/colores";
@@ -15,12 +16,12 @@ export const Comunidad = () => {
         if (datos.length > 0) {
           setComunidades(datos);
         } else {
-          // Aquí cargarías los datos estáticos de comunidades
+          // Aquí cargarías los datos estáticos de comunidades (debe eliminarse)
           setComunidades(datosEstáticos);
         }
       } catch (error) {
         console.error('Error al cargar comunidades:', error);
-        setComunidades(datosEstáticos);
+        setComunidades(datosEstáticos); // (debe eliminarse)
       }
     };
 
