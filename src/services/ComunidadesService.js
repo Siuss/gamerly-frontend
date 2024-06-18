@@ -21,4 +21,4 @@ const obtenerComunidades = async () => {
 };
 
 // Llama a la función para obtener las comunidades
-export const ComunidadesService = { obtenerComunidades };
+export const COMUNIDADES_SERVICE = { obtenerComunidades };

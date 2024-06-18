@@ -3,28 +3,22 @@ import { StyleSheet, ScrollView } from "react-native";
 import { CardComunidad } from "../bloques/CardComunidad";
 import { Color } from "../../estilos/colores";
 
-import { obtenerComunidades } from "../../services/ComunidadesService";
-import comunidades from "../../mocks/comunidadMock.json"; // (debe eliminarse)
+import { COMUNIDADES_SERVICE } from "../../services/ComunidadesService";
+import comunidades from "../../mocks/comunidadMock.json"; // (debe eliminarse datos mocks)
 
-const datosEstáticos = comunidades;
+const datosEstáticos = comunidades; // (debe eliminarse datos mocks)
 
 export const Comunidad = () => {
   const [comunidades, setComunidades] = useState([]);
 
   useEffect(() => {
     const cargarComunidades = async () => {
-      try {
-        const datos = await obtenerComunidades();
-        if (datos.length > 0) {
-          setComunidades(datos);
-        } else {
-          // Aquí cargarías los datos estáticos de comunidades (debe eliminarse)
-          setComunidades(datosEstáticos);
-        }
-      } catch (error) {
+      COMUNIDADES_SERVICE.obtenerComunidades().then(comunidades => {
+        setComunidades(datos);
+      }).catch(error => {
         console.error('Error al cargar comunidades:', error);
-        setComunidades(datosEstáticos); // (debe eliminarse)
-      }
+        setComunidades(datosEstáticos); // (debe eliminarse datos mocks)
+      });
     };
 
     cargarComunidades();
