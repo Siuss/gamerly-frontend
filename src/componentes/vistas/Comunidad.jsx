@@ -1,9 +1,29 @@
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView } from "react-native";
 import { CardComunidad } from "../bloques/CardComunidad";
 import { Color } from "../../estilos/colores";
-import comunidades from "../../mocks/comunidadMock.json"
+
+import { COMUNIDADES_SERVICE } from "../../services/ComunidadesService";
+import comunidades from "../../mocks/comunidadMock.json"; // (debe eliminarse datos mocks)
+
+const datosEstáticos = comunidades; // (debe eliminarse datos mocks)
 
 export const Comunidad = () => {
+  const [comunidades, setComunidades] = useState([]);
+
+  useEffect(() => {
+    const cargarComunidades = async () => {
+      COMUNIDADES_SERVICE.obtenerComunidades().then(comunidades => {
+        setComunidades(datos);
+      }).catch(error => {
+        console.error('Error al cargar comunidades:', error);
+        setComunidades(datosEstáticos); // (debe eliminarse datos mocks)
+      });
+    };
+
+    cargarComunidades();
+  }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {comunidades.map((comunidad) => <CardComunidad
