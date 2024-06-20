@@ -59,11 +59,16 @@ const styles = StyleSheet.create({
     alignSelf: "stretch"
   },
   botonTexto: {
-    color: "black",
-    fontWeight: "bold",
-    borderRadius: 10,
-    backgroundColor: Color.secundario,
-    height:20,
-    width: "fit-content",
+    backgroundColor: Color.primario,
+    borderColor: Color.blanco,
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    marginVertical: 2,
+    alignItems: "center",
+    width: "100%", 
+    marginLeft: "5%",
+   
   },
 });
