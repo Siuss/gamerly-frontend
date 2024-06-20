@@ -3,7 +3,8 @@ import { BASE_URL } from "./requestConfig"
 
 const SesionEndpoints = {
     ELIMINAR_CUENTA: "/usuarios/",
-    LOGIN: "/login"
+    LOGIN: "/login",
+    DETALLE_USUARIO: "/detalle/"
 }
 
 const login = async (credenciales) => {
@@ -21,8 +22,14 @@ const eliminarCuenta = async (id) => {
     const response = await axios.delete(
         `${BASE_URL}${SesionEndpoints.ELIMINAR_CUENTA}${id}`
     );
-
     return response.data;
 }
 
-export const SesionService = { eliminarCuenta, login }
+const obtenerDetalleUsuario = async (id) => {
+    const response = await axios.get(
+        `${BASE_URL}${SesionEndpoints.DETALLE_USUARIO}${id}`
+    );
+    return response.data;
+}
+
+export const SesionService = { eliminarCuenta, login, obtenerDetalleUsuario }

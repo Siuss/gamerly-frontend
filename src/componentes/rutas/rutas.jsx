@@ -17,6 +17,7 @@ import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
 import ToastManager from 'toastify-react-native'
 import { Comunidad } from "../vistas/Comunidad"
+import Toast from "react-native-toast-message";
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -116,6 +117,7 @@ const AppRutas = () => {
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
       </NavigationContainer>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
 };
