@@ -26,7 +26,7 @@ const titlesConfig = {
   busquedaAvanzada: "Busqueda Avanzada",
   perfilJugador: "Perfil Jugador",
   amigos: "Amigos",
-  comunidad: "Comunidad"
+  comunidad: "Juegos"
 };
 
 export const rutas = {

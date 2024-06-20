@@ -1,11 +1,17 @@
 import React from "react";
-import { StyleSheet, View, ImageBackground } from "react-native";
+import { StyleSheet, View, ImageBackground, Text } from "react-native";
 import { Color } from "../../estilos/colores";
 import { Boton } from "../atomos/boton/Boton"
 import { Parrafo } from "../atomos/parrafo/Parrafo"
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-web";
 
 export const CardComunidad = (props) => {
   const { style, foto, juego, plataforma } = props;
+  const navigation = useNavigation ();
+  const handleStart = () =>{
+    navigation.navigate("busquedaDeJugadores");
+  }
 
   return (
     <View style={[styles.card, style]}>
@@ -16,7 +22,10 @@ export const CardComunidad = (props) => {
           <Parrafo variante="blancoS">{juego}</Parrafo>
           <Parrafo variante="blancoS">{plataforma}</Parrafo>
         </View>
-        <Boton variante="acento">Unirme</Boton>
+        <TouchableOpacity style={styles.button} onPress={handleStart}>
+        <Text style={styles.botonTexto}>Ver Jugadores</Text>
+        </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -50,7 +59,11 @@ const styles = StyleSheet.create({
     alignSelf: "stretch"
   },
   botonTexto: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
+    borderRadius: 10,
+    backgroundColor: Color.secundario,
+    height:20,
+    width: "fit-content",
   },
 });
