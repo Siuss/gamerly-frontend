@@ -5,34 +5,27 @@ import { Color } from "../../estilos/colores";
 import jugadoresMock from "../../mocks/jugadoresMock.json"
 import Busqueda from "../bloques/Busqueda"
 import { JuegosService } from '../../services/JuegosService'
+import { JugadoresService } from '../../services/JugadoresService'
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores"
 import { useFocusEffect } from '@react-navigation/native'
 import { useNavigation } from "@react-navigation/native";
-import { rutas } from "../rutas/rutas"
 
-export const Juegos = () => {
-  const [juegos, setJuegos] = useState([])
+export const Jugadores = () => {
   const [jugadores, setJugadores] = useState([])
   const navigation = useNavigation();
 
-
-  const handleJuegoPress = async (juego) => {
-    navigation.navigate(rutas.jugadores, juego.id);
-
-    //setJugadores(await JugadoresService.getJuegadoresConJuegosEnComun(juego.id))
-    setJugadores(jugadoresMock)
-  }
+  const { params: juegoId } = navigation.getState().routes[0];
 
   useFocusEffect(
     useCallback(() => {
-      const fetchJuegos = async () => {
-        setJuegos(await JuegosService.getJuegos())
+      const fetchJugadores = async () => {
+        //setJugadores(await JugadoresService.getJuegadoresConJuegosEnComun(juegoId))
+        setJugadores(jugadoresMock)
       }
 
-      fetchJuegos()
+      fetchJugadores()
 
       return () => {
-        setJuegos([])
         setJugadores([])
       };
     }, [])
@@ -43,14 +36,6 @@ export const Juegos = () => {
     <View style={styles.containerExterior}>
       <ScrollView contentContainerStyle={styles.container}>
         <Busqueda mostrarFiltro={false}></Busqueda>
-        {jugadores.length === 0 && juegos.map((juego) => <CardJuegos
-          key={juego.juego}
-          foto={juego.imagen}
-          juego={juego.nombre}
-          plataforma={juego.plataformas[0]}
-          onPress={async () => handleJuegoPress(juego)}
-        />)}
-
         {jugadores.length > 0 && <ListaDeJugadores jugadores={jugadores} searchText="" />}
       </ScrollView>
     </View>
