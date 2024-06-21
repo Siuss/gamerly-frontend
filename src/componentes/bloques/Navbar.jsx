@@ -92,26 +92,6 @@ const NavBar = (props) => {
                 styles.botonDeNavegacion,
                 {
                   backgroundColor:
-                      activeButton === rutas.busquedaDeJugadores || pressed
-                          ? Color.acento
-                          : "transparent",
-                },
-              ]}
-              onPress={() => handleNavigateConId(rutas.busquedaDeJugadores)}
-          >
-            <MaterialIcons
-                name="connect-without-contact"
-                size={24}
-                color={
-                  activeButton === rutas.busquedaDeJugadores ? Color.neutro : Color.blanco
-                }
-            />
-          </Pressable>
-          <Pressable
-              style={({ pressed }) => [
-                styles.botonDeNavegacion,
-                {
-                  backgroundColor:
                       activeButton === rutas.miPerfil || pressed
                           ? Color.acento
                           : "transparent",
