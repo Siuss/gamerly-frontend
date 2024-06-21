@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Resenias } from "../vistas/Reseñas";
@@ -17,6 +17,9 @@ import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
 import ToastManager from 'toastify-react-native'
 import { Comunidad } from "../vistas/Comunidad"
+import { Juegos } from "../vistas/Juegos"
+import { Color } from "../../estilos/colores.js"
+
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -108,10 +111,10 @@ const AppRutas = () => {
             name="busquedaAvanzada"
             component={BusquedaAvanzada}
           />
-           <Stack.Screen
-            titulo="comunidad"
-            name="comunidad"
-            component={Comunidad}
+          <Stack.Screen
+            titulo={rutas.busquedaDeJugadores}
+            name={rutas.busquedaDeJugadores}
+            component={BusquedaDeJugadores}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    flexDirection: "column",
+    flexDirection: "column"
   },
   navigationContainer: {
     display: 'flex',

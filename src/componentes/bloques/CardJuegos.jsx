@@ -1,14 +1,13 @@
 import React from "react";
-import { StyleSheet, View, ImageBackground } from "react-native";
+import { StyleSheet, View, ImageBackground, TouchableOpacity } from "react-native";
 import { Color } from "../../estilos/colores";
 import { Boton } from "../atomos/boton/Boton"
 import { Parrafo } from "../atomos/parrafo/Parrafo"
-
-export const CardComunidad = (props) => {
-  const { style, foto, juego, plataforma } = props;
+export const CardJuegos = (props) => {
+  const { style, foto, juego, plataforma, onPress } = props;
 
   return (
-    <View style={[styles.card, style]}>
+    <TouchableOpacity style={[styles.card, style]} onPress={onPress}>
       <ImageBackground style={styles.image} source={{ uri: foto }}>
       </ImageBackground>
       <View style={styles.contenido}>
@@ -16,9 +15,8 @@ export const CardComunidad = (props) => {
           <Parrafo variante="blancoS">{juego}</Parrafo>
           <Parrafo variante="blancoS">{plataforma}</Parrafo>
         </View>
-        <Boton variante="acento">Unirme</Boton>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

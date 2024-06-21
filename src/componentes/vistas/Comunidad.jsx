@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView } from "react-native";
-import { CardComunidad } from "../bloques/CardComunidad";
+import { CardComunidad } from "../bloques/CardJuegos";
 import { Color } from "../../estilos/colores";
 
 import { COMUNIDADES_SERVICE } from "../../services/ComunidadesService";
