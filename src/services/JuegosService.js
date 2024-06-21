@@ -7,7 +7,7 @@ const JuegosEndpoints = {
 
 const getJuegos = async () => {
     response = await axios.get(
-        `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}`, { params: { numero: 5 } }
+        `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}`, { params: { numero: 10 } }
     );
 
     return response.data;

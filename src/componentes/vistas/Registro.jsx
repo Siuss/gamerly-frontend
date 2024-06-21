@@ -115,18 +115,22 @@ export const Registro = () => {
   };
 
   const handleRegistro = async () => {
+    console.log("handle registro")
     try {
       const nuevoUsuario = {
         nombre,
         fechaNacimiento,
         email,
-        password,
+        password: contrasena,
         //nacionalidad
       }
+      console.log("tenes un user")
 
       await SesionService.signUp(nuevoUsuario)
+      console.log("volviste del signup")
       navigation.navigate("login")
     } catch (error) {
+      console.log(error)
       console.log("TODO: Manejar errores")
     }
   };
