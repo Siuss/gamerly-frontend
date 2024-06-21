@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Resenias } from "../vistas/Reseñas";
-import { BusquedaDeJugadores } from "../vistas/BusquedaDeJugadores";
 import HeaderTitle from "../header/headerTitle";
 import { View, StyleSheet } from "react-native";
 import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada";
@@ -24,7 +23,6 @@ import { Color } from "../../estilos/colores.js"
 const Stack = createStackNavigator();
 const titlesConfig = {
   resenias: "Reseñas",
-  busquedaDeJugadores: "Busqueda Jugadores",
   miPerfil: "Mi Perfil",
   busquedaAvanzada: "Busqueda Avanzada",
   perfilJugador: "Perfil Jugador",
@@ -41,7 +39,6 @@ export const rutas = {
   resenias: "resenias",
   miPerfil: "miPerfil",
   recuperarContrasena: "recuperarContrasena",
-  busquedaDeJugadores: "busquedaDeJugadores",
   jugadores: "jugadores",
 
 };
@@ -109,11 +106,6 @@ const AppRutas = () => {
             titulo="busquedaAvanzada"
             name="busquedaAvanzada"
             component={BusquedaAvanzada}
-          />
-           <Stack.Screen
-            titulo={rutas.busquedaDeJugadores}
-            name={rutas.busquedaDeJugadores}
-            component={BusquedaDeJugadores}
           />
           <Stack.Screen
             titulo={rutas.jugadores}

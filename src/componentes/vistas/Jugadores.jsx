@@ -13,12 +13,11 @@ export const Jugadores = () => {
   const [jugadores, setJugadores] = useState([])
   const navigation = useNavigation();
 
-  const { params: juegoId } = navigation.getState().routes.slice(-1)[0];
+  const { params: juegoId } = navigation.getState().routes.at(-1);
 
   useFocusEffect(
     useCallback(() => {
       const fetchJugadores = async () => {
-        console.log(juegoId)
         try {
           const nuevosJugadores = await JugadoresService.getJuegadoresConJuegosEnComun(juegoId)
           setJugadores(nuevosJugadores)
@@ -39,7 +38,7 @@ export const Jugadores = () => {
   return (
     <View style={styles.containerExterior}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Busqueda mostrarFiltro={false}></Busqueda>
+        <Busqueda></Busqueda>
         {jugadores.length > 0 ? <ListaDeJugadores jugadores={jugadores} searchText="" /> : (
           <Text style={styles.texto}>
             Parece que no hay usuarios que jueguen a ese juego!

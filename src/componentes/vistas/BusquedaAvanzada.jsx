@@ -30,7 +30,7 @@ const filtrosIniciales = {
 
 export const BusquedaAvanzada = () => {
   const navigation = useNavigation();
-  const { params: filtrosParam } = navigation.getState().routes[0];
+  const { params: filtrosParam } = navigation.getState().routes.at(-1);
 
   const [searchText, setSearchText] = useState("");
   const [filtros, setFiltros] = useState({
@@ -99,7 +99,8 @@ export const BusquedaAvanzada = () => {
   }
 
   const handleAplicar = () => {
-    navigation.navigate(rutas.busquedaDeJugadores, filtros)
+    const rutaAnterior = navigation.getState().routes.at(-2);
+    navigation.navigate(rutaAnterior, filtros)
   }
 
   return (

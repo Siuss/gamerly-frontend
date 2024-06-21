@@ -42,7 +42,7 @@ export const Juegos = () => {
   return (
     <View style={styles.containerExterior}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Busqueda mostrarFiltro={false}></Busqueda>
+        <Busqueda></Busqueda>
         {jugadores.length === 0 && juegos.map((juego) => <CardJuegos
           key={juego.juego}
           foto={juego.imagen}
