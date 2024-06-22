@@ -9,6 +9,10 @@ import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { useFocusEffect } from '@react-navigation/native';
 import { useNavigation } from "@react-navigation/native";
 import { rutas } from "../rutas/rutas";
+import { JugadoresService } from "../../services/JugadoresService";
+import { color } from "framer-motion";
+import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
+import BarraBusquedaFiltro from "../atomos/barraBusquedaFiltro/BarraBusquedaFiltro";
 
 export const Juegos = () => {
   const [juegos, setJuegos] = useState([]);
@@ -36,24 +40,24 @@ export const Juegos = () => {
     }, [])
   );
 
-  const filteredJuegos = juegos.filter(juego =>
-    juego.nombre.toLowerCase().includes(searchText.toLowerCase())
-  );
-
-  const filteredJugadores = jugadores.filter(jugador =>
-    jugador.nombre.toLowerCase().includes(searchText.toLowerCase())
-  );
-
+  
+  const handleChange = async(text)=>{  setSearchText(text)
+    const nuevosJuegos= await JuegosService.getJuegosPorNombre(text)
+  
+    setJuegos(nuevosJuegos)
+  }
+  
+  
   return (
     <View style={styles.containerExterior}>
-      <TextInput
-        style={styles.input}
+      <Busqueda 
         placeholder="Buscar..."
         value={searchText}
-        onChangeText={text => setSearchText(text)}
+        onChangeText={text => handleChange(text)}
+        mostrarFiltro={false}
       />
       <ScrollView contentContainerStyle={styles.container}>
-        {jugadores.length === 0 && filteredJuegos.map((juego) => (
+        {juegos.map((juego) => (
           <CardJuegos
             key={juego.juego}
             foto={juego.imagen}
@@ -62,7 +66,6 @@ export const Juegos = () => {
             onPress={async () => handleJuegoPress(juego)}
           />
         ))}
-        {jugadores.length > 0 && <ListaDeJugadores jugadores={filteredJugadores} searchText={searchText} />}
       </ScrollView>
     </View>
   );
@@ -83,12 +86,13 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: Color.neutroClaro,
+    borderColor: Color.secundario,
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
     width: '100%',
-    backgroundColor: 'white',
+    color:Color.secundario,
+    
   },
 });
