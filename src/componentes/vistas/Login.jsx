@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SesionService } from "../../services/SesionService"
 import { Toast } from 'toastify-react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { rutas } from '../rutas/rutas';
 
 
 export const Login = () => {
@@ -32,18 +33,18 @@ export const Login = () => {
     try {
       const usuario = await SesionService.login(credenciales)
       await AsyncStorage.setItem("usuario", JSON.stringify(usuario))
-      navigation.navigate("busquedaDeJugadores");
+      navigation.navigate(rutas.juegos);
     } catch (error) {
       Toast.error(error.response.data.message)
     }
   };
 
   const registro = () => {
-    navigation.navigate("registro");
+    navigation.navigate(rutas.registro);
   };
 
   const recuperar = () => {
-    navigation.navigate("recuperarContrasena");
+    navigation.navigate(rutas.recuperarContrasena);
   };
 
   return (

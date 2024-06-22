@@ -1,20 +1,14 @@
 import React from "react";
-import { StyleSheet, View, ImageBackground, Text } from "react-native";
+import { StyleSheet, View, ImageBackground, TouchableOpacity } from "react-native";
 import { Color } from "../../estilos/colores";
 import { Boton } from "../atomos/boton/Boton"
 import { Parrafo } from "../atomos/parrafo/Parrafo"
-import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-web";
+export const CardJuegos = (props) => {
+  const { style, foto, juego, plataforma, onPress } = props;
 
-export const CardComunidad = (props) => {
-  const { style, foto, juego, plataforma } = props;
-  const navigation = useNavigation ();
-  const handleStart = () =>{
-    navigation.navigate("busquedaDeJugadores");
-  }
 
   return (
-    <View style={[styles.card, style]}>
+    <TouchableOpacity style={[styles.card, style]} onPress={onPress}>
       <ImageBackground style={styles.image} source={{ uri: foto }}>
       </ImageBackground>
       <View style={styles.contenido}>
@@ -22,12 +16,10 @@ export const CardComunidad = (props) => {
           <Parrafo variante="blancoS">{juego}</Parrafo>
           <Parrafo variante="blancoS">{plataforma}</Parrafo>
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleStart}>
-        <Text style={styles.botonTexto}>Ver Jugadores</Text>
-        </TouchableOpacity>
+
 
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

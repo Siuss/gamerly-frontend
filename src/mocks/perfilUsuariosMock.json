@@ -1,8 +1,8 @@
 [
   {
-    "id": "1",
+    "id": 1,
     "foto": "https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg",
-    "nombreUsuario": "Nanami",
+    "nombre": "Nanami",
     "edad": "25",
     "nacionalidad": "Argentina",
     "genero": "Femenino",
@@ -24,9 +24,9 @@
     }
   },
   {
-    "id": "2",
+    "id": 2,
     "foto": "https://pbs.twimg.com/media/Fn-6kqHaUAEuv2J.jpg",
-    "nombreUsuario": "SilvinaPuerta27",
+    "nombre": "SilvinaPuerta27",
     "edad": "31",
     "nacionalidad": "Uruguay",
     "genero": "Femenino",
@@ -48,9 +48,9 @@
     }
   },
   {
-    "id": "3",
+    "id": 3,
     "foto": "https://i.pinimg.com/originals/03/c4/b7/03c4b72a1a6e937674fd17b4b9d416f3.jpg",
-    "nombreUsuario": "javyVent_7",
+    "nombre": "javyVent_7",
     "edad": "19",
     "nacionalidad": "Argentina",
     "genero": "Masculino",

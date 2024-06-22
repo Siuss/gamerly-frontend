@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { SesionService } from "../../services/SesionService"
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { Color } from "../../estilos/colores";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import moment from "moment";
+
+const regexpFecha = /[^0-9/]/;
+const regexpContrasena = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+const regexpEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const Registro = () => {
   const [nombre, setNombre] = useState('');
@@ -12,14 +18,118 @@ export const Registro = () => {
   const [contrasena, setContrasena] = useState('');
   const [aceptoTerminos, setAceptoTerminos] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [fechaEsValida, setFechaEsValida] = useState(true);
+  const [contrasenaEsValida, setContrasenaEsValida] = useState(true);
+  const [nombreEsValido, setNombreEsValido] = useState(true);
+  const [emailEsValido, setEmailEsValido] = useState(true);
+  const [nacionalidadEsValida, setNacionalidadEsValida] = useState(true);
   const navigation = useNavigation();
 
-  const handleRegistro = () => {
-    navigation.navigate("login");
-  };
+  const validadorFecha = () => (
+    fechaNacimiento.length === 10 &&
+    fechaEsValida
+  )
+
+  const validadorContrasena = () => (
+    contrasena && regexpContrasena.test(contrasena)
+  )
+
+  const validadorNombre = () => (
+    nombre.length > 2
+  )
+
+  const validadorEmail = () => (
+    email && regexpEmail.test(email)
+  )
+
+  const validadorNacionalidad = () => (
+    !!nacionalidad
+  )
+
+  const validadorFormulario = () => {
+    return validadorFecha() && validadorContrasena() && validadorNombre() && validadorEmail() && validadorNacionalidad() && aceptoTerminos
+  }
+
+  const formularioEsValido = useMemo(() => {
+    return validadorFormulario()
+  }, [nombre, fechaNacimiento, nacionalidad, email, contrasena, aceptoTerminos, fechaEsValida])
+
+  const handleChangeContrasena = (password) => {
+    setContrasena(password)
+    setContrasenaEsValida(password === "" || regexpContrasena.test(password))
+  }
+
+  const handleChangeNombre = (_nombre) => {
+    setNombre(_nombre)
+    setNombreEsValido(_nombre === "" || _nombre.length > 2)
+  }
+
+  const handleLimpiarNombre = () => {
+    clearInput(setNombre)
+    setNombreEsValido(true)
+  }
+
+  const handleChangeEmail = (mail) => {
+    setEmail(mail)
+    setEmailEsValido(mail === "" || regexpEmail.test(mail))
+  }
+
+  const handleLimpiarMail = () => {
+    clearInput(setEmail)
+    setEmailEsValido(true)
+  }
+
+  const handleChangeNacionalidad = (nacion) => {
+    setNacionalidad(nacion)
+    setNacionalidadEsValida(nacion === "" || nacion.length > 2)
+  }
+
+  const handleLimpiarNacionalidad = () => {
+    clearInput(setNacionalidad)
+    setNacionalidadEsValida(true)
+  }
+
+  const handleChangeFechaNacimiento = (fecha) => {
+    const fechaMomentJs = moment(fecha, 'DD/MM/YYYY', true);
+
+    if (fecha.length > 9) {
+      setFechaEsValida(fechaMomentJs.isValid());
+    } else {
+      setFechaEsValida(true)
+    }
+
+    if (regexpFecha.test(fecha)) {
+      setFechaEsValida(false)
+    }
+
+    setFechaNacimiento(fecha)
+  }
+
+  const handleLimpiarFechaNacimiento = () => {
+    clearInput(setFechaNacimiento)
+    setFechaEsValida(true)
+  }
 
   const clearInput = (setState) => {
     setState('');
+  };
+
+  const handleRegistro = async () => {
+    try {
+      const nuevoUsuario = {
+        nombre,
+        fechaNacimiento,
+        email,
+        password: contrasena,
+        //nacionalidad
+      }
+
+      await SesionService.signUp(nuevoUsuario)
+      navigation.navigate("login")
+    } catch (error) {
+      console.log(error)
+      console.log("TODO: Manejar errores")
+    }
   };
 
   return (
@@ -27,70 +137,70 @@ export const Registro = () => {
       <Text style={styles.title}>Registro</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, !nombreEsValido && styles.inputError]}
           placeholder="Nombre y Apellido"
           value={nombre}
-          onChangeText={setNombre}
+          onChangeText={handleChangeNombre}
         />
         {nombre !== '' && (
-          <TouchableOpacity onPress={() => clearInput(setNombre)} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={Color.secundario} />
+          <TouchableOpacity onPress={handleLimpiarNombre} style={styles.inputIcon}>
+            <Ionicons name="close" size={24} color={nombreEsValido ? Color.secundario : Color.error} />
           </TouchableOpacity>
         )}
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
-          placeholder="Fecha de Nacimiento"
+          style={[styles.input, !fechaEsValida && styles.inputError]}
+          placeholder="Fecha de Nacimiento (DD/MM/YYYY)"
           value={fechaNacimiento}
-          onChangeText={setFechaNacimiento}
+          onChangeText={handleChangeFechaNacimiento}
         />
         {fechaNacimiento !== '' && (
-          <TouchableOpacity onPress={() => clearInput(setFechaNacimiento)} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={Color.secundario} />
+          <TouchableOpacity onPress={handleLimpiarFechaNacimiento} style={styles.inputIcon}>
+            <Ionicons name="close" size={24} color={fechaEsValida ? Color.secundario : Color.error} />
           </TouchableOpacity>
         )}
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, !nacionalidadEsValida && styles.inputError]}
           placeholder="Nacionalidad"
           value={nacionalidad}
-          onChangeText={setNacionalidad}
+          onChangeText={handleChangeNacionalidad}
         />
         {nacionalidad !== '' && (
-          <TouchableOpacity onPress={() => clearInput(setNacionalidad)} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={Color.secundario} />
+          <TouchableOpacity onPress={handleLimpiarNacionalidad} style={styles.inputIcon}>
+            <Ionicons name="close" size={24} color={nacionalidadEsValida ? Color.secundario : Color.error} />
           </TouchableOpacity>
         )}
       </View>
       <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-          />
-          {email !== '' && (
-            <TouchableOpacity onPress={() => clearInput(setEmail)} style={styles.inputIcon}>
-              <Ionicons name="close" size={24} color={Color.secundario} />
-            </TouchableOpacity>
-          )}
+        <TextInput
+          style={[styles.input, !emailEsValido && styles.inputError]}
+          placeholder="Email"
+          value={email}
+          onChangeText={handleChangeEmail}
+        />
+        {email !== '' && (
+          <TouchableOpacity onPress={handleLimpiarMail} style={styles.inputIcon}>
+            <Ionicons name="close" size={24} color={emailEsValido ? Color.secundario : Color.error} />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            secureTextEntry={!showPassword}
-            value={contrasena}
-            onChangeText={setContrasena}
-          />
-          <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.inputIcon}
-          >
-            <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color={Color.secundario} />
-          </TouchableOpacity>
+        <TextInput
+          style={[styles.input, styles.inputContrasenia, !contrasenaEsValida && styles.inputError]}
+          placeholder="Contraseña"
+          secureTextEntry={!showPassword}
+          value={contrasena}
+          onChangeText={handleChangeContrasena}
+        />
+        <TouchableOpacity
+          onPress={() => setShowPassword(!showPassword)}
+          style={styles.inputIcon}
+        >
+          <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color={Color.secundario} />
+        </TouchableOpacity>
       </View>
       <View style={styles.checkboxContainer}>
         <TouchableOpacity
@@ -100,10 +210,11 @@ export const Registro = () => {
           <View style={styles.checkboxInnerContainer}>
             <View style={[styles.checkboxSquare, aceptoTerminos && styles.checkboxSquareChecked]} />
             <Text style={styles.checkboxText}>Acepto términos y condiciones</Text>
+
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleRegistro}>
+      <TouchableOpacity style={[styles.button, !formularioEsValido && styles.botonDeshabilitado]} onPress={handleRegistro} disabled={!formularioEsValido}>
         <Text style={styles.buttonText}>Registrarme</Text>
       </TouchableOpacity>
     </View>
@@ -139,7 +250,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingLeft: 8,
     borderRadius: 4,
+    paddingRight: 32,
     color: Color.secundario,
+  },
+  inputError: {
+    borderColor: Color.error,
+    color: Color.error,
   },
   inputIcon: {
     position: 'absolute',
@@ -160,7 +276,7 @@ const styles = StyleSheet.create({
   checkboxInnerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    
+
   },
   checkboxSquare: {
     width: 20,
@@ -185,10 +301,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '7%',
   },
+  botonDeshabilitado: {
+    opacity: 0.4
+  },
   buttonText: {
     color: Color.blanco,
     fontSize: 16,
     fontWeight: 'bold',
   },
+  inputContrasenia: {
+    paddingRight: 48
+  }
 });
 

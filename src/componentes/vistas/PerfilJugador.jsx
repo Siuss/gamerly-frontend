@@ -10,33 +10,44 @@ import diasDeLaSemana from "../../data/dias.json";
 import momentos from "../../data/momentosDelDia.json";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+import { useState, useEffect } from 'react'
+import { JugadoresService } from "../../services/JugadoresService";
 
 export const PerfilJugador = (props) => {
   const route = useRoute();
   const { id } = route.params;
+  const [perfilInfo, setPerfilInfo] = useState(null)
 
   const navigation = useNavigation();
 
-  const obtenerInfoPorId = (id) => {
-    return perfilMock.find((usuario) => {
-      return usuario.id === id;
-    });
-  };
-
-  const perfilInfo = obtenerInfoPorId(id);
-
   const juegaEnAlgunMomentoDeEsteDia = (diaDeLaSemana) =>
-    perfilInfo.horarios[diaDeLaSemana].some((momento) => momento);
+    perfilInfo.horarios?.[diaDeLaSemana]?.some((momento) => momento);
 
   const handleOnVerReseniasClick = () => {
     navigation.navigate("resenias", { id });
   };
 
+  useEffect(() => {
+    const traerUsuario = async () => {
+      const perfil = await JugadoresService.getPerfilUsuario(id)
+
+      try {
+        setPerfilInfo(perfil)
+      } catch (error) {
+        // TODO: Manejo de errores
+      }
+    }
+
+    traerUsuario()
+  }, [])
+
+  if (!perfilInfo) return <></>
+
   return (
     <ScrollView style={styles.contenedor} {...props}>
       <CardFotoPerfil
         style={styles.cardFotoPerfil}
-        nombreUsuario={perfilInfo.nombreUsuario}
+        nombreUsuario={perfilInfo.nombre}
         foto={perfilInfo.foto}
       />
       <View style={styles.cardDetalles}>
@@ -48,20 +59,20 @@ export const PerfilJugador = (props) => {
 
         <Parrafo variante="blancoM">Plataforma:</Parrafo>
         <ListaDePildoras
-          items={perfilInfo.plataformas.map((plataforma, index) => ({id: index, contenido: plataforma}))}
+          items={perfilInfo.plataformas.map((plataforma, index) => ({ id: index, contenido: plataforma }))}
           conBorde
           variante="conBorde"
         />
 
         <Parrafo variante="blancoM">Juegos:</Parrafo>
         <ListaDePildoras
-          items={perfilInfo.juegos.map((juego, index) => ({id: index, contenido: juego}))}
+          items={perfilInfo.juegosPreferidos.map((juego, index) => ({ id: index, contenido: juego }))}
           conBorde
           variante="conBorde"
         />
 
         <Parrafo variante="blancoM">Disponibilidad:</Parrafo>
-        <View style={styles.contenedorDisponibilidad}>
+        {diasDeLaSemana && <View style={styles.contenedorDisponibilidad}>
           {diasDeLaSemana.map(
             (diaDeLaSemana, diaIndex) =>
               juegaEnAlgunMomentoDeEsteDia(diaIndex) && (
@@ -73,24 +84,25 @@ export const PerfilJugador = (props) => {
                   >
                     {diaDeLaSemana}
                   </Pildora>
-                  <View style={styles.contenedorMomentos}>
-                    {perfilInfo.horarios[diaIndex].map(
-                      (momento, momentoIndex) =>
-                        momento && (
-                          <Pildora
-                            key={momentos[momentoIndex]}
-                            conBorde
-                            variante="conBorde"
-                          >
-                            {momentos[momentoIndex]}
-                          </Pildora>
-                        )
-                    )}
-                  </View>
+                  {perfilInfo.horarios &&
+                    <View style={styles.contenedorMomentos}>
+                      {perfilInfo.horarios?.[diaIndex].map(
+                        (momento, momentoIndex) =>
+                          momento && (
+                            <Pildora
+                              key={momentos[momentoIndex]}
+                              conBorde
+                              variante="conBorde"
+                            >
+                              {momentos[momentoIndex]}
+                            </Pildora>
+                          )
+                      )}
+                    </View>}
                 </View>
               )
           )}
-        </View>
+        </View>}
       </View>
       <View style={styles.contenedorBotones}>
         <Boton style={styles.boton} textStyle={styles.textoBoton} variante="secundario">
@@ -141,7 +153,7 @@ const styles = StyleSheet.create({
   },
   contenedorDias: {
     marginBottom: 8,
-  },  
+  },
   contenedorMomentos: {
     display: "flex",
     flexDirection: "row",
