@@ -11,6 +11,14 @@ const getJuegos = async () => {
     );
 
     return response.data;
+  
 };
 
-export const JuegosService = { getJuegos };
+const getJuegosPorNombre = async (Nombre) => {
+    response = await axios.get(
+        `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}/${Nombre}`,
+    );
+
+    return response.data;
+}
+export const JuegosService = { getJuegos,getJuegosPorNombre };//
