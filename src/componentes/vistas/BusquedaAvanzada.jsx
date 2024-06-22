@@ -106,20 +106,15 @@ export const BusquedaAvanzada = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Juegos en común</Parrafo>
+       
         <View style={styles.espaciador}>
-          <BarraBusqueda
-            style={styles.barraBusqueda}
-            text={searchText}
-            onChangeText={setSearchText}
-            onSubmitEditing={handleEnter}
-          />
+          
         </View>
         <View style={styles.espaciador}>
           <ListaDePildoras onPress={handleJuegoRemove} items={filtros.juegos} />
         </View>
       </View>
-      <Divisor />
+     
       <View style={styles.espaciador}>
         <View style={styles.espaciador}>
           <Parrafo variante="blancoM">Reseña</Parrafo>
