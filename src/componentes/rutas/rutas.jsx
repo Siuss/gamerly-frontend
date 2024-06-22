@@ -18,6 +18,7 @@ import useNavBarStore from "../../hooks/useNavbarStore";
 import ToastManager from 'toastify-react-native'
 import { Juegos } from "../vistas/Juegos"
 import { Color } from "../../estilos/colores.js"
+import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
 
 
 const Stack = createStackNavigator();
@@ -29,6 +30,11 @@ const titlesConfig = {
   amigos: "Amigos",
   juegos: "Juegos",
   jugadores: "Jugadores",
+<<<<<<< Updated upstream
+=======
+  reseniaJugador: "ReseniaJugador",
+
+>>>>>>> Stashed changes
 };
 
 export const rutas = {
@@ -40,6 +46,7 @@ export const rutas = {
   miPerfil: "miPerfil",
   recuperarContrasena: "recuperarContrasena",
   jugadores: "jugadores",
+  reseniaJugador: "reseniaJugador",
 
 };
 
@@ -116,6 +123,11 @@ const AppRutas = () => {
             titulo={rutas.juegos}
             name={rutas.juegos}
             component={Juegos}
+          />
+           <Stack.Screen
+            titulo={rutas.reseniaJugador}
+            name={rutas.reseniaJugador}
+            component={ReseniaJugador}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
