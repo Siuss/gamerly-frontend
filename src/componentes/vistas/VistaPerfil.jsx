@@ -20,7 +20,6 @@ export const VistaPerfil = () => {
   const [perfil, setPerfil] = useState({});
   const {isLoggedIn, userId,} = useStore()
   const [isLoading, setIsLoading] = useState(true);
-  // const [horarios, setHorarios] = useState(perfil.horarios);
   const {id} = route.params;
 
   const navigation = useNavigation();
@@ -49,7 +48,8 @@ export const VistaPerfil = () => {
 
   const obtenerReseniasDeOtrosUsuarios = () => {
     if (!perfil.resenias) return [];
-    return perfil.resenias.filter((resenia) => resenia.nombre !== perfil.nombre);
+    const resenias = Array.isArray(perfil.resenias) ? perfil.resenias : [perfil.resenias];
+    return resenias.filter((resenia) => resenia.nombre !== perfil.nombre);
   };
 
   const reseniasDeOtrosUsuarios = obtenerReseniasDeOtrosUsuarios();
@@ -152,15 +152,14 @@ export const VistaPerfil = () => {
               {/*  onHorarioChange={onHorarioChange}*/}
               {/*/>*/}
             </View>
-            {reseniasDeOtrosUsuarios.length > 0 &&
-                reseniasDeOtrosUsuarios.map((resenia, index) => (
-                    <CardResenia
-                        key={index}
-                        puntaje={resenia.puntaje}
-                        foto={resenia.foto}
-                        resenia={resenia}
-                    />
-                ))}
+            {reseniasDeOtrosUsuarios.map((resenia, index) => (
+                <CardResenia
+                    key={index}
+                    puntaje={resenia.puntaje}
+                    foto={resenia.foto}
+                    resenia={resenia.comentario}
+                />
+            ))}
             <View style={styles.verMas}>
               <Boton variante="link" onPress={handleVerMasClick}>
                 Ver mas
