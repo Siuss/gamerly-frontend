@@ -18,7 +18,7 @@ export const VistaPerfil = () => {
   const [posicionAnteriorScroll, setPosicionAnteriorScroll] = useState(0);
   const [direccionScroll, setDireccionScroll] = useState("arriba");
   const [perfil, setPerfil] = useState({});
-  const {isLoggedIn, userId,} = useStore()
+  const {isLoggedIn, userId, logout} = useStore()
   const [isLoading, setIsLoading] = useState(true);
   const {id} = route.params;
 
@@ -86,6 +86,7 @@ export const VistaPerfil = () => {
   };
 
   const handleLogout = () => {
+    logout()
     navigation.navigate("login");
   }
 
