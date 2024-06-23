@@ -20,8 +20,6 @@ import { Juegos } from "../vistas/Juegos"
 import { Color } from "../../estilos/colores.js"
 import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
 
-
-import { Comunidad } from "../vistas/Comunidad"
 import Toast from "react-native-toast-message";
 
 const Stack = createStackNavigator();

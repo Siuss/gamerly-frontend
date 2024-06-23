@@ -18,7 +18,7 @@ export const VistaPerfil = () => {
   const [posicionAnteriorScroll, setPosicionAnteriorScroll] = useState(0);
   const [direccionScroll, setDireccionScroll] = useState("arriba");
   const [perfil, setPerfil] = useState({});
-  const {isLoggedIn, userId, logout} = useStore()
+  const {isLoggedIn, userId, logout, setUser} = useStore()
   const [isLoading, setIsLoading] = useState(true);
   const {id} = route.params;
 
@@ -29,7 +29,8 @@ export const VistaPerfil = () => {
       if (!isLoggedIn || !userId) {
         throw new Error("El usuario no está autenticado o el userId no está disponible");
       }
-      const perfilData = await SesionService.obtenerDetalleUsuario(id);
+      console.log("Fetching perfil for userId:", userId);
+      const perfilData = await SesionService.obtenerDetalleUsuario(userId)
       setPerfil(perfilData);
     } catch (error) {
       console.error("Error fetching perfil info:", error);
@@ -41,8 +42,10 @@ export const VistaPerfil = () => {
   useEffect(() => {
     if (isLoggedIn && userId) {
       fetchPerfil();
+    } else {
+      setPerfil({});
     }
-  }, [isLoggedIn, userId])
+  }, [])
 
 
 
@@ -85,8 +88,9 @@ export const VistaPerfil = () => {
     setShowNavBar(false)
   };
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await logout()
+    setPerfil({});
     navigation.navigate("login");
   }
 

@@ -7,7 +7,7 @@ const JugadoresEndpoints = {
 };
 
 const getJuegadoresConJuegosEnComun = async (idJuego) => {
-    response = await axios.get(
+    const response = await axios.get(
         `${BASE_URL}${JugadoresEndpoints.JUGADORES_CON_JUEGOS_EN_COMUN}${idJuego}`
     );
 
@@ -15,7 +15,7 @@ const getJuegadoresConJuegosEnComun = async (idJuego) => {
 };
 
 const getPerfilUsuario = async (idUsuario) => {
-    response = await axios.get(
+    const response = await axios.get(
         `${BASE_URL}${JugadoresEndpoints.PERFIL_USUARIO}${idUsuario}`
     );
 
