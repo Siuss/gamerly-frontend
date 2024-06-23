@@ -21,6 +21,9 @@ import { Color } from "../../estilos/colores.js"
 import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
 
 
+import { Comunidad } from "../vistas/Comunidad"
+import Toast from "react-native-toast-message";
+
 const Stack = createStackNavigator();
 const titlesConfig = {
   resenias: "Reseñas",
@@ -30,11 +33,7 @@ const titlesConfig = {
   amigos: "Amigos",
   juegos: "Juegos",
   jugadores: "Jugadores",
-<<<<<<< Updated upstream
-=======
   reseniaJugador: "ReseniaJugador",
-
->>>>>>> Stashed changes
 };
 
 export const rutas = {
@@ -132,6 +131,7 @@ const AppRutas = () => {
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
       </NavigationContainer>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
 };

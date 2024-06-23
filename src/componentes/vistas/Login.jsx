@@ -4,15 +4,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { Color } from "../../estilos/colores";
 import { useNavigation } from "@react-navigation/native";
 import { SesionService } from "../../services/SesionService"
-import { Toast } from 'toastify-react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { rutas } from '../rutas/rutas';
+import {useMessageToast} from "../../hooks/useToast";
+import UseStore from "../../hooks/useStore";
 
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [credenciales, setCredenciales] = useState({ email: "", password: "" });
   const navigation = useNavigation();
+  const {errorToast} = useMessageToast();
+  const { login, setUser } = UseStore()
 
   const handleCredencialesChange = (campo, valor) => {
     setCredenciales({ ...credenciales, [campo]: valor })
@@ -34,8 +37,13 @@ export const Login = () => {
       const usuario = await SesionService.login(credenciales)
       await AsyncStorage.setItem("usuario", JSON.stringify(usuario))
       navigation.navigate(rutas.juegos);
+      if (usuario) {
+        login()
+        setUser(usuario)
+        navigation.navigate("busquedaDeJugadores");
+      }
     } catch (error) {
-      Toast.error(error.response.data.message)
+        errorToast(error)
     }
   };
 
