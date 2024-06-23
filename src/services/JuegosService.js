@@ -6,7 +6,7 @@ const JuegosEndpoints = {
 };
 
 const getJuegos = async () => {
-    response = await axios.get(
+   const response = await axios.get(
         `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}`, { params: { numero: 10 } }
     );
 
@@ -15,7 +15,7 @@ const getJuegos = async () => {
 };
 
 const getJuegosPorNombre = async (Nombre) => {
-    response = await axios.get(
+    const response = await axios.get(
         `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}/${Nombre}`,
     );
 
