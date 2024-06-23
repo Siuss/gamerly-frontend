@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
-import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import { Divisor } from "../atomos/divisor/Divisor";
 import { Boton } from "../atomos/boton/Boton";
 import { useNavigation } from "@react-navigation/native";
-import { ListaDePildoras } from "../bloques/ListaDePildoras";
-import juegosData from "../.././data/juegos.json";
+import juegosData from "../../data/juegos.json";
 import { Color } from "../../estilos/colores";
 import dias from "../../data/dias.json";
 import momentosDelDia from "../../data/momentosDelDia.json";
-import {rutas} from "../rutas/rutas"
+import { rutas } from "../rutas/rutas";
+import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
+import TextArea from "../atomos/TextArea/TextArea";
 
 const filtrosIniciales = {
   juegos: [],
@@ -28,15 +28,13 @@ const filtrosIniciales = {
   resenia: undefined,
 };
 
-export const BusquedaAvanzada = () => {
+export const ReseniaJugador = () => {
   const navigation = useNavigation();
   const { params: filtrosParam } = navigation.getState().routes.at(-1);
 
   const [searchText, setSearchText] = useState("");
-  const [filtros, setFiltros] = useState({
-    ...filtrosIniciales,
-    ...filtrosParam,
-  });
+  const [puntaje, setPuntaje] = useState(0);
+  const [resenia, setResenia] = useState("");
 
   const handleEnter = (event) => {
     if (event.target.value.length < 3) return;
@@ -90,41 +88,32 @@ export const BusquedaAvanzada = () => {
   };
 
   const handleReseniaChange = (reseniaRaw) => {
-    const resenia = reseniaRaw === 0 ? undefined : reseniaRaw
-    setFiltros((prevFiltros) => ({ ...prevFiltros, resenia }));
+    const resenia = reseniaRaw === 0 ? undefined : reseniaRaw;
+    setPuntaje(resenia);
   };
 
   const handleLimpiar = () => {
-    setFiltros(filtrosIniciales)
-  }
+    setFiltros(filtrosIniciales);
+  };
 
   const handleAplicar = () => {
     const rutaAnterior = navigation.getState().routes.at(-2);
-    navigation.navigate(rutaAnterior, filtros)
-  }
+    navigation.navigate(rutaAnterior, filtros);
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Juegos en común</Parrafo>
-        <View style={styles.espaciador}>
-          <BarraBusqueda
-            style={styles.barraBusqueda}
-            text={searchText}
-            onChangeText={setSearchText}
-            onSubmitEditing={handleEnter}
-          />
-        </View>
-        <View style={styles.espaciador}>
-          <ListaDePildoras onPress={handleJuegoRemove} items={filtros.juegos} />
-        </View>
+    <View style={styles.container}>
+      <View>
+        <FotoDePerfil
+          src="https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg"
+          height={64}
+          width={64}
+        ></FotoDePerfil>
+        <Parrafo variante="blancoM">Julio Perez</Parrafo>
       </View>
-      <Divisor />
       <View style={styles.espaciador}>
-        <View style={styles.espaciador}>
-          <Parrafo variante="blancoM">Reseña</Parrafo>
-        </View>
-        <View style={styles.espaciador}>
+        <View style={styles.puntuacion}>
+          <Parrafo variante="blancoM" style={styles.textoPuntuacion}>Puntuación:</Parrafo>
           <View style={styles.contenedorSlider}>
             <Slider
               onValueChange={handleReseniaChange}
@@ -133,46 +122,23 @@ export const BusquedaAvanzada = () => {
               maximumValue={5}
               step={1}
             />
-          </View>
-          <Parrafo style={styles.parrafoCentrado} variante="blancoM">
-            {filtros.resenia || 0}
+            <Parrafo style={styles.parrafoCentrado} variante="blancoM">
+            {puntaje || 0}
           </Parrafo>
+          </View>
         </View>
-      </View>
-      <Divisor />
-      <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Disponibilidad horaria</Parrafo>
-      </View>
-      <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Días de la semana</Parrafo>
         <View style={styles.espaciador}>
-          <ListaDePildoras
-            onPress={handleDiaToggle}
-            items={filtros.dias.map((dia) => ({
-              ...dia,
-              variante: dia.juega ? "" : "deseleccionado",
-            }))}
-          />
+          <Parrafo style={styles.dejarResenia} variante="blancoM">Dejar una reseña:</Parrafo>
+          <TextArea></TextArea>
         </View>
       </View>
-      <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Horario</Parrafo>
-        <View style={styles.espaciador}>
-          <ListaDePildoras
-            onPress={handleMomentoToggle}
-            items={filtros.momentosDelDia.map((momento) => ({
-              ...momento,
-              variante: momento.juega ? "" : "deseleccionado",
-            }))}
-          />
-        </View>
-      </View>
-      <Divisor />
+
       <View style={styles.botonera}>
-        <Boton variante="acento"  onPress={handleAplicar}>Aplicar</Boton>
-        <Boton variante="primario" onPress={handleLimpiar}>Limpiar</Boton>
+        <Boton variante="primario" onPress={handleLimpiar}>
+          Enviar
+        </Boton>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -183,6 +149,9 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingVertical: 12,
     paddingHorizontal: 20,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   barraBusqueda: {
     padding: 0,
@@ -196,6 +165,7 @@ const styles = StyleSheet.create({
   },
   contenedorSlider: {
     padding: 16,
+    width: "75vw",
   },
   input: {
     width: "100%",
@@ -205,5 +175,16 @@ const styles = StyleSheet.create({
   },
   parrafoCentrado: {
     textAlign: "center",
+  },
+  puntuacion: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+  },
+  dejarResenia:{
+marginBottom:"16px",
+  },
+  textoPuntuacion:{
+marginTop:"12px",
   },
 });

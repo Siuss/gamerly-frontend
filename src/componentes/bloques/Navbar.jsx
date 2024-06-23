@@ -52,18 +52,18 @@ const NavBar = (props) => {
                 styles.botonDeNavegacion,
                 {
                   backgroundColor:
-                      activeButton === rutas.busquedaDeJugadores || pressed
+                      activeButton === rutas.juegos || pressed
                           ? Color.acento
                           : "transparent",
                 },
               ]}
-              onPress={() => handleNavigate(rutas.busquedaDeJugadores)}
+              onPress={() => handleNavigate(rutas.juegos)}
           >
             <MaterialIcons
                 name="home"
                 size={24}
                 color={
-                  activeButton === rutas.busquedaDeJugadores
+                  activeButton === rutas.juegos
                       ? Color.neutro
                       : Color.blanco
                 }
@@ -85,26 +85,6 @@ const NavBar = (props) => {
                 name="group"
                 size={24}
                 color={activeButton === rutas.amigos ? Color.neutro : Color.blanco}
-            />
-          </Pressable>
-          <Pressable
-              style={({ pressed }) => [
-                styles.botonDeNavegacion,
-                {
-                  backgroundColor:
-                      activeButton === rutas.comunidad || pressed
-                          ? Color.acento
-                          : "transparent",
-                },
-              ]}
-              onPress={() => handleNavigateConId(rutas.comunidad)}
-          >
-            <MaterialIcons
-                name="groups"
-                size={24}
-                color={
-                  activeButton === rutas.comunidad ? Color.neutro : Color.blanco
-                }
             />
           </Pressable>
           <Pressable

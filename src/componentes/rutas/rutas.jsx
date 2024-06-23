@@ -1,8 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Resenias } from "../vistas/Reseñas";
-import { BusquedaDeJugadores } from "../vistas/BusquedaDeJugadores";
 import HeaderTitle from "../header/headerTitle";
 import { View, StyleSheet } from "react-native";
 import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada";
@@ -12,31 +11,41 @@ import { Login } from "../vistas/Login";
 import { Inicio } from "../vistas/Inicio";
 import { Registro } from "../vistas/Registro";
 import { RecuperarContrasena } from "../vistas/RecuperarContrasena";
+import { Jugadores } from "../vistas/Jugadores";
 import { Amigos } from "../vistas/Amigos";
 import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
 import ToastManager from 'toastify-react-native'
+import { Juegos } from "../vistas/Juegos"
+import { Color } from "../../estilos/colores.js"
+import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
+
+
 import { Comunidad } from "../vistas/Comunidad"
 import Toast from "react-native-toast-message";
 
 const Stack = createStackNavigator();
 const titlesConfig = {
   resenias: "Reseñas",
-  busquedaDeJugadores: "Busqueda Jugadores",
   miPerfil: "Mi Perfil",
   busquedaAvanzada: "Busqueda Avanzada",
   perfilJugador: "Perfil Jugador",
   amigos: "Amigos",
-  comunidad: "Comunidad"
+  juegos: "Juegos",
+  jugadores: "Jugadores",
+  reseniaJugador: "ReseniaJugador",
 };
 
 export const rutas = {
   amigos: "amigos",
-  busquedaDeJugadores: "busquedaDeJugadores",
-  comunidad: "comunidad",
+  registro: "registro",
+  juegos: "juegos",
   perfilJugador: "perfilJugador",
   resenias: "resenias",
   miPerfil: "miPerfil",
+  recuperarContrasena: "recuperarContrasena",
+  jugadores: "jugadores",
+  reseniaJugador: "reseniaJugador",
 
 };
 
@@ -95,11 +104,6 @@ const AppRutas = () => {
             component={PerfilJugador}
           />
           <Stack.Screen
-            titulo="busquedaDeJugadores"
-            name="busquedaDeJugadores"
-            component={BusquedaDeJugadores}
-          />
-          <Stack.Screen
             titulo="miPerfil"
             name="miPerfil"
             component={VistaPerfil}
@@ -109,10 +113,20 @@ const AppRutas = () => {
             name="busquedaAvanzada"
             component={BusquedaAvanzada}
           />
+          <Stack.Screen
+            titulo={rutas.jugadores}
+            name={rutas.jugadores}
+            component={Jugadores}
+          />
+          <Stack.Screen
+            titulo={rutas.juegos}
+            name={rutas.juegos}
+            component={Juegos}
+          />
            <Stack.Screen
-            titulo="comunidad"
-            name="comunidad"
-            component={Comunidad}
+            titulo={rutas.reseniaJugador}
+            name={rutas.reseniaJugador}
+            component={ReseniaJugador}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
@@ -128,7 +142,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    flexDirection: "column",
+    flexDirection: "column"
   },
   navigationContainer: {
     display: 'flex',

@@ -6,6 +6,7 @@ const primario = "#4C007E";
 const rosa = "#FFCAAC";
 const secundario = "#AC97FE";
 const neutro = "#020116";
+const error = "#bf2b21";
 
 export const Color = {
   acento,
@@ -16,4 +17,5 @@ export const Color = {
   rosa,
   secundario,
   neutro,
+  error
 };

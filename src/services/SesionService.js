@@ -2,18 +2,26 @@ import axios from "axios";
 import { BASE_URL } from "./requestConfig"
 
 const SesionEndpoints = {
+    CREAR_CUENTA: "/sign-up",
     ELIMINAR_CUENTA: "/usuarios/",
     LOGIN: "/login",
     DETALLE_USUARIO: "/detalle/"
 }
+
+const signUp = async (nuevoUsuario) => {
+    const response = await axios.post(
+        `${BASE_URL}${SesionEndpoints.CREAR_CUENTA}`,
+        nuevoUsuario
+    );
+
+    return response.data;
+} 
 
 const login = async (credenciales) => {
     const response = await axios.post(
         `${BASE_URL}${SesionEndpoints.LOGIN}`,
         credenciales
     );
-
-    console.log(response)
 
     return response.data;
 }
@@ -31,5 +39,6 @@ const obtenerDetalleUsuario = async (id) => {
     );
     return response.data;
 }
+
 
 export const SesionService = { eliminarCuenta, login, obtenerDetalleUsuario }

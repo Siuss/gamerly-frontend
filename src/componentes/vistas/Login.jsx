@@ -5,6 +5,7 @@ import { Color } from "../../estilos/colores";
 import { useNavigation } from "@react-navigation/native";
 import { SesionService } from "../../services/SesionService"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { rutas } from '../rutas/rutas';
 import {useMessageToast} from "../../hooks/useToast";
 import UseStore from "../../hooks/useStore";
 
@@ -34,23 +35,24 @@ export const Login = () => {
   const iniciarSesion = async () => {
     try {
       const usuario = await SesionService.login(credenciales)
+      await AsyncStorage.setItem("usuario", JSON.stringify(usuario))
+      navigation.navigate(rutas.juegos);
       if (usuario) {
         login()
         setUser(usuario)
         navigation.navigate("busquedaDeJugadores");
       }
-
     } catch (error) {
         errorToast(error)
     }
   };
 
   const registro = () => {
-    navigation.navigate("registro");
+    navigation.navigate(rutas.registro);
   };
 
   const recuperar = () => {
-    navigation.navigate("recuperarContrasena");
+    navigation.navigate(rutas.recuperarContrasena);
   };
 
   return (
