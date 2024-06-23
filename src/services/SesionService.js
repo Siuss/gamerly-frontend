@@ -41,4 +41,4 @@ const obtenerDetalleUsuario = async (id) => {
 }
 
 
-export const SesionService = { eliminarCuenta, login, obtenerDetalleUsuario }
+export const SesionService = { eliminarCuenta, login, obtenerDetalleUsuario, signUp }

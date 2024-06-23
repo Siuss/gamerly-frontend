@@ -15,13 +15,8 @@ import { Jugadores } from "../vistas/Jugadores";
 import { Amigos } from "../vistas/Amigos";
 import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
-import ToastManager from 'toastify-react-native'
 import { Juegos } from "../vistas/Juegos"
-import { Color } from "../../estilos/colores.js"
 import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
-
-
-import { Comunidad } from "../vistas/Comunidad"
 import Toast from "react-native-toast-message";
 
 const Stack = createStackNavigator();
@@ -33,7 +28,7 @@ const titlesConfig = {
   amigos: "Amigos",
   juegos: "Juegos",
   jugadores: "Jugadores",
-  reseniaJugador: "ReseniaJugador",
+  reseniaJugador: "ReseniaJugador"
 };
 
 export const rutas = {
@@ -45,7 +40,7 @@ export const rutas = {
   miPerfil: "miPerfil",
   recuperarContrasena: "recuperarContrasena",
   jugadores: "jugadores",
-  reseniaJugador: "reseniaJugador",
+  reseniaJugador: "reseniaJugador"
 
 };
 
