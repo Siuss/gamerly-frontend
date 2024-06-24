@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {ScrollView, StyleSheet, View} from "react-native";
-import {FotoDePerfil} from "../atomos/fotoDePerfil/FotoDePerfil";
-import {Parrafo} from "../atomos/parrafo/Parrafo";
-import {Color} from "../../estilos/colores";
-import {Divisor} from "../atomos/divisor/Divisor";
-import {BotonFlotante} from "../atomos/botonFlotante/BotonFlotante";
-import {useNavigation, useRoute} from "@react-navigation/native";
-import {ListaDePildoras} from "../bloques/ListaDePildoras";
-import {CardResenia} from "../bloques/CardResenia";
-import {Boton} from "../atomos/boton/Boton";
-import {SesionService} from "../../services/SesionService"
+import React, { useCallback, useState } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
+import { Parrafo } from "../atomos/parrafo/Parrafo";
+import { Color } from "../../estilos/colores";
+import { Divisor } from "../atomos/divisor/Divisor";
+import { BotonFlotante } from "../atomos/botonFlotante/BotonFlotante";
+import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
+import { ListaDePildoras } from "../bloques/ListaDePildoras";
+import { CardResenia } from "../bloques/CardResenia";
+import { Boton } from "../atomos/boton/Boton";
+import { SesionService } from "../../services/SesionService"
 import useStore from "../../hooks/useStore";
+import { Toast } from "react-native-toast-message";
 
 
 export const VistaPerfil = () => {
@@ -18,34 +19,36 @@ export const VistaPerfil = () => {
   const [posicionAnteriorScroll, setPosicionAnteriorScroll] = useState(0);
   const [direccionScroll, setDireccionScroll] = useState("arriba");
   const [perfil, setPerfil] = useState({});
-  const {isLoggedIn, userId, logout, setUser} = useStore()
+  const { getIdUsuarioLogueado, logout } = useStore()
   const [isLoading, setIsLoading] = useState(true);
-  const {id} = route.params;
+  const { id } = route.params;
 
   const navigation = useNavigation();
 
-  const fetchPerfil = async () => {
+  const traerPerfil = async () => {
+    const idUsuarioLogueado = await getIdUsuarioLogueado()
+
     try {
-      if (!isLoggedIn || !userId) {
+      if (!idUsuarioLogueado) {
         throw new Error("El usuario no está autenticado o el userId no está disponible");
       }
-      console.log("Fetching perfil for userId:", userId);
-      const perfilData = await SesionService.obtenerDetalleUsuario(userId)
-      setPerfil(perfilData);
+      console.log("Se traen los datos del perfil logueado:", idUsuarioLogueado);
+      setPerfil(await SesionService.obtenerDetalleUsuario(idUsuarioLogueado));
     } catch (error) {
-      console.error("Error fetching perfil info:", error);
+      console.error("Error al traer los datos del perfil buscado:", error);
+      Toast.error("Error inesperado intentalo mas tarde")
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (isLoggedIn && userId) {
-      fetchPerfil();
-    } else {
-      setPerfil({});
-    }
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      if (!id) return
+
+      traerPerfil()
+    }, [id])
+  );
 
 
 
@@ -77,14 +80,14 @@ export const VistaPerfil = () => {
     }
 
     const direccion =
-        nuevaPosicionScroll > posicionAnteriorScroll ? "abajo" : "arriba";
+      nuevaPosicionScroll > posicionAnteriorScroll ? "abajo" : "arriba";
 
     setPosicionAnteriorScroll(nuevaPosicionScroll);
     setDireccionScroll(direccion);
   };
 
   const handleVerMasClick = () => {
-    navigation.navigate("resenias", {id});
+    navigation.navigate("resenias", { id });
     setShowNavBar(false)
   };
 
@@ -99,94 +102,94 @@ export const VistaPerfil = () => {
     handleLogout();
   }
   return (
-      <View style={styles.container}>
-        <ScrollView
-            style={{flex: 1}}
-            onScroll={handleScroll}
-            scrollEventThrottle={8}
-        >
-          <View style={styles.informacionUsuario}>
-            <View style={styles.fotoDePerfil}>
-              <FotoDePerfil width={100} height={100} src={perfil.foto}/>
-            </View>
-            <Divisor/>
-            <Parrafo variante="grisS" style={styles.descripcionUsuario}>
-              {perfil.nombre}
-            </Parrafo>
-            <Divisor/>
-            <Parrafo variante="grisS" style={styles.descripcionUsuario}>
-              {perfil.edad} Años
-            </Parrafo>
-            <Divisor/>
-            <Parrafo variante="grisS" style={styles.descripcionUsuario}>
-              {perfil.nacionalidad}
-            </Parrafo>
-            <Divisor/>
-            <Parrafo variante="grisS" style={styles.descripcionUsuario}>
-              {perfil.genero}
-            </Parrafo>
-            <Divisor/>
-
-            <Parrafo variante="grisS" style={styles.descripcionplataformas}>
-              Mis Plataformas
-            </Parrafo>
-            <View style={styles.pildora1}>
-              <ListaDePildoras items={perfil.plataformas ? perfil.plataformas.map((plataforma, index) => ({
-                id: index,
-                contenido: plataforma
-              })) : []}/>
-            </View>
-
-            <Parrafo variante="grisS" style={styles.descripcionplataformas}>
-              Mis Juegos
-            </Parrafo>
-            <View style={styles.pildora1}>
-              <ListaDePildoras items={perfil.juegosPreferidos ? perfil.juegosPreferidos.map((juego, index) => ({
-                id: index,
-                contenido: juego
-              })) : []}/>
-            </View>
-            <View style={styles.conatainerEditarJuego}>
-              <Parrafo variante="grisS" style={styles.descripcionplataformas}>
-                Mis Horarios
-              </Parrafo>
-            </View>
-            <View style={styles.containerTable}>
-              {/*<TablaHorarios*/}
-              {/*  horarios={horarios}*/}
-              {/*  onHorarioChange={onHorarioChange}*/}
-              {/*/>*/}
-            </View>
-            {reseniasDeOtrosUsuarios.map((resenia, index) => (
-                <CardResenia
-                    key={index}
-                    puntaje={resenia.puntaje}
-                    foto={resenia.foto}
-                    resenia={resenia.comentario}
-                />
-            ))}
-            <View style={styles.verMas}>
-              <Boton variante="link" onPress={handleVerMasClick}>
-                Ver mas
-              </Boton>
-            </View>
+    <View style={styles.container}>
+      <ScrollView
+        style={{ flex: 1 }}
+        onScroll={handleScroll}
+        scrollEventThrottle={8}
+      >
+        <View style={styles.informacionUsuario}>
+          <View style={styles.fotoDePerfil}>
+            <FotoDePerfil width={100} height={100} src={perfil.foto} />
           </View>
-          <View style={styles.botonesSesion}>
-            <Divisor/>
-            <Boton variante="transparente" onPress={handleEliminarCuenta}>Eliminar Cuenta</Boton>
-            <Divisor/>
-            <Boton variante="transparente" onPress={handleLogout}>Cerrar Sesion</Boton>
-            <Divisor/>
+          <Divisor />
+          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+            {perfil.nombre}
+          </Parrafo>
+          <Divisor />
+          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+            {perfil.edad} Años
+          </Parrafo>
+          <Divisor />
+          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+            {perfil.nacionalidad}
+          </Parrafo>
+          <Divisor />
+          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+            {perfil.genero}
+          </Parrafo>
+          <Divisor />
+
+          <Parrafo variante="grisS" style={styles.descripcionplataformas}>
+            Mis Plataformas
+          </Parrafo>
+          <View style={styles.pildora1}>
+            <ListaDePildoras items={perfil.plataformas ? perfil.plataformas.map((plataforma, index) => ({
+              id: index,
+              contenido: plataforma
+            })) : []} />
           </View>
-        </ScrollView>
-        {direccionScroll === "arriba" && (
-            <BotonFlotante
-                name="mode-edit-outline"
-                label="Editar"
-                style={styles.botonFlotante}
+
+          <Parrafo variante="grisS" style={styles.descripcionplataformas}>
+            Mis Juegos
+          </Parrafo>
+          <View style={styles.pildora1}>
+            <ListaDePildoras items={perfil.juegosPreferidos ? perfil.juegosPreferidos.map((juego, index) => ({
+              id: index,
+              contenido: juego
+            })) : []} />
+          </View>
+          <View style={styles.conatainerEditarJuego}>
+            <Parrafo variante="grisS" style={styles.descripcionplataformas}>
+              Mis Horarios
+            </Parrafo>
+          </View>
+          <View style={styles.containerTable}>
+            {/*<TablaHorarios*/}
+            {/*  horarios={horarios}*/}
+            {/*  onHorarioChange={onHorarioChange}*/}
+            {/*/>*/}
+          </View>
+          {reseniasDeOtrosUsuarios.map((resenia, index) => (
+            <CardResenia
+              key={index}
+              puntaje={resenia.puntaje}
+              foto={resenia.foto}
+              resenia={resenia.comentario}
             />
-        )}
-      </View>
+          ))}
+          <View style={styles.verMas}>
+            <Boton variante="link" onPress={handleVerMasClick}>
+              Ver mas
+            </Boton>
+          </View>
+        </View>
+        <View style={styles.botonesSesion}>
+          <Divisor />
+          <Boton variante="transparente" onPress={handleEliminarCuenta}>Eliminar Cuenta</Boton>
+          <Divisor />
+          <Boton variante="transparente" onPress={handleLogout}>Cerrar Sesion</Boton>
+          <Divisor />
+        </View>
+      </ScrollView>
+      {direccionScroll === "arriba" && (
+        <BotonFlotante
+          name="mode-edit-outline"
+          label="Editar"
+          style={styles.botonFlotante}
+        />
+      )}
+    </View>
   );
 };
 

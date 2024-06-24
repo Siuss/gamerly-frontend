@@ -1,28 +1,17 @@
-import { create } from "zustand";
+import { create } from "zustand"; 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// Se usa AsyncStorage porque localStorage no va a funcionar en mobile, solo en web
 const useStore = create((set) => {
-    const userId = localStorage.getItem("userId");
-    const user = JSON.parse(localStorage.getItem("user")) || {};
     return {
-        isLoggedIn: !!userId,
-        userId,
-        user,
-        login: (newUserId, newUser) => {
-            set({ isLoggedIn: true, userId: newUserId, user: newUser });
-            localStorage.setItem("userId", newUserId);
-            localStorage.setItem("user", JSON.stringify(newUser));
-        },
-        logout: () => {
-            localStorage.removeItem("userId");
-            localStorage.removeItem("userFotoPerfil");
-            localStorage.removeItem("nombreApellido");
-            localStorage.removeItem("user");
+        getIdUsuarioLogueado: async () => JSON.parse(await AsyncStorage.getItem("usuario"))?.id || {},
+        getUsuarioLogueado: async () => JSON.parse(await AsyncStorage.getItem("usuario")) || {}, 
+        logout: async () => {
+            await AsyncStorage.removeItem("usuario");
             set({ isLoggedIn: false, userId: null, user: {} });
         },
-        setUser: (userData) => {
-            localStorage.setItem("userId", userData.id);
-            localStorage.setItem("userFotoPerfil", userData.foto);
-            localStorage.setItem("user", JSON.stringify(userData));
+        setUsuarioLogueado: async (userData) => {
+            await AsyncStorage.setItem("usuario", JSON.stringify(userData));
             set({ user: userData });
         },
     };

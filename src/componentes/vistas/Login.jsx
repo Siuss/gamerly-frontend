@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Color } from "../../estilos/colores";
@@ -13,18 +13,27 @@ export const Login = () => {
   const [credenciales, setCredenciales] = useState({ email: "", password: "" });
   const navigation = useNavigation();
   const { errorToast } = useMessageToast();
-  const { login, setUser } = useStore();
+  const { getUsuarioLogueado, setUsuarioLogueado } = useStore();
 
   const handleCredencialesChange = (campo, valor) => {
     setCredenciales({ ...credenciales, [campo]: valor });
   }
 
+  useEffect(() => {
+    const rellenarEmail = async () =>{
+      console.log(getUsuarioLogueado)
+      console.log(await getUsuarioLogueado())
+      handleCredencialesChange("email", (await getUsuarioLogueado()).email)
+    }
+
+    rellenarEmail()
+  }, [])
+
   const iniciarSesion = async () => {
     try {
       const usuario = await SesionService.login(credenciales);
       if (usuario) {
-        login(usuario.id, usuario);
-        setUser(usuario);
+        await setUsuarioLogueado(usuario);
         navigation.navigate(rutas.juegos);
       }
     } catch (error) {
