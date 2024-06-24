@@ -4,6 +4,7 @@ import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Color } from "../../estilos/colores";
 import { rutas } from "../rutas/rutas";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const NavBar = (props) => {
     const { style, ...restProps } = props;
@@ -30,8 +31,9 @@ const NavBar = (props) => {
         setActiveButton(buttonName);
     };
 
-    const handleNavigateConId = (buttonName) => {
-        navigation.navigate(buttonName, { id: "1" });
+    const handleNavigateConId = async (buttonName) => {
+      const idUsuarioLogueado = JSON.parse((await AsyncStorage.getItem("usuario"))).id
+        navigation.navigate(buttonName, { id: idUsuarioLogueado });
         setActiveButton(buttonName);
     };
 
@@ -42,7 +44,7 @@ const NavBar = (props) => {
         'inicio'
     ];
 
-    if (routesToHideNavBar.includes(currentRouteName)) {
+    if (routesToHideNavBar.includes(currentRouteName) || !currentRouteName) {
         return null;
     }
   return (

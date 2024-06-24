@@ -2,20 +2,21 @@ import { StyleSheet, View } from "react-native";
 import { CardAmigo } from "./CardAmigo"
 
 export const ListaDeAmigos = (props) => {
-  const { style, amigos, ...restProps } = props;
+          const { style, amigos, onAmigoClick, ...restProps } = props;
 
   return (
     <View style={[styles.container, style]} {...restProps}>
       {amigos.map((amigo) => (
         <CardAmigo
-          key={amigo.nombreUsuario}
+          key={amigo.nombre}
           style={styles.card}
           foto={amigo.foto}
-          nombreUsuario={amigo.nombreUsuario}
-          plataforma={amigo.plataforma}
-          juego={amigo.juego}
+          nombreUsuario={amigo.nombre}
+          plataforma={amigo.plataformas[0]}
+          juego={amigo.juegosPreferidos[0]}
           onBloquear={() => console.log(`Bloquear ${amigo.nombreUsuario}`)}
           onBorrar={() => console.log(`Borrar ${amigo.nombreUsuario}`)}
+          onAmigoClick={() => onAmigoClick(amigo)}
         />
       ))}
     </View>

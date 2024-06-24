@@ -17,7 +17,9 @@ import NavBar from "../bloques/Navbar";
 import useNavBarStore from "../../hooks/useNavbarStore";
 import { Juegos } from "../vistas/Juegos"
 import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
-import Toast from "react-native-toast-message";
+import { SolicitudesPendientes } from "../vistas/SolicitudesPendientes.jsx";
+import { Color } from '../../estilos/colores.js'
+import ToastManager from 'toastify-react-native'
 
 const Stack = createStackNavigator();
 const titlesConfig = {
@@ -28,7 +30,8 @@ const titlesConfig = {
   amigos: "Amigos",
   juegos: "Juegos",
   jugadores: "Jugadores",
-  reseniaJugador: "ReseniaJugador"
+  reseniaJugador: "Reseña Jugador",
+  solicitudesPendientes: "Solicitudes Pendientes"
 };
 
 export const rutas = {
@@ -40,8 +43,8 @@ export const rutas = {
   miPerfil: "miPerfil",
   recuperarContrasena: "recuperarContrasena",
   jugadores: "jugadores",
-  reseniaJugador: "reseniaJugador"
-
+  reseniaJugador: "reseniaJugador",
+  solicitudesPendientes: "solicitudesPendientes"
 };
 
 const AppRutas = () => {
@@ -54,6 +57,7 @@ const AppRutas = () => {
 
   return (
     <View style={styles.container}>
+      <ToastManager style={styles.toast} textStyle={styles.toastText} />
       <NavigationContainer style={styles.navigationContainer}>
         <Stack.Navigator
           initialRouteName="inicio"
@@ -118,15 +122,19 @@ const AppRutas = () => {
             name={rutas.juegos}
             component={Juegos}
           />
-           <Stack.Screen
+          <Stack.Screen
             titulo={rutas.reseniaJugador}
             name={rutas.reseniaJugador}
             component={ReseniaJugador}
           />
+          <Stack.Screen
+            titulo={rutas.solicitudesPendientes}
+            name={rutas.solicitudesPendientes}
+            component={SolicitudesPendientes}
+          />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
       </NavigationContainer>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
 };
@@ -149,4 +157,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  toast: {
+    backgroundColor: Color.primario,
+  },
+  toastText: {
+    color: Color.blanco,
+  }
 });

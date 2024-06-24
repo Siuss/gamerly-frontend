@@ -9,7 +9,7 @@ export default function TextArea(props) {
       style={[styles.input, style]}
       value={props.text}
       onChangeText={props.onChangeText}
-      placeholder="Deja tu mensaje"
+      placeholder={props.placeholder}
       multiline={true}
       {...restProps}
     />

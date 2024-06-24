@@ -5,6 +5,7 @@ import { Color } from "../../estilos/colores";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
+import { Toast } from 'toastify-react-native';
 
 const regexpFecha = /[^0-9/]/;
 const regexpContrasena = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
@@ -12,6 +13,7 @@ const regexpEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const Registro = () => {
   const [nombre, setNombre] = useState('');
+  const [discord, setDiscord] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [nacionalidad, setNacionalidad] = useState('');
   const [email, setEmail] = useState('');
@@ -21,6 +23,7 @@ export const Registro = () => {
   const [fechaEsValida, setFechaEsValida] = useState(true);
   const [contrasenaEsValida, setContrasenaEsValida] = useState(true);
   const [nombreEsValido, setNombreEsValido] = useState(true);
+  const [discordEsValido, setDiscordEsValido] = useState(true);
   const [emailEsValido, setEmailEsValido] = useState(true);
   const [nacionalidadEsValida, setNacionalidadEsValida] = useState(true);
   const navigation = useNavigation();
@@ -46,13 +49,17 @@ export const Registro = () => {
     !!nacionalidad
   )
 
+  const validadorDiscord = () => {
+    discord.length > 2
+  }
+
   const validadorFormulario = () => {
-    return validadorFecha() && validadorContrasena() && validadorNombre() && validadorEmail() && validadorNacionalidad() && aceptoTerminos
+    return validadorNombre() && validadorDiscord() && validadorFecha() && validadorContrasena() && validadorEmail() && validadorNacionalidad() && aceptoTerminos
   }
 
   const formularioEsValido = useMemo(() => {
     return validadorFormulario()
-  }, [nombre, fechaNacimiento, nacionalidad, email, contrasena, aceptoTerminos, fechaEsValida])
+  }, [nombre, discord, fechaNacimiento, nacionalidad, email, contrasena, aceptoTerminos, fechaEsValida])
 
   const handleChangeContrasena = (password) => {
     setContrasena(password)
@@ -67,6 +74,16 @@ export const Registro = () => {
   const handleLimpiarNombre = () => {
     clearInput(setNombre)
     setNombreEsValido(true)
+  }
+
+  const handleChangeDiscord = (_discord) => {
+    setDiscord(_discord)
+    setDiscordEsValido(_discord === "" || _discord.length > 2)
+  }
+
+  const limpiarDiscord = () => {
+    clearInput(setDiscord)
+    setDiscordEsValido(true)
   }
 
   const handleChangeEmail = (mail) => {
@@ -121,14 +138,14 @@ export const Registro = () => {
         fechaNacimiento,
         email,
         password: contrasena,
+        //discord,
         //nacionalidad
       }
 
       await SesionService.signUp(nuevoUsuario)
       navigation.navigate("login")
     } catch (error) {
-      console.log(error)
-      console.log("TODO: Manejar errores")
+      Toast.error("Error inesperado intentalo mas tarde")
     }
   };
 
@@ -145,6 +162,19 @@ export const Registro = () => {
         {nombre !== '' && (
           <TouchableOpacity onPress={handleLimpiarNombre} style={styles.inputIcon}>
             <Ionicons name="close" size={24} color={nombreEsValido ? Color.secundario : Color.error} />
+          </TouchableOpacity>
+        )}
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={[styles.input, !nombreEsValido && styles.inputError]}
+          placeholder="Usuario de discord"
+          value={nombre}
+          onChangeText={handleChangeDiscord}
+        />
+        {nombre !== '' && (
+          <TouchableOpacity onPress={handleLimpiarDiscrod} style={styles.inputIcon}>
+            <Ionicons name="close" size={24} color={discrodEsValido ? Color.secundario : Color.error} />
           </TouchableOpacity>
         )}
       </View>

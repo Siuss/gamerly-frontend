@@ -11,7 +11,7 @@ export const Card = (props) => {
   const navigation = useNavigation()
 
   const handleCardClick = () => {
-    navigation.navigate(rutas.perfilJugador, { id: props.id });
+    navigation.navigate(rutas.perfilJugador, props.id);
   };
 
   return (

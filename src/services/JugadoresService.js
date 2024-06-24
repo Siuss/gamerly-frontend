@@ -4,6 +4,7 @@ import { BASE_URL } from './requestConfig'
 const JugadoresEndpoints = {
     JUGADORES_CON_JUEGOS_EN_COMUN: "/jugadoresPorJuego/",
     PERFIL_USUARIO: "/detalle/",
+    AMIGOS: "/amigos/"
 };
 
 const getJuegadoresConJuegosEnComun = async (idJuego) => {
@@ -22,4 +23,12 @@ const getPerfilUsuario = async (idUsuario) => {
     return response.data;
 }
 
-export const JugadoresService = { getJuegadoresConJuegosEnComun, getPerfilUsuario };
+const getAmigosDelUsuario = async (idUsuario) => {
+    response = await axios.get(
+        `${BASE_URL}${JugadoresEndpoints.AMIGOS}${idUsuario}`
+    );
+
+    return response.data;
+}
+
+export const JugadoresService = { getJuegadoresConJuegosEnComun, getPerfilUsuario, getAmigosDelUsuario };

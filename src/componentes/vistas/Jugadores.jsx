@@ -8,6 +8,8 @@ import { JugadoresService } from '../../services/JugadoresService'
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores"
 import { useFocusEffect } from '@react-navigation/native'
 import { useNavigation } from "@react-navigation/native";
+import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
+import { Toast } from "toastify-react-native";
 
 export const Jugadores = () => {
   const [jugadores, setJugadores] = useState([])
@@ -20,9 +22,12 @@ export const Jugadores = () => {
       const fetchJugadores = async () => {
         try {
           const nuevosJugadores = await JugadoresService.getJuegadoresConJuegosEnComun(juegoId)
-          setJugadores(nuevosJugadores)
+          const idUsuarioLogueado = await getUsuarioLogueadoId()
+          const jugadoresMenosUsuarioLogueado = nuevosJugadores.filter(jugador => jugador.id !== idUsuarioLogueado)
+          setJugadores(jugadoresMenosUsuarioLogueado)
         } catch (error) {
-          console.log(error.response)
+          if(error.data.status !== 404)
+          Toast.error("Error inesperado intentalo mas tarde")
         }
       }
 
@@ -41,7 +46,7 @@ export const Jugadores = () => {
         <Busqueda></Busqueda>
         {jugadores.length > 0 ? <ListaDeJugadores jugadores={jugadores} searchText="" /> : (
           <Text style={styles.texto}>
-            Parece que no hay usuarios que jueguen a ese juego!
+            Parece que no hay usuarios que jueguen a ese juego
           </Text>)}
       </ScrollView>
     </View>

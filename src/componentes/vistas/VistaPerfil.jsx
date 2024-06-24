@@ -99,7 +99,7 @@ export const VistaPerfil = () => {
 
   const handleEliminarCuenta = async () => {
     await SesionService.eliminarCuenta(id);
-    handleLogout();
+    await handleLogout();
   }
   return (
     <View style={styles.container}>
@@ -125,10 +125,13 @@ export const VistaPerfil = () => {
             {perfil.nacionalidad}
           </Parrafo>
           <Divisor />
-          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+          {/* 
+         TODO: Agregar nombre de discord
+         <Parrafo variante="grisS" style={styles.descripcionUsuario}>
             {perfil.genero}
           </Parrafo>
           <Divisor />
+          */}
 
           <Parrafo variante="grisS" style={styles.descripcionplataformas}>
             Mis Plataformas

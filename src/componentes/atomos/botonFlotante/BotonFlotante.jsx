@@ -17,10 +17,10 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 */
 
 export const BotonFlotante = (props) => {
-  const { style, ...restProps } = props;
+  const {color = Color.blanco, style, ...restProps } = props;
   return (
     <TouchableOpacity style={[styles.boton, style]} {...restProps}>
-       <MaterialIcons name={props.name} color={Color.blanco} size={16} />
+       <MaterialIcons name={props.name} color={color} size={16} />
     </TouchableOpacity>
   );
 };

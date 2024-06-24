@@ -4,10 +4,10 @@ import { Color } from "../../../estilos/colores";
 import { Parrafo } from "../parrafo/Parrafo";
 
 export const Boton = (props) => {
-  const { style, textStyle, variante = "primario", ...restProps } = props;
+  const { style, textStyle, outline, variante = "primario", ...restProps } = props;
   return (
     <TouchableOpacity
-      style={[styles.boton, styles[variante], style]}
+      style={[styles.boton, styles[variante], outline && styles.outline[outline], style]}
       {...restProps}
     >
       <Text style={[styles.texto, textStyle]}>{props.children}</Text>
@@ -37,6 +37,20 @@ const styles = StyleSheet.create({
   },
   secundario: {
     backgroundColor: Color.secundario,
+  },
+  outline: {
+    acento: {
+      border: `solid 1px ${Color.acento}`,
+    },
+    gris: {
+      border: "solid 1px #606D5D",
+    },
+    primario: {
+      border: `solid 1px ${Color.primario}`,
+    },
+    secundario: {
+      border: `solid 1px ${Color.secundario}`,
+    },
   },
   link: {
     // Vacio a proposito, si hace falta mas adelante se pueden agregar estilos

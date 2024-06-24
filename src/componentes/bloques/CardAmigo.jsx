@@ -5,31 +5,31 @@ import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 
 export const CardAmigo = (props) => {
-  const { style, foto, nombreUsuario, plataforma, juego, onBloquear, onBorrar, ...restProps } = props;
+  const { style, foto, nombreUsuario, plataforma, juego, onBloquear, onBorrar, onAmigoClick, ...restProps } = props;
 
   return (
-    <View style={[styles.card, style]} {...restProps}>
-      <FotoDePerfil width={45} height={45} src={foto} />
-      <View style={styles.info}>
-        <Parrafo variante="blancoM" style={styles.nombreUsuario}>
-          {nombreUsuario}
-        </Parrafo>
-        <Parrafo variante="blancoM" style={styles.texto}>
-          {plataforma}
-        </Parrafo>
-        <Parrafo variante="blancoM" style={styles.texto}>
-          {juego}
-        </Parrafo>
-      </View>
-      <View style={styles.botones}>
-        <TouchableOpacity style={styles.boton} onPress={onBloquear}>
-          <Text style={styles.botonTexto}>Bloquear</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.boton} onPress={onBorrar}>
-          <Text style={styles.botonTexto}>Borrar</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <TouchableOpacity onPress={onAmigoClick} style={[styles.card, style]} {...restProps}>
+        <FotoDePerfil width={45} height={45} src={foto} />
+        <View style={styles.info}>
+          <Parrafo variante="blancoM" style={styles.nombreUsuario}>
+            {nombreUsuario}
+          </Parrafo>
+          <Parrafo variante="blancoM" style={styles.texto}>
+            {plataforma}
+          </Parrafo>
+          <Parrafo variante="blancoM" style={styles.texto}>
+            {juego}
+          </Parrafo>
+        </View>
+        <View style={styles.botones}>
+          <TouchableOpacity style={styles.boton} onPress={onBloquear}>
+            <Text style={styles.botonTexto}>Bloquear</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.boton} onPress={onBorrar}>
+            <Text style={styles.botonTexto}>Borrar</Text>
+          </TouchableOpacity>
+        </View>
+    </TouchableOpacity>
   );
 };
 
@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginVertical: 2,
     alignItems: "center",
-    width: "145%", 
-    marginLeft: "-40%", 
-    
+    width: "145%",
+    marginLeft: "-40%",
+
   },
   botonTexto: {
     color: Color.blanco,

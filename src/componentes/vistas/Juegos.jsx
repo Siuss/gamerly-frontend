@@ -9,10 +9,6 @@ import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { useFocusEffect } from '@react-navigation/native';
 import { useNavigation } from "@react-navigation/native";
 import { rutas } from "../rutas/rutas";
-import { JugadoresService } from "../../services/JugadoresService";
-import { color } from "framer-motion";
-import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
-import BarraBusquedaFiltro from "../atomos/barraBusquedaFiltro/BarraBusquedaFiltro";
 
 export const Juegos = () => {
   const [juegos, setJuegos] = useState([]);
@@ -54,18 +50,19 @@ export const Juegos = () => {
         placeholder="Buscar..."
         value={searchText}
         onChangeText={text => handleChange(text)}
-        mostrarFiltro={false}
       />
       <ScrollView contentContainerStyle={styles.container}>
-        {juegos.map((juego) => (
-          <CardJuegos
-            key={juego.juego}
-            foto={juego.imagen}
-            juego={juego.nombre}
-            plataforma={juego.plataformas[0]}
-            onPress={async () => handleJuegoPress(juego)}
-          />
-        ))}
+
+        {jugadores.length === 0 && juegos.map((juego) => <CardJuegos
+          key={juego.id}
+          foto={juego.imagen}
+          juego={juego.nombre}
+          plataforma={juego.plataformas[0]}
+          onPress={async () => handleJuegoPress(juego)}
+        />)}
+
+        {jugadores.length > 0 && <ListaDeJugadores jugadores={jugadores} searchText="" />}
+
       </ScrollView>
     </View>
   );
