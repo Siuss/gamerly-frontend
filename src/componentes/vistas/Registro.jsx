@@ -49,9 +49,9 @@ export const Registro = () => {
     !!nacionalidad
   )
 
-  const validadorDiscord = () => {
+  const validadorDiscord = () => (
     discord.length > 2
-  }
+  )
 
   const validadorFormulario = () => {
     return validadorNombre() && validadorDiscord() && validadorFecha() && validadorContrasena() && validadorEmail() && validadorNacionalidad() && aceptoTerminos
@@ -81,7 +81,7 @@ export const Registro = () => {
     setDiscordEsValido(_discord === "" || _discord.length > 2)
   }
 
-  const limpiarDiscord = () => {
+  const handleLimpiarDiscrod = () => {
     clearInput(setDiscord)
     setDiscordEsValido(true)
   }
@@ -138,7 +138,7 @@ export const Registro = () => {
         fechaNacimiento,
         email,
         password: contrasena,
-        //discord,
+        discord,
         //nacionalidad
       }
 
@@ -167,14 +167,14 @@ export const Registro = () => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={[styles.input, !nombreEsValido && styles.inputError]}
+          style={[styles.input, !discordEsValido && styles.inputError]}
           placeholder="Usuario de discord"
-          value={nombre}
+          value={discord}
           onChangeText={handleChangeDiscord}
         />
         {nombre !== '' && (
           <TouchableOpacity onPress={handleLimpiarDiscrod} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={discrodEsValido ? Color.secundario : Color.error} />
+            <Ionicons name="close" size={24} color={discordEsValido ? Color.secundario : Color.error} />
           </TouchableOpacity>
         )}
       </View>

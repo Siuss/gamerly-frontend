@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { rutas } from "../rutas/rutas";
 
 
-export const CardInvitacion = ({ style, idUsuario, idSolicitud, foto, nombre, mensaje, onAceptar, onRechazar, ...props }) => {
+export const CardInvitacion = ({ style, idUsuario, idSolicitud, foto, nombre, mensaje, discord, onAceptar, onRechazar, ...props }) => {
     const navigation = useNavigation()
 
     const handleAceptar = async () => {
@@ -44,6 +44,9 @@ export const CardInvitacion = ({ style, idUsuario, idSolicitud, foto, nombre, me
                 <View style={styles.info}>
                     <Parrafo variante="blancoM" style={styles.nombreUsuario}>
                         {nombre}
+                    </Parrafo>
+                    <Parrafo variante="blancoM">
+                        Discord: {discord}
                     </Parrafo>
                 </View>
                 < View style={styles.botones}>

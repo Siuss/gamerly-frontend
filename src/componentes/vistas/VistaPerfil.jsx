@@ -12,6 +12,7 @@ import { Boton } from "../atomos/boton/Boton";
 import { SesionService } from "../../services/SesionService"
 import useStore from "../../hooks/useStore";
 import { Toast } from "react-native-toast-message";
+import { getUsuarioLogueadoId, getUsuarioLogueado } from "../../utils/usuarioLogueado";
 
 
 export const VistaPerfil = () => {
@@ -19,17 +20,17 @@ export const VistaPerfil = () => {
   const [posicionAnteriorScroll, setPosicionAnteriorScroll] = useState(0);
   const [direccionScroll, setDireccionScroll] = useState("arriba");
   const [perfil, setPerfil] = useState({});
-  const { getIdUsuarioLogueado, logout } = useStore()
+  const { logout } = useStore()
   const [isLoading, setIsLoading] = useState(true);
   const { id } = route.params;
 
   const navigation = useNavigation();
 
   const traerPerfil = async () => {
-    const idUsuarioLogueado = await getIdUsuarioLogueado()
+    const idUsuarioLogueado = await getUsuarioLogueadoId()
 
     try {
-      if (!idUsuarioLogueado) {
+      if (idUsuarioLogueado === undefined) {
         throw new Error("El usuario no está autenticado o el userId no está disponible");
       }
       console.log("Se traen los datos del perfil logueado:", idUsuarioLogueado);
@@ -125,13 +126,11 @@ export const VistaPerfil = () => {
             {perfil.nacionalidad}
           </Parrafo>
           <Divisor />
-          {/* 
-         TODO: Agregar nombre de discord
          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
-            {perfil.genero}
+            {perfil.discord}
           </Parrafo>
           <Divisor />
-          */}
+          
 
           <Parrafo variante="grisS" style={styles.descripcionplataformas}>
             Mis Plataformas
