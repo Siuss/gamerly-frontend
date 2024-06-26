@@ -59,7 +59,7 @@ export const ReseniaJugador = () => {
       traerPerfil()
 
       return () => {
-        setJugador(null)
+        setJugador({})
       };
     }, [jugadorId])
   );
