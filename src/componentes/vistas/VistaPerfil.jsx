@@ -13,7 +13,8 @@ import { SesionService } from "../../services/SesionService"
 import useStore from "../../hooks/useStore";
 import { Toast } from "react-native-toast-message";
 import { getUsuarioLogueadoId, getUsuarioLogueado } from "../../utils/usuarioLogueado";
-
+import { TablaHorarios } from "../bloques/TablaHorarios"
+import { getHorariosPreferidos } from '../../utils/diasMapper'
 
 export const VistaPerfil = () => {
   const route = useRoute();
@@ -34,7 +35,10 @@ export const VistaPerfil = () => {
         throw new Error("El usuario no está autenticado o el userId no está disponible");
       }
       console.log("Se traen los datos del perfil logueado:", idUsuarioLogueado);
-      setPerfil(await SesionService.obtenerDetalleUsuario(idUsuarioLogueado));
+      const infoPerfil = await SesionService.obtenerDetalleUsuario(idUsuarioLogueado)
+
+      setPerfil(infoPerfil);
+
     } catch (error) {
       console.error("Error al traer los datos del perfil buscado:", error);
       Toast.error("Error inesperado intentalo mas tarde")
@@ -126,11 +130,11 @@ export const VistaPerfil = () => {
             {perfil.nacionalidad}
           </Parrafo>
           <Divisor />
-         <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
             {perfil.discord}
           </Parrafo>
           <Divisor />
-          
+
 
           <Parrafo variante="grisS" style={styles.descripcionplataformas}>
             Mis Plataformas
@@ -157,10 +161,11 @@ export const VistaPerfil = () => {
             </Parrafo>
           </View>
           <View style={styles.containerTable}>
-            {/*<TablaHorarios*/}
-            {/*  horarios={horarios}*/}
-            {/*  onHorarioChange={onHorarioChange}*/}
-            {/*/>*/}
+            {perfil.diasHorariosPreferidos && <TablaHorarios
+              horarios={getHorariosPreferidos(perfil.diasHorariosPreferidos)}
+              onHorarioChange={onHorarioChange}
+            />}
+
           </View>
           {reseniasDeOtrosUsuarios.map((resenia, index) => (
             <CardResenia
@@ -251,6 +256,7 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   containerTable: {
+    marginBottom: 16,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",

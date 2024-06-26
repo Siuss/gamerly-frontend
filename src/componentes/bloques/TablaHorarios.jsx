@@ -10,7 +10,6 @@ import { useEffect } from "react";
 // en horarios van a quedar los horarios finales (si el usuario hace click en)
 // la tabla para cambiarlos los cambios se van a ver en la variable horarios
 /*
-
  const horariosIniciales = [
     { mañana: false, tarde: false, noche: false }, // Lunes
     { mañana: false, tarde: false, noche: false }, // Martes
@@ -23,6 +22,7 @@ import { useEffect } from "react";
 
 const [horarios, setHorarios] = useState(horariosIniciales)
 
+
  const onHorarioChange = (dia, momento) => {
     const nuevosHorarios = { ...horarios };
     nuevosHorarios[dia][momento] = !nuevosHorarios[dia][momento];
@@ -32,7 +32,7 @@ const [horarios, setHorarios] = useState(horariosIniciales)
 
   <TablaHorarios horarios={horarios} onHorarioChange={onHorarioChange} />
 
-*/
+  */
 
 export const TablaHorarios = (props) => {
   const onSwitch = (dia, momento) => {
@@ -60,17 +60,17 @@ export const TablaHorarios = (props) => {
          
           <Switch
             style={styles.switch}
-            value={props.horarios[index][0]}
+            value={props.horarios[index].mañana}
             onChange={() => onSwitch(index, 0)}
           />
           <Switch
             style={styles.switch}
-            value={props.horarios[index][1]}
+            value={props.horarios[index].tarde}
             onChange={() => onSwitch(index, 1)}
           />
           <Switch
             style={styles.switch}
-            value={props.horarios[index][2]}
+            value={props.horarios[index].noche}
             onChange={() => onSwitch(index, 2)}
           />
         </View>

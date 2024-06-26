@@ -15,7 +15,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { rutas } from "../rutas/rutas";
 import { SolicitudService } from "../../services/SolicitudService";
 import { Toast } from 'toastify-react-native'
-
+import { juegaEnEsteDia } from '../../utils/diasMapper.js'
+import { getHorariosPreferidos } from '../../utils/diasMapper.js'
 
 export const PerfilJugador = (props) => {
   const [perfilInfo, setPerfilInfo] = useState(null)
@@ -28,8 +29,9 @@ export const PerfilJugador = (props) => {
 
   const { params: id } = navigation.getState().routes.at(-1);
 
-  const juegaEnAlgunMomentoDeEsteDia = (diaDeLaSemana) =>
-    perfilInfo.horarios?.[diaDeLaSemana]?.some((momento) => momento);
+  const juegaEnAlgunMomentoDeEsteDia = (diaDeLaSemana) => {
+    return juegaEnEsteDia(perfilInfo.diasHorariosPreferidos, diaDeLaSemana)
+  }
 
   const handleOnVerReseniasClick = () => {
     navigation.navigate("resenias", { id });
@@ -77,7 +79,7 @@ export const PerfilJugador = (props) => {
 
 
         const amigos = await JugadoresService.getAmigosDelUsuario(idUsuarioLogueado)
-        const esAmigoDelUsuarioLogueado =amigos.some(amigo => amigo.id === id)
+        const esAmigoDelUsuarioLogueado = amigos.some(amigo => amigo.id === id)
         setEsAmigoDelUsuarioLogueado(esAmigoDelUsuarioLogueado)
       } catch (error) {
         Toast.error("Error inesperado intentalo mas tarde")
@@ -108,7 +110,7 @@ export const PerfilJugador = (props) => {
           foto={perfilInfo.foto}
         />
         <View style={styles.cardDetalles}>
-        {esAmigoDelUsuarioLogueado && <Parrafo variante="blancoM">
+          {esAmigoDelUsuarioLogueado && <Parrafo variante="blancoM">
             Discord: {perfilInfo.discord}
           </Parrafo>}
           <Parrafo variante="blancoM">
@@ -132,7 +134,7 @@ export const PerfilJugador = (props) => {
           />
 
           <Parrafo variante="blancoM">Disponibilidad:</Parrafo>
-          {diasDeLaSemana && <View style={styles.contenedorDisponibilidad}>
+          {diasDeLaSemana && perfilInfo?.diasHorariosPreferidos && <View style={styles.contenedorDisponibilidad}>
             {diasDeLaSemana.map(
               (diaDeLaSemana, diaIndex) =>
                 juegaEnAlgunMomentoDeEsteDia(diaIndex) && (
@@ -144,20 +146,27 @@ export const PerfilJugador = (props) => {
                     >
                       {diaDeLaSemana}
                     </Pildora>
-                    {perfilInfo.horarios &&
+                    {perfilInfo?.diasHorariosPreferidos &&
                       <View style={styles.contenedorMomentos}>
-                        {perfilInfo.horarios?.[diaIndex].map(
-                          (momento, momentoIndex) =>
-                            momento && (
-                              <Pildora
-                                key={momentos[momentoIndex]}
-                                conBorde
-                                variante="conBorde"
-                              >
-                                {momentos[momentoIndex]}
-                              </Pildora>
-                            )
-                        )}
+                        {getHorariosPreferidos(perfilInfo.diasHorariosPreferidos)[diaIndex].mañana && <Pildora
+                          conBorde
+                          variante="conBorde"
+                        >
+                          {momentos[0]}
+                        </Pildora>}
+                        {getHorariosPreferidos(perfilInfo.diasHorariosPreferidos)[diaIndex].tarde && <Pildora
+                          conBorde
+                          variante="conBorde"
+                        >
+                          {momentos[1]}
+                        </Pildora>}
+                        {getHorariosPreferidos(perfilInfo.diasHorariosPreferidos)[diaIndex].noche && <Pildora
+                          conBorde
+                          variante="conBorde"
+                        >
+                          {momentos[2]}
+                        </Pildora>}
+
                       </View>}
                   </View>
                 )
@@ -175,13 +184,23 @@ export const PerfilJugador = (props) => {
               {tieneSolicitudPendiente ? "Solicitud pendiente" : "Añadir amigo"}
             </Boton>
           )}
+          {esAmigoDelUsuarioLogueado &&
+            <Boton
+              style={styles.boton}
+              textStyle={styles.textoBoton}
+              variante="primario"
+              onPress={handleEscribirResenia}
+            >
+              Escribir reseña
+            </Boton>}
+
           <Boton
             style={styles.boton}
             textStyle={styles.textoBoton}
             variante="primario"
-            onPress={esAmigoDelUsuarioLogueado ? handleEscribirResenia : handleOnVerReseniasClick}
+            onPress={handleOnVerReseniasClick}
           >
-            {esAmigoDelUsuarioLogueado ? "Escribir reseña" : "Ver reseñas"}
+            Ver reseñas
           </Boton>
         </View>
       </ScrollView>

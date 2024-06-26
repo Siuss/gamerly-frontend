@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { CardJuegos } from "../bloques/CardJuegos";
 import { Color } from "../../estilos/colores";
@@ -14,8 +14,20 @@ import { Toast } from "toastify-react-native";
 export const Jugadores = () => {
   const [jugadores, setJugadores] = useState([])
   const navigation = useNavigation();
-
+  const [busqueda, setBusqueda] = useState("")
   const { params: juegoId } = navigation.getState().routes.at(-1);
+
+  const handleBusqueda = (busqueda) => {
+    setBusqueda(busqueda)
+  }
+  
+  const jugadoresFiltrados = useMemo(() => {
+    if (busqueda != "") {
+      return jugadores.filter(jugador => jugador.nombre.toLowerCase().includes(busqueda.toLowerCase()))
+    } else {
+      return jugadores
+    }
+  }, [busqueda, jugadores])
 
   useFocusEffect(
     useCallback(() => {
@@ -42,8 +54,8 @@ export const Jugadores = () => {
   return (
     <View style={styles.containerExterior}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Busqueda></Busqueda>
-        {jugadores.length > 0 ? <ListaDeJugadores jugadores={jugadores} searchText="" /> : (
+        <Busqueda onChangeText={handleBusqueda} />
+        {jugadores.length > 0 ? <ListaDeJugadores jugadores={jugadoresFiltrados} searchText="" /> : (
           <Text style={styles.texto}>
             Parece que no hay usuarios que jueguen a ese juego
           </Text>)}

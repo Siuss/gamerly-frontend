@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Boton } from "../atomos/boton/Boton";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute, useNavigation } from "@react-navigation/native";
 import { Color } from "../../estilos/colores";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import TextArea from "../atomos/TextArea/TextArea";
@@ -16,6 +16,7 @@ export const ReseniaJugador = () => {
   const route = useRoute();
   const { getIdUsuarioLogueado } = useStore()
   const { id: jugadorId } = route.params;
+  const navigation = useNavigation()
 
   const [jugador, setJugador] = useState({})
   const [puntaje, setPuntaje] = useState(0);
@@ -37,6 +38,10 @@ export const ReseniaJugador = () => {
       const resenia = { comentario, puntaje }
 
       await ReseniaService.enviarResenia(usuarioLogueadoId, jugadorId, resenia)
+      const rutaAnterior = navigation.getState().routes.at(-2);
+      navigation.navigate(rutaAnterior)    
+       
+      Toast.success("La reseña se envio satisfactoriamente")
     } catch (error) {
       console.log(error)
       Toast.error("Error inesperado intenta mas tarde")

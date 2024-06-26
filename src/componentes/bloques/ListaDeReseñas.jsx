@@ -3,7 +3,7 @@ import { CardResenia } from "./CardResenia";
 import { CardFotoPerfil } from "./CardFotoPerfil";
 
 export const ListaDeResenias = (props) => {
-  const { style, id, foto, nombreUsuario, ...restProps } = props;
+  const { style, foto, nombreUsuario, ...restProps } = props;
 
   return (
     <View style={[styles.container, style]} {...restProps}>
@@ -18,7 +18,7 @@ export const ListaDeResenias = (props) => {
           style={styles.card}
           puntaje={resenia.puntaje}
           foto={resenia.foto}
-          resenia={resenia.resenia}
+          resenia={resenia.comentario}
         />
       ))}
     </View>
