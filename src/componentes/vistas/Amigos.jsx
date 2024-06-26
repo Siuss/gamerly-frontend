@@ -15,8 +15,24 @@ export const Amigos = (props) => {
     const [amigos, setAmigos] = useState([])
     const [solicitudes, setSolicitudes] = useState([])
 
+    const traerAmigos = async () => {
+        try {
+            const amigosEncontrados = await JugadoresService.getAmigosDelUsuario(params.id)
+            setAmigos(amigosEncontrados)
+
+            const peticiones = await SolicitudService.getSolicitudesPendientes(params.id)
+            setSolicitudes(peticiones)
+        } catch (error) {
+            Toast.error("Error inesperado intenta mas tarde")
+        }
+    }
+
     const handleAmigoClick = (amigo) => {
         navigation.navigate(rutas.perfilJugador, amigo.id);
+    }
+
+    const handleBorrarAmigo = async () => {
+        await traerAmigos()
     }
 
     const handleVerSolicitudesPendientes = () => {
@@ -25,17 +41,6 @@ export const Amigos = (props) => {
 
     useFocusEffect(
         useCallback(() => {
-            const traerAmigos = async () => {
-                try {
-                    const amigosEncontrados = await JugadoresService.getAmigosDelUsuario(params.id)
-                    setAmigos(amigosEncontrados)
-
-                    const peticiones = await SolicitudService.getSolicitudesPendientes(params.id)
-                    setSolicitudes(peticiones)
-                } catch (error) {
-                    Toast.error("Error inesperado intenta mas tarde")
-                }
-            }
 
             if (!params.id) return
 
@@ -59,6 +64,7 @@ export const Amigos = (props) => {
             <ListaDeAmigos
                 amigos={amigos}
                 onAmigoClick={handleAmigoClick}
+                onBorrarAmigo={handleBorrarAmigo}
             />
         </View>
     );

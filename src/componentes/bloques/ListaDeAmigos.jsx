@@ -1,8 +1,24 @@
 import { StyleSheet, View } from "react-native";
 import { CardAmigo } from "./CardAmigo"
+import { JugadoresService } from "../../services/JugadoresService";
+import { Toast } from "toastify-react-native";
+import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 
 export const ListaDeAmigos = (props) => {
-          const { style, amigos, onAmigoClick, ...restProps } = props;
+  const { style, amigos, onAmigoClick, onBorrarAmigo, ...restProps } = props;
+
+  const handleBorrar = async (amigo) => {
+    try {
+      const idUsuarioLogueado = await getUsuarioLogueadoId()
+      await JugadoresService.borrarAmigo(idUsuarioLogueado, amigo.id)
+      onBorrarAmigo(amigo)
+
+      Toast.success("Se ha eleminado al jugador exitosamente")
+    } catch (error) {
+      console.log(error)
+      Toast.error("Hubo un error inesperado intentalo mas tarde")
+    }
+  }
 
   return (
     <View style={[styles.container, style]} {...restProps}>
@@ -14,8 +30,7 @@ export const ListaDeAmigos = (props) => {
           nombreUsuario={amigo.nombre}
           plataforma={amigo.plataformas[0]}
           juego={amigo.juegosPreferidos[0]}
-          onBloquear={() => console.log(`Bloquear ${amigo.nombreUsuario}`)}
-          onBorrar={() => console.log(`Borrar ${amigo.nombreUsuario}`)}
+          onBorrar={() => handleBorrar(amigo)}
           onAmigoClick={() => onAmigoClick(amigo)}
         />
       ))}

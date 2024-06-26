@@ -108,6 +108,9 @@ export const PerfilJugador = (props) => {
           foto={perfilInfo.foto}
         />
         <View style={styles.cardDetalles}>
+        {esAmigoDelUsuarioLogueado && <Parrafo variante="blancoM">
+            Discord: {perfilInfo.discord}
+          </Parrafo>}
           <Parrafo variante="blancoM">
             Nacionalidad: {perfilInfo.nacionalidad}
           </Parrafo>

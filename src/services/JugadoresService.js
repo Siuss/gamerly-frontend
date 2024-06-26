@@ -7,7 +7,7 @@ const JugadoresEndpoints = {
     AMIGOS: "/amigos/"
 };
 
-const getJuegadoresConJuegosEnComun = async (idJuego) => {
+const getJugadoresConJuegosEnComun = async (idJuego) => {
     const response = await axios.get(
         `${BASE_URL}${JugadoresEndpoints.JUGADORES_CON_JUEGOS_EN_COMUN}${idJuego}`
     );
@@ -31,4 +31,12 @@ const getAmigosDelUsuario = async (idUsuario) => {
     return response.data;
 }
 
-export const JugadoresService = { getJuegadoresConJuegosEnComun, getPerfilUsuario, getAmigosDelUsuario };
+const borrarAmigo = async (idUsuario, idAmigo) => {
+    response = await axios.post(
+        `${BASE_URL}/${idUsuario}${JugadoresEndpoints.AMIGOS}${idAmigo}`
+    );
+
+    return response.data;
+}
+
+export const JugadoresService = { getJugadoresConJuegosEnComun, getPerfilUsuario, getAmigosDelUsuario, borrarAmigo };

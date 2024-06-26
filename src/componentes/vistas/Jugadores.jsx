@@ -21,7 +21,7 @@ export const Jugadores = () => {
     useCallback(() => {
       const fetchJugadores = async () => {
         try {
-          const nuevosJugadores = await JugadoresService.getJuegadoresConJuegosEnComun(juegoId)
+          const nuevosJugadores = await JugadoresService.getJugadoresConJuegosEnComun(juegoId)
           const idUsuarioLogueado = await getUsuarioLogueadoId()
           const jugadoresMenosUsuarioLogueado = nuevosJugadores.filter(jugador => jugador.id !== idUsuarioLogueado)
           setJugadores(jugadoresMenosUsuarioLogueado)

@@ -22,9 +22,9 @@ export const CardAmigo = (props) => {
           </Parrafo>
         </View>
         <View style={styles.botones}>
-          <TouchableOpacity style={styles.boton} onPress={onBloquear}>
+          {/*<TouchableOpacity style={styles.boton} onPress={onBloquear}>
             <Text style={styles.botonTexto}>Bloquear</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity style={styles.boton} onPress={onBorrar}>
             <Text style={styles.botonTexto}>Borrar</Text>
           </TouchableOpacity>
