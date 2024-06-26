@@ -18,23 +18,11 @@ export const useMessageToast = () => {
         if (status >= INTERNAL_SERVER_ERROR) {
             console.error(error)
         }
-        Toast.show({
-            type: 'error',
-            text1: mensajeError,
-            position: 'bottom',
-            autoHide: true,
-            visibilityTime: 5000,
-        })
+        Toast.error(mensajeError)
     }
 
     const successToast = (mensajeExitoso) => {
-        Toast.show({
-            type: 'success',
-            text1: mensajeExitoso,
-            position: 'bottom',
-            autoHide: true,
-            visibilityTime: 5000,
-        })
+        Toast.success(mensajeExitoso)
     }
 
     return { errorToast, successToast }
