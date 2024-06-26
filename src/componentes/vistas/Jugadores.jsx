@@ -26,7 +26,6 @@ export const Jugadores = () => {
           const jugadoresMenosUsuarioLogueado = nuevosJugadores.filter(jugador => jugador.id !== idUsuarioLogueado)
           setJugadores(jugadoresMenosUsuarioLogueado)
         } catch (error) {
-          if(error.data.status !== 404)
           Toast.error("Error inesperado intentalo mas tarde")
         }
       }

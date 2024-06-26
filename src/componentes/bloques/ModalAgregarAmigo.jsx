@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
     modal: {
         width: "75%",
         display: "flex",
-        gap: 16
+        gap: 16,
+        borderRadius: 12
     },
     botones: {
         display: "flex",

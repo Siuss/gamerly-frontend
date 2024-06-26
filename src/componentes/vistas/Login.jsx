@@ -21,8 +21,6 @@ export const Login = () => {
 
   useEffect(() => {
     const rellenarEmail = async () =>{
-      console.log(getUsuarioLogueado)
-      console.log(await getUsuarioLogueado())
       handleCredencialesChange("email", (await getUsuarioLogueado()).email)
     }
 
@@ -43,10 +41,6 @@ export const Login = () => {
 
   const registro = () => {
     navigation.navigate(rutas.registro);
-  };
-
-  const recuperar = () => {
-    navigation.navigate(rutas.recuperarContrasena);
   };
 
   return (
@@ -78,9 +72,6 @@ export const Login = () => {
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.forgotPasswordContainer} onPress={recuperar}>
-          <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
-        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={iniciarSesion}>
             <Text style={styles.buttonText}>Iniciar sesión</Text>

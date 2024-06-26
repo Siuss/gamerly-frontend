@@ -1,24 +1,20 @@
-import { useState, useEffect, useCallback } from "react";
-import { StyleSheet, ScrollView, View, TextInput } from "react-native";
+import { useState, useCallback } from "react";
+import { StyleSheet, ScrollView, View } from "react-native";
 import { CardJuegos } from "../bloques/CardJuegos";
 import { Color } from "../../estilos/colores";
-import jugadoresMock from "../../mocks/jugadoresMock.json";
 import Busqueda from "../bloques/Busqueda";
 import { JuegosService } from "../../services/JuegosService";
-import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { useFocusEffect } from '@react-navigation/native';
 import { useNavigation } from "@react-navigation/native";
 import { rutas } from "../rutas/rutas";
 
 export const Juegos = () => {
   const [juegos, setJuegos] = useState([]);
-  const [jugadores, setJugadores] = useState([]);
   const [searchText, setSearchText] = useState('');
   const navigation = useNavigation();
 
   const handleJuegoPress = async (juego) => {
     navigation.navigate(rutas.jugadores, juego.id);
-    setJugadores(jugadoresMock);
   };
 
   useFocusEffect(
@@ -31,38 +27,35 @@ export const Juegos = () => {
 
       return () => {
         setJuegos([]);
-        setJugadores([]);
       };
     }, [])
   );
 
-  
-  const handleChange = async(text)=>{  setSearchText(text)
-    const nuevosJuegos= await JuegosService.getJuegosPorNombre(text)
-  
+
+  const handleChange = async (text) => {
+    setSearchText(text)
+    const nuevosJuegos = await JuegosService.getJuegosPorNombre(text)
+
     setJuegos(nuevosJuegos)
   }
-  
-  
+
+
   return (
     <View style={styles.containerExterior}>
-      <Busqueda 
+      <Busqueda
         placeholder="Buscar..."
         value={searchText}
         onChangeText={text => handleChange(text)}
       />
       <ScrollView contentContainerStyle={styles.container}>
 
-        {jugadores.length === 0 && juegos.map((juego) => <CardJuegos
+        {juegos.length > 0 && juegos.map((juego) => <CardJuegos
           key={juego.id}
           foto={juego.imagen}
           juego={juego.nombre}
           plataforma={juego.plataformas[0]}
           onPress={async () => handleJuegoPress(juego)}
         />)}
-
-        {jugadores.length > 0 && <ListaDeJugadores jugadores={jugadores} searchText="" />}
-
       </ScrollView>
     </View>
   );
@@ -89,7 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     width: '100%',
-    color:Color.secundario,
-    
+    color: Color.secundario,
+
   },
 });

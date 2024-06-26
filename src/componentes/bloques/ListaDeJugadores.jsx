@@ -30,7 +30,7 @@ export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugerido
             plataforma={jugador.plataformas?.[0]}
             juego={jugador.juegosPreferidos?.[0]}
             amigos={jugador.amigos}
-            puntuacion={jugador.reputacion}
+            puntuacion={jugador.puntaje}
           />
         ))}
       </View>

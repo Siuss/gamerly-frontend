@@ -43,6 +43,7 @@ export const Amigos = (props) => {
 
             return () => {
                 setAmigos([])
+                setSolicitudes([])
             };
         }, [params?.id])
     );

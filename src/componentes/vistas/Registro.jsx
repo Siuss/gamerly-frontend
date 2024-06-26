@@ -139,7 +139,7 @@ export const Registro = () => {
         email,
         password: contrasena,
         discord,
-        //nacionalidad
+        nacionalidad
       }
 
       await SesionService.signUp(nuevoUsuario)
@@ -172,7 +172,7 @@ export const Registro = () => {
           value={discord}
           onChangeText={handleChangeDiscord}
         />
-        {nombre !== '' && (
+        {discord !== '' && (
           <TouchableOpacity onPress={handleLimpiarDiscrod} style={styles.inputIcon}>
             <Ionicons name="close" size={24} color={discordEsValido ? Color.secundario : Color.error} />
           </TouchableOpacity>
