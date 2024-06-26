@@ -1,140 +1,103 @@
-import React, { useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import React, { useState, useCallback } from "react";
+import { StyleSheet, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
-import { Divisor } from "../atomos/divisor/Divisor";
 import { Boton } from "../atomos/boton/Boton";
-import { useNavigation } from "@react-navigation/native";
-import juegosData from "../../data/juegos.json";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { Color } from "../../estilos/colores";
-import dias from "../../data/dias.json";
-import momentosDelDia from "../../data/momentosDelDia.json";
-import { rutas } from "../rutas/rutas";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import TextArea from "../atomos/TextArea/TextArea";
-
-const filtrosIniciales = {
-  juegos: [],
-  momentosDelDia: momentosDelDia.map((contenido, index) => ({
-    contenido,
-    juega: false,
-    id: index,
-  })),
-  dias: dias.map((contenido, index) => ({
-    contenido,
-    juega: false,
-    id: index,
-  })),
-  resenia: undefined,
-};
+import { JugadoresService } from "../../services/JugadoresService";
+import { ReseniaService } from "../../services/ReseniaService";
+import useStore from "../../hooks/useStore";
+import { Toast } from "toastify-react-native";
 
 export const ReseniaJugador = () => {
-  const navigation = useNavigation();
-  const { params: filtrosParam } = navigation.getState().routes.at(-1);
+  const route = useRoute();
+  const { getIdUsuarioLogueado } = useStore()
+  const { id: jugadorId } = route.params;
 
-  const [searchText, setSearchText] = useState("");
+  const [jugador, setJugador] = useState({})
   const [puntaje, setPuntaje] = useState(0);
-  const [resenia, setResenia] = useState("");
+  const [comentario, setComentario] = useState("");
 
-  const handleEnter = (event) => {
-    if (event.target.value.length < 3) return;
-    const juego = juegosData.find((juego) =>
-      juego.contenido.toLowerCase().includes(event.target.value.toLowerCase())
-    );
 
-    if (!juego) return;
-
-    setSearchText("");
-
-    const juegos = filtros.juegos;
-
-    if (juegos.some((_juego) => _juego.id === juego.id)) return;
-
-    juegos.push(juego);
-
-    setFiltros((prevFiltros) => ({ ...prevFiltros, juegos }));
+  const handlePuntajeChange = (puntajeRaw) => {
+    const nuevoPuntaje = puntajeRaw === 0 ? undefined : puntajeRaw;
+    setPuntaje(nuevoPuntaje);
   };
 
-  const handleJuegoRemove = (juegoABorrar) => {
-    const juegos = filtros.juegos.filter(
-      (juego) => juego.id !== juegoABorrar.id
-    );
+  const handleComentarioChange = (nuevoComentario) => {
+    setComentario(nuevoComentario)
+  }
 
-    setFiltros((prevFiltros) => ({ ...prevFiltros, juegos }));
-  };
+  const handleEnviarResenia = async () => {
+    try {
+      const usuarioLogueadoId = await getIdUsuarioLogueado()
+      const resenia = { comentario, puntaje }
 
-  const handleDiaToggle = (diaBuscado) => {
-    const dias = filtros.dias.map((momento) => {
-      if (momento.id === diaBuscado.id) {
-        return { ...momento, juega: !momento.juega };
-      } else {
-        return momento;
+      await ReseniaService.enviarResenia(usuarioLogueadoId, jugadorId, resenia)
+    } catch (error) {
+      console.log(error)
+      Toast.error("Error inesperado intenta mas tarde")
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      const traerPerfil = async () => {
+        try {
+          const perfilJugador = await JugadoresService.getPerfilUsuario(jugadorId)
+          setJugador(perfilJugador)
+        } catch (error) {
+          Toast.error("Error inesperado intenta mas tarde")
+        }
       }
-    });
 
-    setFiltros((prevFiltros) => ({ ...prevFiltros, dias }));
-  };
+      if (!jugadorId) return
 
-  const handleMomentoToggle = (momentoBuscado) => {
-    const momentos = filtros.momentosDelDia.map((momento) => {
-      if (momento.id === momentoBuscado.id) {
-        return { ...momento, juega: !momento.juega };
-      } else {
-        return momento;
-      }
-    });
+      traerPerfil()
 
-    setFiltros((prevFiltros) => ({ ...prevFiltros, momentosDelDia: momentos }));
-  };
-
-  const handleReseniaChange = (reseniaRaw) => {
-    const resenia = reseniaRaw === 0 ? undefined : reseniaRaw;
-    setPuntaje(resenia);
-  };
-
-  const handleLimpiar = () => {
-    setFiltros(filtrosIniciales);
-  };
-
-  const handleAplicar = () => {
-    const rutaAnterior = navigation.getState().routes.at(-2);
-    navigation.navigate(rutaAnterior, filtros);
-  };
+      return () => {
+        setJugador(null)
+      };
+    }, [jugadorId])
+  );
 
   return (
     <View style={styles.container}>
       <View>
         <FotoDePerfil
-          src="https://www.civitatis.com/f/argentina/bariloche/free-tour-bariloche-589x392.jpg"
+          src={jugador.foto || ''}
           height={64}
           width={64}
         ></FotoDePerfil>
-        <Parrafo variante="blancoM">Julio Perez</Parrafo>
+        <Parrafo variante="blancoM">{jugador.nombre}</Parrafo>
       </View>
       <View style={styles.espaciador}>
         <View style={styles.puntuacion}>
           <Parrafo variante="blancoM" style={styles.textoPuntuacion}>Puntuación:</Parrafo>
           <View style={styles.contenedorSlider}>
             <Slider
-              onValueChange={handleReseniaChange}
+              onValueChange={handlePuntajeChange}
               style={styles.input}
               minimumValue={0}
               maximumValue={5}
               step={1}
             />
             <Parrafo style={styles.parrafoCentrado} variante="blancoM">
-            {puntaje || 0}
-          </Parrafo>
+              {puntaje || 0}
+            </Parrafo>
           </View>
         </View>
         <View style={styles.espaciador}>
           <Parrafo style={styles.dejarResenia} variante="blancoM">Dejar una reseña:</Parrafo>
-          <TextArea></TextArea>
+          <TextArea onChangeText={handleComentarioChange} placeholder="Deja tu mensaje" />
         </View>
       </View>
 
       <View style={styles.botonera}>
-        <Boton variante="primario" onPress={handleLimpiar}>
+        <Boton variante="primario" onPress={handleEnviarResenia}>
           Enviar
         </Boton>
       </View>
@@ -181,10 +144,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
   },
-  dejarResenia:{
-marginBottom:"16px",
+  dejarResenia: {
+    marginBottom: "16px",
   },
-  textoPuntuacion:{
-marginTop:"12px",
+  textoPuntuacion: {
+    marginTop: "12px",
   },
 });
