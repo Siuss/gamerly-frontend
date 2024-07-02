@@ -17,6 +17,7 @@ import { SolicitudService } from "../../services/SolicitudService";
 import { Toast } from 'toastify-react-native'
 import { juegaEnEsteDia } from '../../utils/diasMapper.js'
 import { getHorariosPreferidos } from '../../utils/diasMapper.js'
+import { ReseniaService } from "../../services/ReseniaService.js";
 
 export const PerfilJugador = (props) => {
   const [perfilInfo, setPerfilInfo] = useState(null)
@@ -24,6 +25,7 @@ export const PerfilJugador = (props) => {
   const [esAmigoDelUsuarioLogueado, setEsAmigoDelUsuarioLogueado] = useState(false)
   const [modalAgregarAmigoEsVisible, setModalAgregarAmigoEsVisible] = useState(false)
   const [tieneSolicitudPendiente, setTieneSolicitudPendiente] = useState(false)
+  const [tieneResenia, setTieneResenia] = useState(false)
 
   const navigation = useNavigation();
 
@@ -77,6 +79,9 @@ export const PerfilJugador = (props) => {
         const usuario = await JugadoresService.getPerfilUsuario(idUsuarioLogueado)
         setusuarioLogueado(usuario)
 
+        const tieneUnaResenia = await ReseniaService.tieneUnaResenia(idUsuarioLogueado, id)
+        setTieneResenia(tieneUnaResenia)
+
 
         const amigos = await JugadoresService.getAmigosDelUsuario(idUsuarioLogueado)
         const esAmigoDelUsuarioLogueado = amigos.some(amigo => amigo.id === id)
@@ -88,7 +93,7 @@ export const PerfilJugador = (props) => {
 
     traerUsuario()
   },
-    [usuarioLogueado?.id, id],
+    [id],
   ))
 
   useFocusEffect(useCallback(() => {
@@ -124,6 +129,7 @@ export const PerfilJugador = (props) => {
             items={perfilInfo.plataformas.map((plataforma, index) => ({ id: index, contenido: plataforma }))}
             conBorde
             variante="conBorde"
+            disabled
           />
 
           <Parrafo variante="blancoM">Juegos:</Parrafo>
@@ -131,6 +137,7 @@ export const PerfilJugador = (props) => {
             items={perfilInfo.juegosPreferidos.map((juego, index) => ({ id: index, contenido: juego }))}
             conBorde
             variante="conBorde"
+            disabled
           />
 
           <Parrafo variante="blancoM">Disponibilidad:</Parrafo>
@@ -143,6 +150,7 @@ export const PerfilJugador = (props) => {
                       style={styles.pildora}
                       conBorde
                       variante="secundario"
+                      disabled
                     >
                       {diaDeLaSemana}
                     </Pildora>
@@ -151,18 +159,21 @@ export const PerfilJugador = (props) => {
                         {getHorariosPreferidos(perfilInfo.diasHorariosPreferidos)[diaIndex].mañana && <Pildora
                           conBorde
                           variante="conBorde"
+                          disabled
                         >
                           {momentos[0]}
                         </Pildora>}
                         {getHorariosPreferidos(perfilInfo.diasHorariosPreferidos)[diaIndex].tarde && <Pildora
                           conBorde
                           variante="conBorde"
+                          disabled
                         >
                           {momentos[1]}
                         </Pildora>}
                         {getHorariosPreferidos(perfilInfo.diasHorariosPreferidos)[diaIndex].noche && <Pildora
                           conBorde
                           variante="conBorde"
+                          disabled
                         >
                           {momentos[2]}
                         </Pildora>}
@@ -186,10 +197,11 @@ export const PerfilJugador = (props) => {
           )}
           {esAmigoDelUsuarioLogueado &&
             <Boton
-              style={styles.boton}
+              style={[styles.boton, tieneResenia && styles.disabled]}
               textStyle={styles.textoBoton}
               variante="primario"
               onPress={handleEscribirResenia}
+              disabled={tieneResenia}
             >
               Escribir reseña
             </Boton>}
@@ -263,4 +275,7 @@ const styles = StyleSheet.create({
   textoBoton: {
     textAlign: "center",
   },
+  disabled: {
+    opacity: 0.4
+  }
 });

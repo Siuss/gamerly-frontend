@@ -27,6 +27,7 @@ export const Juegos = () => {
 
       return () => {
         setJuegos([]);
+        setSearchText('')
       };
     }, [])
   );
@@ -34,7 +35,8 @@ export const Juegos = () => {
 
   const handleChange = async (text) => {
     setSearchText(text)
-    const nuevosJuegos = await JuegosService.getJuegosPorNombre(text)
+
+    const nuevosJuegos = text ? await JuegosService.getJuegosPorNombre(text) : await JuegosService.getJuegos()
 
     setJuegos(nuevosJuegos)
   }
@@ -44,7 +46,7 @@ export const Juegos = () => {
     <View style={styles.containerExterior}>
       <Busqueda
         placeholder="Buscar..."
-        value={searchText}
+        text={searchText}
         onChangeText={text => handleChange(text)}
       />
       <ScrollView contentContainerStyle={styles.container}>

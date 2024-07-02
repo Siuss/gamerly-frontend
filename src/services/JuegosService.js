@@ -6,19 +6,19 @@ const JuegosEndpoints = {
 };
 
 const getJuegos = async () => {
-   const response = await axios.get(
+    const response = await axios.get(
         `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}`, { params: { numero: 10 } }
     );
 
     return response.data;
-  
+
 };
 
 const getJuegosPorNombre = async (Nombre) => {
     const response = await axios.get(
-        `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}/${Nombre}`,
+        `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}/${Nombre}`, { params: { numero: 10 } }
     );
 
     return response.data;
 }
-export const JuegosService = { getJuegos,getJuegosPorNombre };//
+export const JuegosService = { getJuegos, getJuegosPorNombre };

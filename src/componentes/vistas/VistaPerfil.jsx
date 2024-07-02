@@ -139,7 +139,7 @@ export const VistaPerfil = () => {
             Mis Plataformas
           </Parrafo>
           <View style={styles.pildora1}>
-            <ListaDePildoras items={perfil.plataformas ? perfil.plataformas.map((plataforma, index) => ({
+            <ListaDePildoras disabled items={perfil.plataformas ? perfil.plataformas.map((plataforma, index) => ({
               id: index,
               contenido: plataforma
             })) : []} />
@@ -149,7 +149,7 @@ export const VistaPerfil = () => {
             Mis Juegos
           </Parrafo>
           <View style={styles.pildora1}>
-            <ListaDePildoras items={perfil.juegosPreferidos ? perfil.juegosPreferidos.map((juego, index) => ({
+            <ListaDePildoras disabled items={perfil.juegosPreferidos ? perfil.juegosPreferidos.map((juego, index) => ({
               id: index,
               contenido: juego
             })) : []} />

@@ -19,7 +19,7 @@ export const ReseniaJugador = () => {
   const navigation = useNavigation()
 
   const [jugador, setJugador] = useState({})
-  const [puntaje, setPuntaje] = useState(0);
+  const [puntaje, setPuntaje] = useState(1);
   const [comentario, setComentario] = useState("");
 
 
@@ -76,7 +76,7 @@ export const ReseniaJugador = () => {
           src={jugador.foto || ''}
           height={64}
           width={64}
-        ></FotoDePerfil>
+        />
         <Parrafo variante="blancoM">{jugador.nombre}</Parrafo>
       </View>
       <View style={styles.espaciador}>
@@ -86,12 +86,12 @@ export const ReseniaJugador = () => {
             <Slider
               onValueChange={handlePuntajeChange}
               style={styles.input}
-              minimumValue={0}
+              minimumValue={1}
               maximumValue={5}
               step={1}
             />
             <Parrafo style={styles.parrafoCentrado} variante="blancoM">
-              {puntaje || 0}
+              {puntaje || 1}
             </Parrafo>
           </View>
         </View>
