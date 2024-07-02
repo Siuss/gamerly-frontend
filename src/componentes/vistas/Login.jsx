@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Color } from "../../estilos/colores";
@@ -15,17 +15,10 @@ export const Login = () => {
   const { errorToast } = useMessageToast();
   const { getUsuarioLogueado, setUsuarioLogueado } = useStore();
 
+  const formularioEstaVacio = useMemo(() => !credenciales.email && !credenciales.password, [credenciales])
   const handleCredencialesChange = (campo, valor) => {
     setCredenciales({ ...credenciales, [campo]: valor });
   }
-
-  useEffect(() => {
-    const rellenarEmail = async () =>{
-      handleCredencialesChange("email", (await getUsuarioLogueado()).email)
-    }
-
-    rellenarEmail()
-  }, [])
 
   const iniciarSesion = async () => {
     try {
@@ -43,44 +36,52 @@ export const Login = () => {
     navigation.navigate(rutas.registro);
   };
 
+  useEffect(() => {
+    const rellenarEmail = async () => {
+      handleCredencialesChange("email", (await getUsuarioLogueado()).email)
+    }
+
+    rellenarEmail()
+  }, [])
+
   return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Login</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
+      <TextInput
+        style={[styles.input, { color: Color.secundario }]}
+        onChangeText={(value) => handleCredencialesChange("email", value)}
+        placeholder="Email"
+        placeholderTextColor={Color.secundario}
+        value={credenciales.email}
+      />
+      <View style={styles.passwordContainer}>
         <TextInput
-            style={[styles.input, { color: Color.secundario }]}
-            onChangeText={(value) => handleCredencialesChange("email", value)}
-            placeholder="Email"
-            placeholderTextColor={Color.secundario}
-            value={credenciales.email}
+          style={[styles.passwordInput, { color: Color.secundario }]}
+          onChangeText={(value) => handleCredencialesChange("password", value)}
+          placeholder="Contraseña"
+          placeholderTextColor={Color.secundario}
+          secureTextEntry={!passwordVisible}
         />
-        <View style={styles.passwordContainer}>
-          <TextInput
-              style={[styles.passwordInput, { color: Color.secundario }]}
-              onChangeText={(value) => handleCredencialesChange("password", value)}
-              placeholder="Contraseña"
-              placeholderTextColor={Color.secundario}
-              secureTextEntry={!passwordVisible}
+        <TouchableOpacity
+          style={styles.eyeIcon}
+          onPress={() => setPasswordVisible(!passwordVisible)}
+        >
+          <Ionicons
+            name={passwordVisible ? 'eye-off' : 'eye'}
+            size={24}
+            color="gray"
           />
-          <TouchableOpacity
-              style={styles.eyeIcon}
-              onPress={() => setPasswordVisible(!passwordVisible)}
-          >
-            <Ionicons
-                name={passwordVisible ? 'eye-off' : 'eye'}
-                size={24}
-                color="gray"
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={iniciarSesion}>
-            <Text style={styles.buttonText}>Iniciar sesión</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={registro}>
-            <Text style={styles.buttonText}>Registrarse</Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity disabled={formularioEstaVacio} style={[styles.button, formularioEstaVacio && styles.deshabilitado]} onPress={iniciarSesion}>
+          <Text style={styles.buttonText}>Iniciar sesión</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={registro}>
+          <Text style={styles.buttonText}>Registrarse</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -157,4 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  deshabilitado: {
+    opacity: 0.4
+  }
 });
