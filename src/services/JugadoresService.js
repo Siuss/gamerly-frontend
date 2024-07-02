@@ -24,7 +24,7 @@ const getPerfilUsuario = async (idUsuario) => {
 }
 
 const getAmigosDelUsuario = async (idUsuario) => {
-    response = await axios.get(
+    const response = await axios.get(
         `${BASE_URL}${JugadoresEndpoints.AMIGOS}${idUsuario}`
     );
 
@@ -32,7 +32,7 @@ const getAmigosDelUsuario = async (idUsuario) => {
 }
 
 const borrarAmigo = async (idUsuario, idAmigo) => {
-    response = await axios.post(
+    const response = await axios.post(
         `${BASE_URL}/${idUsuario}${JugadoresEndpoints.AMIGOS}${idAmigo}`
     );
 

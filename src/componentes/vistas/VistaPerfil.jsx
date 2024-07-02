@@ -12,7 +12,7 @@ import { Boton } from "../atomos/boton/Boton";
 import { SesionService } from "../../services/SesionService"
 import useStore from "../../hooks/useStore";
 import { Toast } from "react-native-toast-message";
-import { getUsuarioLogueadoId, getUsuarioLogueado } from "../../utils/usuarioLogueado";
+import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { TablaHorarios } from "../bloques/TablaHorarios"
 import { getHorariosPreferidos } from '../../utils/diasMapper'
 
@@ -93,7 +93,6 @@ export const VistaPerfil = () => {
 
   const handleVerMasClick = () => {
     navigation.navigate("resenias", { id });
-    setShowNavBar(false)
   };
 
   const handleLogout = async () => {
