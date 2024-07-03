@@ -150,9 +150,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   dejarResenia: {
-    marginBottom: "16px",
+    marginBottom: 16,
   },
   textoPuntuacion: {
-    marginTop: "12px",
+    marginTop: 12,
   },
 });

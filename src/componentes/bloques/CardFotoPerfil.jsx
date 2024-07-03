@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     color: Color.blanco,
     fontWeight: "bold",
     paddingTop: "0.5rem",
-    fontSize: "medium",
+    fontSize: 16,
   },
   contenidoArriba: {
     marginBottom: 5,

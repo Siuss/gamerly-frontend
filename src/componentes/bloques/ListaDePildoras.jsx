@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import { View } from "react-native-web";
+import { View } from "react-native";
 import { Pildora } from "../atomos/pildora/Pildora";
 
 export const ListaDePildoras = (props) => {

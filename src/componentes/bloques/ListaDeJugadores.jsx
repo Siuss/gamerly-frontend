@@ -24,7 +24,7 @@ export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugerido
           <Card
             key={jugador.id}
             style={styles.card}
-            id={jugador.id}
+            id={jugador.id.toString()}
             foto={jugador.foto}
             nombreUsuario={jugador.nombre}
             plataforma={jugador.plataformas?.[0]}
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   contenedor: {
     display: "flex",
     flexDirection: "column",
-    gap: "8px",
+    gap: 8,
     alignItems: "center",
     paddingVertical: 8,
     width: "100%"

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "prueba",
-    "slug": "prueba",
+    "slug": "gamerly",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "645bffe1-49a4-41cd-b12d-6f3dd531f276"
+      }
+    },
+    "owner": "stephaniepazos"
   }
 }

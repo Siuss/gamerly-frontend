@@ -7,6 +7,7 @@ import { SesionService } from "../../services/SesionService";
 import { rutas } from '../rutas/rutas';
 import { useMessageToast } from "../../hooks/useToast";
 import useStore from "../../hooks/useStore";
+import { NotificacionesService } from '../../services/NotificacionesService';
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -22,7 +23,9 @@ export const Login = () => {
 
   const iniciarSesion = async () => {
     try {
-      const usuario = await SesionService.login(credenciales);
+      const tokenNotificaciones = await NotificacionesService.obtenerTokenDeNotificaciones()
+      const usuario = await SesionService.login({...credenciales, tokenNotificaciones});
+
       if (usuario) {
         await setUsuarioLogueado(usuario);
         navigation.navigate(rutas.juegos);

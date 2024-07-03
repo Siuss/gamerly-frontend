@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
   amigos: {
     display: "flex",
     flexDirection: "row",
-    maxWidth: "50vw",
+    // maxWidth: "50vw",
   },
   amigoTitle: {
-    minWidth: "fit-content",
+    //minWidth: "fit-content",
   },
   card: {
     backgroundColor: Color.primario,

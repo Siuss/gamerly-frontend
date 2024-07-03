@@ -34,13 +34,11 @@ export const VistaPerfil = () => {
       if (idUsuarioLogueado === undefined) {
         throw new Error("El usuario no está autenticado o el userId no está disponible");
       }
-      console.log("Se traen los datos del perfil logueado:", idUsuarioLogueado);
       const infoPerfil = await SesionService.obtenerDetalleUsuario(idUsuarioLogueado)
 
       setPerfil(infoPerfil);
 
     } catch (error) {
-      console.error("Error al traer los datos del perfil buscado:", error);
       Toast.error("Error inesperado intentalo mas tarde")
     } finally {
       setIsLoading(false);

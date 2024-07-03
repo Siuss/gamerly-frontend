@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import { Color } from "../../../estilos/colores";
-import { TouchableOpacity } from "react-native-web";
+import { TouchableOpacity } from "react-native";
 import { Parrafo } from "../parrafo/Parrafo";
 
 export const Pildora = (props) => {

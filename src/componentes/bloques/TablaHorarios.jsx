@@ -47,7 +47,7 @@ export const TablaHorarios = (props) => {
     <View style={styles.tabla}>
       <View style={styles.contenedorEncabezado}>
         {momentosDelDia.map((momento) => (
-          <Parrafo style={styles.encabezado} variante="blancoS">
+          <Parrafo key={momento} style={styles.encabezado} variante="blancoS">
             {momento}
           </Parrafo>
         ))}

@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column",
-    gap: "8px",
+    gap: 8,
     alignItems: "center",
-    padding: "8px",
+    padding: 8,
   },
   card: {
     width: "80%",
