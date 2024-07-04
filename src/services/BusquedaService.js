@@ -1,5 +1,4 @@
 import axios from "axios";
-import busqueda from "../mocks/busquedaAvanzadaMock.json";
 
 const BusquedaEndpoints = {
   BUSQUEDA_AVANZADA: "/buscar",
@@ -14,7 +13,7 @@ const busquedaAvanzada = async (filtros) => {
   return response.data;
   */
 
-  return busqueda;
+  //return busqueda;
 };
 
 export const BusquedaService = { busquedaAvanzada };

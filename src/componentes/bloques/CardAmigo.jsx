@@ -65,11 +65,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingHorizontal: 24,
     marginVertical: 2,
     alignItems: "center",
-    width: "145%",
-    marginLeft: "-40%",
 
   },
   botonTexto: {

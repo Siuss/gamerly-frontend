@@ -4,8 +4,7 @@ import { CardJuegos } from "../bloques/CardJuegos";
 import { Color } from "../../estilos/colores";
 import Busqueda from "../bloques/Busqueda";
 import { JuegosService } from "../../services/JuegosService";
-import { useFocusEffect } from '@react-navigation/native';
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect , useNavigation } from '@react-navigation/native';
 import { rutas } from "../rutas/rutas";
 
 export const Juegos = () => {

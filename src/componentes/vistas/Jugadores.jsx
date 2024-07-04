@@ -1,13 +1,11 @@
 import { useState, useMemo, useCallback } from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
-import { CardJuegos } from "../bloques/CardJuegos";
 import { Color } from "../../estilos/colores";
 import Busqueda from "../bloques/Busqueda"
-import { JuegosService } from '../../services/JuegosService'
 import { JugadoresService } from '../../services/JugadoresService'
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores"
-import { useFocusEffect } from '@react-navigation/native'
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect , useNavigation } from '@react-navigation/native'
+
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { Toast } from "toastify-react-native";
 
@@ -22,7 +20,7 @@ export const Jugadores = () => {
   }
   
   const jugadoresFiltrados = useMemo(() => {
-    if (busqueda != "") {
+    if (busqueda !== "") {
       return jugadores.filter(jugador => jugador.nombre.toLowerCase().includes(busqueda.toLowerCase()))
     } else {
       return jugadores
@@ -37,7 +35,7 @@ export const Jugadores = () => {
           const idUsuarioLogueado = await getUsuarioLogueadoId()
           const jugadoresMenosUsuarioLogueado = nuevosJugadores.filter(jugador => jugador.id !== idUsuarioLogueado)
           setJugadores(jugadoresMenosUsuarioLogueado)
-        } catch (error) {
+        } catch {
           Toast.error("Error inesperado intentalo mas tarde")
         }
       }
@@ -47,6 +45,7 @@ export const Jugadores = () => {
       return () => {
         setJugadores([])
       };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   );
 

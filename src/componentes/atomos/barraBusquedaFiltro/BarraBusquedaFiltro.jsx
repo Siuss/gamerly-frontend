@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { StyleSheet, Pressable } from "react-native";
+// eslint-disable-next-line import/named
 import { useNavigation } from "@react-navigation/native";
 
 import Icons from "@expo/vector-icons/AntDesign"

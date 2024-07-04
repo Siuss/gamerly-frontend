@@ -6,37 +6,8 @@ import dias from "../../data/dias.json";
 import momentosDelDia from "../../data/momentosDelDia.json";
 import { useEffect } from "react";
 
-// Ejemplo de como usar la tabla horarios cuando se le agregue la logica
-// en horarios van a quedar los horarios finales (si el usuario hace click en)
-// la tabla para cambiarlos los cambios se van a ver en la variable horarios
-/*
- const horariosIniciales = [
-    { mañana: false, tarde: false, noche: false }, // Lunes
-    { mañana: false, tarde: false, noche: false }, // Martes
-    { mañana: false, tarde: false, noche: false }, // Miercoles
-    { mañana: false, tarde: false, noche: false }, // Jueves
-    { mañana: false, tarde: false, noche: false }, // Viernes
-    { mañana: false, tarde: false, noche: false }, // Sabado
-    { mañana: false, tarde: false, noche: false }, // Domingo
-  ]
-
-const [horarios, setHorarios] = useState(horariosIniciales)
-
-
- const onHorarioChange = (dia, momento) => {
-    const nuevosHorarios = { ...horarios };
-    nuevosHorarios[dia][momento] = !nuevosHorarios[dia][momento];
-    
-    setHorarios(nuevosHorarios)
- }
-
-  <TablaHorarios horarios={horarios} onHorarioChange={onHorarioChange} />
-
-  */
-
 export const TablaHorarios = (props) => {
   const onSwitch = (dia, momento) => {
-    "";
     props.onHorarioChange(dia, momento);
   };
 
@@ -81,7 +52,7 @@ export const TablaHorarios = (props) => {
 
 const styles = StyleSheet.create({
   tabla: {
-    width: "fit-content",
+    alignSelf: "center",
     borderRadius: 10,
     padding: 16,
     display: "flex",
@@ -95,28 +66,28 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignContent: "flex-end",
-    width: 60,
+    width: 62,
   },
   switch: {
-    width: 50,
+    width: 58,
   },
   encabezado: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: 50,
+    width: 62,
   },
   contenedorEncabezado: {
     marginLeft: 70,
     display: "flex",
     flexDirection: "row",
-    alignContent: "center",
+    alignItems: "center",
     gap: 10,
   },
   filas: {
     display: "flex",
     flexDirection: "row",
-    alignContent: "center",
+    alignItems: "center",
     columnGap: 10,
   },
 });

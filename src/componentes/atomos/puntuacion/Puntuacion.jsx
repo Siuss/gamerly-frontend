@@ -1,4 +1,4 @@
-import { StyleSheet, Image, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Color } from "../../../estilos/colores";
 import { Parrafo } from "../parrafo/Parrafo";
 import Icons from "@expo/vector-icons/AntDesign";

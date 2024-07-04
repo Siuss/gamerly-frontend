@@ -1,8 +1,8 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import { Color } from "../../../estilos/colores";
 
 export default function TextArea(props) {
-  const {style, ...restProps} = props;
+  const { style, ...restProps } = props;
 
   return (
     <TextInput
@@ -10,6 +10,7 @@ export default function TextArea(props) {
       value={props.text}
       onChangeText={props.onChangeText}
       placeholder={props.placeholder}
+      placeholderTextColor={Color.secundario}
       multiline={true}
       {...restProps}
     />
@@ -18,12 +19,14 @@ export default function TextArea(props) {
 
 const styles = StyleSheet.create({
   input: {
-     width: "100%",
+    width: "100%",
     height: 150,
     padding: 16,
     color: Color.secundario,
+    textAlignVertical: 'top',
     fontSize: 16,
-    borderRadius:40,
-    border:`1px solid ${Color.secundario}`,
+    borderRadius: 40,
+    borderWidth: 1,
+    borderColor: Color.secundario
   },
 });

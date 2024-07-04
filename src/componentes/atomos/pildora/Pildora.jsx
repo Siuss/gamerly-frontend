@@ -1,6 +1,6 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet , TouchableOpacity } from "react-native";
 import { Color } from "../../../estilos/colores";
-import { TouchableOpacity } from "react-native";
+
 import { Parrafo } from "../parrafo/Parrafo";
 
 export const Pildora = (props) => {
@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.primario,
     color: Color.blanco,
     fontSize: 16,
-    width: "fit-content",
+    alignItems: "center",
     paddingHorizontal: 24,
-    borderRadius: 100,
+    borderRadius: 100
   },
   conBorde: {
     borderColor: Color.bordeBoton,

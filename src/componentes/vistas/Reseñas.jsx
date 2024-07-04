@@ -1,14 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import { ListaDeResenias } from "../bloques/ListaDeReseñas";
 import { Color } from "../../estilos/colores";
-import reseniasMock from "../../mocks/reseniasMock.json";
-import jugadoresMock from "../../mocks/jugadoresMock.json";
-import { useRoute } from '@react-navigation/native';
+import { useRoute , useFocusEffect } from '@react-navigation/native';
 import { ReseniaService } from "../../services/ReseniaService";
-import { getUsuarioLogueado, getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { useState, useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+
 import { JugadoresService } from "../../services/JugadoresService";
 
 export const Resenias = (props) => {
@@ -38,6 +35,7 @@ export const Resenias = (props) => {
                 setResenias([])
                 setPerfilJugador(null)
             };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [id])
     );
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Color } from "../../../estilos/colores";
-import { Parrafo } from "../parrafo/Parrafo";
 
 export const Boton = (props) => {
   const { style, textStyle, outline, variante = "primario", ...restProps } = props;
@@ -40,16 +39,20 @@ const styles = StyleSheet.create({
   },
   outline: {
     acento: {
-      border: `solid 1px ${Color.acento}`,
+      borderWidth: 1,
+      borderColor: Color.acento
     },
     gris: {
-      border: "solid 1px #606D5D",
+      borderWidth: 1,
+      borderColor: "#606D5D"
     },
     primario: {
-      border: `solid 1px ${Color.primario}`,
+      borderWidth: 1,
+      borderColor: Color.primario
     },
     secundario: {
-      border: `solid 1px ${Color.secundario}`,
+      borderWidth: 1,
+      borderColor: Color.secundario
     },
   },
   link: {

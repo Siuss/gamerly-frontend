@@ -1,5 +1,5 @@
 import React from 'react';
-import AppRutas from './src/componentes/rutas/rutas'
+import AppRutas from './src/componentes/rutas/AppRutas'
 
 const App = () => {
   return (

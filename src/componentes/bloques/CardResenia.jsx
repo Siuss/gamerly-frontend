@@ -18,7 +18,7 @@ export const CardResenia = (props) => {
             Reseña{" "}
             <View style={styles.iconos}>
               {[...Array(puntaje).keys()].map((index) => (
-                <Icons key={index} name="star" size={14} />
+                <Icons style={styles.estrella} key={index} name="star" size={14} />
               ))}
             </View>
           </Text>
@@ -65,4 +65,7 @@ const styles = StyleSheet.create({
   textoResenia: {
     marginLeft: 10,
   },
+  estrella: {
+    color: Color.blanco
+  }
 });

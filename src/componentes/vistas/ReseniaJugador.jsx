@@ -42,8 +42,7 @@ export const ReseniaJugador = () => {
       navigation.navigate(rutaAnterior)    
        
       Toast.success("La reseña se envio satisfactoriamente")
-    } catch (error) {
-      console.log(error)
+    } catch {
       Toast.error("Error inesperado intenta mas tarde")
     }
   }
@@ -54,7 +53,7 @@ export const ReseniaJugador = () => {
         try {
           const perfilJugador = await JugadoresService.getPerfilUsuario(jugadorId)
           setJugador(perfilJugador)
-        } catch (error) {
+        } catch {
           Toast.error("Error inesperado intenta mas tarde")
         }
       }

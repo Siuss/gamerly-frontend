@@ -19,7 +19,7 @@ export const ModalAgregarAmigo = ({ idCreador, idAmigo, visible, onOcultar, ...p
             await SolicitudService.solicitarAmistad(idCreador, idAmigo, mensaje)
             onOcultar()
             Toast.success("Solicitud enviada correctamente!")
-        } catch (error) {
+        } catch {
             Toast.error("Error inesperado: No se pudo enviar la solicitud, intente mas tarde")
         }
     }
@@ -36,9 +36,9 @@ export const ModalAgregarAmigo = ({ idCreador, idAmigo, visible, onOcultar, ...p
             {...props}>
 
             <Parrafo variante="blancoM">
-                Añadí un mensaje
+                Añadir mensaje
             </Parrafo>
-            <Textarea onChangeText={handleMensajeChange} placeholder="Nota..." />
+            <Textarea onChangeText={handleMensajeChange} placeholder="Mensaje..." />
             <View style={styles.botones}>
                 <Boton
                     textStyle

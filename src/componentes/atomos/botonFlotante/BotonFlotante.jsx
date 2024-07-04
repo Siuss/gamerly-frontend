@@ -20,7 +20,7 @@ export const BotonFlotante = (props) => {
   const {color = Color.blanco, style, ...restProps } = props;
   return (
     <TouchableOpacity style={[styles.boton, style]} {...restProps}>
-       <MaterialIcons name={props.name} color={color} size={16} />
+       <MaterialIcons name={props.name} color={color} size={20} />
     </TouchableOpacity>
   );
 };
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     color: Color.blanco,
     backgroundColor: Color.primario,
     borderRadius: 100,
-    padding: 16,
-    width: "fit-content",
+    padding: 20,
+    alignSelf: "flex-start",
+    elevation: 4
   },
 });

@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 
 export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugeridos = true, ...restProps }) => {
 
-  const busquedaActiva = searchText != ""
+  const busquedaActiva = searchText !== ""
 
   const jugadoresFinal = useMemo(() => {
     if (busquedaActiva) {
@@ -13,6 +13,7 @@ export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugerido
     } else {
       return jugadores
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jugadores])
 
   return (

@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { CardAmigo } from "./CardAmigo"
 import { JugadoresService } from "../../services/JugadoresService";
 import { Toast } from "toastify-react-native";
@@ -21,7 +21,7 @@ export const ListaDeAmigos = (props) => {
   }
 
   return (
-    <View style={[styles.container, style]} {...restProps}>
+    <ScrollView contentContainerStyle={[styles.container, style]} {...restProps}>
       {amigos.map((amigo) => (
         <CardAmigo
           key={amigo.nombre}
@@ -34,7 +34,7 @@ export const ListaDeAmigos = (props) => {
           onAmigoClick={() => onAmigoClick(amigo)}
         />
       ))}
-    </View>
+    </ScrollView>
   );
 };
 

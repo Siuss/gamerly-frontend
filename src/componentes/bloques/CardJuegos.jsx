@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View, ImageBackground, TouchableOpacity } from "react-native";
 import { Color } from "../../estilos/colores";
-import { Boton } from "../atomos/boton/Boton"
 import { Parrafo } from "../atomos/parrafo/Parrafo"
 export const CardJuegos = (props) => {
   const { style, foto, juego, plataforma, onPress } = props;

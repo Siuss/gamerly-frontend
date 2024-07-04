@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Color } from "../../estilos/colores";
 import { useNavigation } from "@react-navigation/native";

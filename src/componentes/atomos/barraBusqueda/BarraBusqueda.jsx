@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import { Color } from "../../../estilos/colores";
 
 export default function BarraBusqueda(props) {
@@ -9,6 +9,7 @@ export default function BarraBusqueda(props) {
       style={[styles.input, style]}
       value={props.text}
       onChangeText={props.onChangeText}
+      placeholderTextColor={Color.secundario}
       placeholder="Busqueda"
       {...restProps}
     />
@@ -17,7 +18,7 @@ export default function BarraBusqueda(props) {
 
 const styles = StyleSheet.create({
   input: {
-     width: "100%",
+    width: "100%",
     height: 50,
     padding: 16,
     color: Color.secundario,

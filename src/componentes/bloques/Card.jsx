@@ -34,7 +34,6 @@ export const Card = (props) => {
           {props.amigos?.length > 0 &&
             <View style={styles.amigos}>
               <Parrafo
-                style={styles.amigoTitle}
                 variante="grisS"
                 numberOfLines={1}
                 subrayado
@@ -66,10 +65,6 @@ const styles = StyleSheet.create({
   amigos: {
     display: "flex",
     flexDirection: "row",
-    // maxWidth: "50vw",
-  },
-  amigoTitle: {
-    //minWidth: "fit-content",
   },
   card: {
     backgroundColor: Color.primario,

@@ -18,7 +18,7 @@ export const CardInvitacion = ({ style, idUsuario, idSolicitud, foto, nombre, me
             await SolicitudService.aceptarSolicitud(idSolicitud)
             onAceptar()
             Toast.success("Solicitud aceptada con éxito")
-        } catch (error) {
+        } catch {
             Toast.error("Error inesperado intenta mas tarde")
         }
     }
@@ -28,7 +28,7 @@ export const CardInvitacion = ({ style, idUsuario, idSolicitud, foto, nombre, me
             await SolicitudService.rechazarSolicitud(idSolicitud)
             Toast.success("Solicitud rechazada con éxito")
             onRechazar()
-        } catch (error) {
+        } catch {
             Toast.error("Error inesperado intenta mas tarde")
         }
     }

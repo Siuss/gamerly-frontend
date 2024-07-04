@@ -28,6 +28,7 @@ const obtenerTokenDeNotificaciones = async () => {
 // Notificaciones foreground es cuando te entra una notificacion mientras tenes la app abierta.
 // Queremos que las notificaciones si se muestren en ese caso y por eso la habilitamos
 const habilitarNotificacionesForeground = () => {
+    // eslint-disable-next-line import/namespace
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
           shouldShowAlert: true

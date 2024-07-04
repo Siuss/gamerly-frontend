@@ -22,7 +22,7 @@ export const Amigos = (props) => {
 
             const peticiones = await SolicitudService.getSolicitudesPendientes(params.id)
             setSolicitudes(peticiones)
-        } catch (error) {
+        } catch {
             Toast.error("Error inesperado intenta mas tarde")
         }
     }
@@ -50,22 +50,24 @@ export const Amigos = (props) => {
                 setAmigos([])
                 setSolicitudes([])
             };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [params?.id])
     );
 
     return (
         <View style={styles.container}>
+            <ListaDeAmigos
+                amigos={amigos}
+                onAmigoClick={handleAmigoClick}
+                onBorrarAmigo={handleBorrarAmigo}
+            />
+
             <View style={styles.solicitudesPendientes}>
                 <BotonFlotante onPress={handleVerSolicitudesPendientes} name="email" style={styles.botonFlotante} />
                 {solicitudes.length > 0 && <View style={styles.burbujaSolicitudes}>
                     <Text style={[styles.burbujaSolicitudesTexto, solicitudes.length > 9 && styles.textoLargo]}>{solicitudes.length}</Text>
                 </View>}
             </View>
-            <ListaDeAmigos
-                amigos={amigos}
-                onAmigoClick={handleAmigoClick}
-                onBorrarAmigo={handleBorrarAmigo}
-            />
         </View>
     );
 };
@@ -77,13 +79,13 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     solicitudesPendientes: {
-        position: "fixed",
-        bottom: 128,
-        right: 16,
-        width: 48
+        position: "absolute",
+        bottom: 64,
+        right: 16
     },
     botonFlotante: {
-        position: "absolute",
+        backgroundColor: Color.secundario,
+        position: "relative",
     },
     burbujaSolicitudes: {
         position: "absolute",
@@ -91,21 +93,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: Color.error,
-        borderRadius: "100%",
+        borderRadius: 100,
         width: 24,
         height: 24,
+        elevation: 4,
+        shadowOpacity: 1,
+        shadowOffset: 4
     },
     burbujaSolicitudesTexto: {
-        display: "block",
-        color: Color.blanco,
-        width: 24,
-        height: 24,
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        color: Color.blanco,
+        alignSelf: "center",
+        justifyContent: "center"
 
     },
-    textoLargo: {
-        transform: "translateX(-1px)"
-    }
 });

@@ -11,7 +11,6 @@ import juegosData from "../.././data/juegos.json";
 import { Color } from "../../estilos/colores";
 import dias from "../../data/dias.json";
 import momentosDelDia from "../../data/momentosDelDia.json";
-import {rutas} from "../rutas/rutas"
 
 const filtrosIniciales = {
   juegos: [],

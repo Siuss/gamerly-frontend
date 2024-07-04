@@ -1,55 +1,30 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Resenias } from "../vistas/Reseñas";
-import HeaderTitle from "../header/headerTitle";
+import { Resenias } from "../vistas/Reseñas.jsx";
+import { HeaderTitle } from "../header/HeaderTitle.jsx";
 import { View, StyleSheet } from "react-native";
-import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada";
-import { VistaPerfil } from "../vistas/VistaPerfil";
-import { PerfilJugador } from "../vistas/PerfilJugador";
-import { Login } from "../vistas/Login";
-import { Inicio } from "../vistas/Inicio";
-import { Registro } from "../vistas/Registro";
-import { RecuperarContrasena } from "../vistas/RecuperarContrasena";
-import { Jugadores } from "../vistas/Jugadores";
-import { Amigos } from "../vistas/Amigos";
-import NavBar from "../bloques/Navbar";
-import useNavBarStore from "../../hooks/useNavbarStore";
-import { Juegos } from "../vistas/Juegos"
+import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada.jsx";
+import { VistaPerfil } from "../vistas/VistaPerfil.jsx";
+import { PerfilJugador } from "../vistas/PerfilJugador.jsx";
+import { Login } from "../vistas/Login.jsx";
+import { Inicio } from "../vistas/Inicio.jsx";
+import { Registro } from "../vistas/Registro.jsx";
+import { RecuperarContrasena } from "../vistas/RecuperarContrasena.jsx";
+import { Jugadores } from "../vistas/Jugadores.jsx";
+import { Amigos } from "../vistas/Amigos.jsx";
+import NavBar from "../bloques/Navbar.jsx";
+import useNavBarStore from "../../hooks/useNavbarStore.jsx";
+import { Juegos } from "../vistas/Juegos.jsx";
 import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
 import { SolicitudesPendientes } from "../vistas/SolicitudesPendientes.jsx";
-import { Color } from '../../estilos/colores.js'
-import ToastManager from 'toastify-react-native'
+import { Color } from "../../estilos/colores.js";
+import ToastManager from "toastify-react-native";
+import { rutas, titlesConfig } from "./rutas.js";
 
 const Stack = createStackNavigator();
-const titlesConfig = {
-  resenias: "Reseñas",
-  miPerfil: "Mi Perfil",
-  busquedaAvanzada: "Busqueda Avanzada",
-  perfilJugador: "Perfil Jugador",
-  amigos: "Amigos",
-  juegos: "Juegos",
-  jugadores: "Jugadores",
-  reseniaJugador: "Reseña Jugador",
-  solicitudesPendientes: "Solicitudes Pendientes"
-};
-
-export const rutas = {
-  amigos: "amigos",
-  registro: "registro",
-  juegos: "juegos",
-  perfilJugador: "perfilJugador",
-  resenias: "resenias",
-  miPerfil: "miPerfil",
-  recuperarContrasena: "recuperarContrasena",
-  jugadores: "jugadores",
-  reseniaJugador: "reseniaJugador",
-  solicitudesPendientes: "solicitudesPendientes"
-};
 
 const AppRutas = () => {
-  const setShowNavBar = useNavBarStore((state) => state.setShowNavBar);
-  const showNavBar = useNavBarStore((state) => state.showNavBar);
   const excludeLoading = useNavBarStore((state) => state.excludeLoading);
   useEffect(() => {
     excludeLoading();
@@ -67,11 +42,7 @@ const AppRutas = () => {
             ),
           })}
         >
-          <Stack.Screen
-            titulo="reseñas"
-            name="resenias"
-            component={Resenias}
-          />
+          <Stack.Screen titulo="reseñas" name="resenias" component={Resenias} />
           <Stack.Screen
             name="inicio"
             component={Inicio}
@@ -82,11 +53,7 @@ const AppRutas = () => {
             component={Login}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            titulo="Amigos"
-            name="amigos"
-            component={Amigos}
-          />
+          <Stack.Screen titulo="Amigos" name="amigos" component={Amigos} />
           <Stack.Screen
             name="recuperarContrasena"
             component={RecuperarContrasena}
@@ -143,12 +110,12 @@ export default AppRutas;
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    display: "flex",
     flex: 1,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   navigationContainer: {
-    display: 'flex',
+    display: "flex",
     flex: 1,
   },
   navBar: {
@@ -162,5 +129,5 @@ const styles = StyleSheet.create({
   },
   toastText: {
     color: Color.blanco,
-  }
+  },
 });

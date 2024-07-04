@@ -59,6 +59,7 @@ export const Registro = () => {
 
   const formularioEsValido = useMemo(() => {
     return validadorFormulario()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nombre, discord, fechaNacimiento, nacionalidad, email, contrasena, aceptoTerminos, fechaEsValida])
 
   const handleChangeContrasena = (password) => {
@@ -81,7 +82,7 @@ export const Registro = () => {
     setDiscordEsValido(_discord === "" || _discord.length > 2)
   }
 
-  const handleLimpiarDiscrod = () => {
+  const handleLimpiarDiscord = () => {
     clearInput(setDiscord)
     setDiscordEsValido(true)
   }
@@ -144,7 +145,7 @@ export const Registro = () => {
 
       await SesionService.signUp(nuevoUsuario)
       navigation.navigate("login")
-    } catch (error) {
+    } catch {
       Toast.error("Error inesperado intentalo mas tarde")
     }
   };
@@ -173,7 +174,7 @@ export const Registro = () => {
           onChangeText={handleChangeDiscord}
         />
         {discord !== '' && (
-          <TouchableOpacity onPress={handleLimpiarDiscrod} style={styles.inputIcon}>
+          <TouchableOpacity onPress={handleLimpiarDiscord} style={styles.inputIcon}>
             <Ionicons name="close" size={24} color={discordEsValido ? Color.secundario : Color.error} />
           </TouchableOpacity>
         )}

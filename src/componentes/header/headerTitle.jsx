@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Color } from '../../estilos/colores';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const HeaderTitle = ({ title, showBackButton }) => {
   const navigation = useNavigation();
@@ -12,14 +13,16 @@ export const HeaderTitle = ({ title, showBackButton }) => {
   };
 
   return (
-      <View style={styles.header}>
+    <SafeAreaView>
+      <View style={[styles.header]}>
         {showBackButton && (
             <TouchableOpacity onPress={handleNavigateBack} style={styles.boton}>
               <Ionicons name="arrow-back" size={24} color={Color.blanco} />
             </TouchableOpacity>
         )}
         <Text style={styles.title}>{title}</Text>
-      </View>
+        </View>
+      </SafeAreaView>
   );
 };
 
@@ -41,5 +44,3 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-
-export default HeaderTitle;

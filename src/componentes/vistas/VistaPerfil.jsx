@@ -22,7 +22,6 @@ export const VistaPerfil = () => {
   const [direccionScroll, setDireccionScroll] = useState("arriba");
   const [perfil, setPerfil] = useState({});
   const { logout } = useStore()
-  const [isLoading, setIsLoading] = useState(true);
   const { id } = route.params;
 
   const navigation = useNavigation();
@@ -38,10 +37,8 @@ export const VistaPerfil = () => {
 
       setPerfil(infoPerfil);
 
-    } catch (error) {
+    } catch {
       Toast.error("Error inesperado intentalo mas tarde")
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -77,7 +74,7 @@ export const VistaPerfil = () => {
     const nuevaPosicionScroll = event.nativeEvent.contentOffset.y;
     const desplazamiento = nuevaPosicionScroll - posicionAnteriorScroll;
 
-    if (Math.abs(desplazamiento) < 3) {
+    if (Math.abs(desplazamiento) < 5) {
       setPosicionAnteriorScroll(nuevaPosicionScroll);
       return;
     }
@@ -236,9 +233,9 @@ const styles = StyleSheet.create({
   },
 
   botonFlotante: {
-    position: "fixed",
+    position: "absolute",
     right: 16,
-    bottom: 64,
+    bottom: 32,
   },
   botonAgregar: {
     backgroundColor: Color.acento,
