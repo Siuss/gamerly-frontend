@@ -26,7 +26,6 @@ import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
 import { MessagesList } from "../vistas/Mensajes";
 import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
 
-
 const Stack = createStackNavigator();
 
 const AppRutas = () => {
