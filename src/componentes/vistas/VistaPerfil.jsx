@@ -19,6 +19,7 @@ import { Toast } from "react-native-toast-message";
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { TablaHorarios } from "../bloques/TablaHorarios";
 import { getHorariosPreferidos } from "../../utils/diasMapper";
+import { rutas } from "../rutas/rutas";
 
 export const VistaPerfil = () => {
   const route = useRoute();
@@ -97,6 +98,10 @@ export const VistaPerfil = () => {
     navigation.navigate("resenias", { id });
   };
 
+  const handleVerReseniasPendientes = () => {
+    navigation.navigate(rutas.reseniasPendientes);
+  };
+
   const handleLogout = async () => {
     await logout();
     setPerfil({});
@@ -107,6 +112,7 @@ export const VistaPerfil = () => {
     await SesionService.eliminarCuenta(id);
     await handleLogout();
   };
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -193,7 +199,7 @@ export const VistaPerfil = () => {
               variante="link"
               subrayado
               textStyle={styles.textoReseniasPendientes}
-              onPress={handleVerMasClick}
+              onPress={handleVerReseniasPendientes}
             >
               Reseñas pendientes
             </Boton>
@@ -306,13 +312,13 @@ const styles = StyleSheet.create({
   reseniasHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   reseniasPendientes: {
-    paddingRight: 0
+    paddingRight: 0,
   },
   textoReseniasPendientes: {
-    color: Color.gris
+    color: Color.gris,
   },
   cardResenia: {
     marginBottom: 16,

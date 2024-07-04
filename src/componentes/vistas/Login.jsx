@@ -53,7 +53,7 @@ export const Login = () => {
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={[styles.input, { color: Color.secundario }]}
-        onChangeText={(value) => handleCredencialesChange("email", value)}
+        onChangeText={(value) => handleCredencialesChange("email", value.toLowerCase())}
         placeholder="Email"
         placeholderTextColor={Color.secundario}
         value={credenciales.email}

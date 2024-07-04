@@ -16,11 +16,25 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
  
 */
 
-export const BotonFlotante = (props) => {
-  const {color = Color.blanco, style, ...restProps } = props;
+export const BotonFlotante = ({
+  color = Color.blanco,
+  style,
+  size = 20,
+  name,
+  ...restProps
+}) => {
+  const dynamicStyles = StyleSheet.create({
+    boton: {
+      padding: 20,
+    },
+  });
+
   return (
-    <TouchableOpacity style={[styles.boton, style]} {...restProps}>
-       <MaterialIcons name={props.name} color={color} size={20} />
+    <TouchableOpacity
+      style={[styles.boton, dynamicStyles.boton, style]}
+      {...restProps}
+    >
+      <MaterialIcons name={name} color={color} size={size} />
     </TouchableOpacity>
   );
 };
@@ -30,8 +44,7 @@ const styles = StyleSheet.create({
     color: Color.blanco,
     backgroundColor: Color.primario,
     borderRadius: 100,
-    padding: 20,
     alignSelf: "flex-start",
-    elevation: 4
+    elevation: 4,
   },
 });

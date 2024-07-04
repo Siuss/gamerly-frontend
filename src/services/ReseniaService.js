@@ -4,7 +4,8 @@ import { BASE_URL } from './requestConfig'
 const ReseniaEndpoints = {
     AGREGAR_RESENIA: "/crear-resenia/",
     RESENIAS: "/resenias/",
-    TIENE_RESENIA_DE: "/tiene-resenia-de/"
+    TIENE_RESENIA_DE: "/tiene-resenia-de/",
+    RESENIAS_PENDIENTES: "/resenias-pendientes/",
 };
 
 const enviarResenia = async (idUsuarioEmisor, idUsuarioReceptor, resenia) => {
@@ -31,4 +32,12 @@ const tieneUnaResenia = async (idUsuarioCreador, idUsuarioReceptor) => {
     return response.data;
 }
 
-export const ReseniaService = { enviarResenia, getResenias, tieneUnaResenia };
+const getReseniasPendientes = async (idUsuario) => {
+    const response = await axios.get(
+        `${BASE_URL}${ReseniaEndpoints.RESENIAS_PENDIENTES}${idUsuario}`
+    );
+
+    return response.data;
+}
+
+export const ReseniaService = { enviarResenia, getResenias, tieneUnaResenia, getReseniasPendientes };

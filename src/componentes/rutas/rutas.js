@@ -7,7 +7,8 @@ export const titlesConfig = {
   juegos: "Juegos",
   jugadores: "Jugadores",
   reseniaJugador: "Reseña Jugador",
-  solicitudesPendientes: "Solicitudes Pendientes"
+  solicitudesPendientes: "Solicitudes Pendientes",
+  reseniasPendientes: "Reseñas Pendientes"
 };
 
 export const rutas = {
@@ -20,5 +21,6 @@ export const rutas = {
   recuperarContrasena: "recuperarContrasena",
   jugadores: "jugadores",
   reseniaJugador: "reseniaJugador",
-  solicitudesPendientes: "solicitudesPendientes"
+  solicitudesPendientes: "solicitudesPendientes",
+  reseniasPendientes: "reseniasPendientes"
 };

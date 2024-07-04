@@ -21,6 +21,7 @@ import { SolicitudesPendientes } from "../vistas/SolicitudesPendientes.jsx";
 import { Color } from "../../estilos/colores.js";
 import ToastManager from "toastify-react-native";
 import { rutas, titlesConfig } from "./rutas.js";
+import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
 
 const Stack = createStackNavigator();
 
@@ -98,6 +99,11 @@ const AppRutas = () => {
             titulo={rutas.solicitudesPendientes}
             name={rutas.solicitudesPendientes}
             component={SolicitudesPendientes}
+          />
+          <Stack.Screen
+            titulo={rutas.reseniasPendientes}
+            name={rutas.reseniasPendientes}
+            component={ReseniasPendientes}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />

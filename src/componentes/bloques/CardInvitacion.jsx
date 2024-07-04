@@ -49,7 +49,7 @@ export const CardInvitacion = ({ style, idUsuario, idSolicitud, foto, nombre, me
                         Discord: {discord}
                     </Parrafo>
                 </View>
-                < View style={styles.botones}>
+                <View style={styles.botones}>
                     <BotonFlotante
                         style={styles.rechazar}
                         name="close"
