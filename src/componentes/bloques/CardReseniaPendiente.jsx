@@ -10,12 +10,10 @@ export const CardReseniaPendiente = ({
   foto,
   discord,
   style,
+  onAceptar,
+  onRechazar,
   ...restProps
-}) => {
-  const handleAceptar = () => {};
-
-  const handleRechazar = () => {};
-  return (
+}) => (
     <View style={[styles.card, style]} {...restProps}>
       <FotoDePerfil width={64} height={64} src={foto} />
       <View style={styles.perfilInfo}>
@@ -34,19 +32,18 @@ export const CardReseniaPendiente = ({
           style={styles.rechazar}
           name="close"
           color={Color.secundario}
-          onPress={handleRechazar}
+          onPress={onRechazar}
         />
         <BotonFlotante
           size={14}
           style={styles.aceptar}
           name="check"
           color={Color.primario}
-          onPress={handleAceptar}
+          onPress={onAceptar}
         />
       </View>
     </View>
   );
-};
 
 const styles = StyleSheet.create({
   card: {

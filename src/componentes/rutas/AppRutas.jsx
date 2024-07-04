@@ -5,7 +5,7 @@ import { Resenias } from "../vistas/Reseñas.jsx";
 import { HeaderTitle } from "../header/HeaderTitle.jsx";
 import { View, StyleSheet } from "react-native";
 import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada.jsx";
-import { VistaPerfil } from "../vistas/VistaPerfil.jsx";
+import { VistaMiPerfil } from "../vistas/VistaMiPerfil.jsx";
 import { PerfilJugador } from "../vistas/PerfilJugador.jsx";
 import { Login } from "../vistas/Login.jsx";
 import { Inicio } from "../vistas/Inicio.jsx";
@@ -18,8 +18,6 @@ import useNavBarStore from "../../hooks/useNavbarStore.jsx";
 import { Juegos } from "../vistas/Juegos.jsx";
 import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
 import { SolicitudesPendientes } from "../vistas/SolicitudesPendientes.jsx";
-import { Color } from "../../estilos/colores.js";
-import ToastManager from "toastify-react-native";
 import { rutas, titlesConfig } from "./rutas.js";
 import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
 
@@ -33,7 +31,6 @@ const AppRutas = () => {
 
   return (
     <View style={styles.container}>
-      <ToastManager style={styles.toast} textStyle={styles.toastText} />
       <NavigationContainer style={styles.navigationContainer}>
         <Stack.Navigator
           initialRouteName="inicio"
@@ -73,7 +70,7 @@ const AppRutas = () => {
           <Stack.Screen
             titulo="miPerfil"
             name="miPerfil"
-            component={VistaPerfil}
+            component={VistaMiPerfil}
           />
           <Stack.Screen
             titulo="busquedaAvanzada"
@@ -129,11 +126,5 @@ const styles = StyleSheet.create({
     backgroundColor: "lightblue",
     justifyContent: "center",
     alignItems: "center",
-  },
-  toast: {
-    backgroundColor: Color.primario,
-  },
-  toastText: {
-    color: Color.blanco,
   },
 });

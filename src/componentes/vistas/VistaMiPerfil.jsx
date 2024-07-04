@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
@@ -20,16 +20,23 @@ import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { TablaHorarios } from "../bloques/TablaHorarios";
 import { getHorariosPreferidos } from "../../utils/diasMapper";
 import { rutas } from "../rutas/rutas";
+import { ReseniaService } from "../../services/ReseniaService";
 
-export const VistaPerfil = () => {
+export const VistaMiPerfil = () => {
   const route = useRoute();
   const [posicionAnteriorScroll, setPosicionAnteriorScroll] = useState(0);
   const [direccionScroll, setDireccionScroll] = useState("arriba");
   const [perfil, setPerfil] = useState({});
+  const [reseniasPendientes, setReseniasPendientes] = useState([]);
   const { logout } = useStore();
   const { id } = route.params;
 
   const navigation = useNavigation();
+
+  const tieneReseniasPendientes = useMemo(
+    () => reseniasPendientes.length > 0,
+    [reseniasPendientes]
+  );
 
   const traerPerfil = async () => {
     const idUsuarioLogueado = await getUsuarioLogueadoId();
@@ -50,23 +57,22 @@ export const VistaPerfil = () => {
     }
   };
 
+  const traerReseniasPendientes = async () => {
+    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const resenias = await ReseniaService.getReseniasPendientes(
+      idUsuarioLogueado
+    );
+    setReseniasPendientes(resenias);
+  };
+
   useFocusEffect(
     useCallback(() => {
       if (!id) return;
 
       traerPerfil();
+      traerReseniasPendientes();
     }, [id])
   );
-
-  const obtenerReseniasDeOtrosUsuarios = () => {
-    if (!perfil.resenias) return [];
-    const resenias = Array.isArray(perfil.resenias)
-      ? perfil.resenias
-      : [perfil.resenias];
-    return resenias.filter((resenia) => resenia.nombre !== perfil.nombre);
-  };
-
-  const reseniasDeOtrosUsuarios = obtenerReseniasDeOtrosUsuarios();
 
   const onHorarioChange = (dia, momento) => {
     /* TODO: Decidir si se elimina,sirve para el editar
@@ -194,33 +200,39 @@ export const VistaPerfil = () => {
               Mis Reseñas
             </Parrafo>
 
-            <Boton
-              style={styles.reseniasPendientes}
-              variante="link"
-              subrayado
-              textStyle={styles.textoReseniasPendientes}
-              onPress={handleVerReseniasPendientes}
-            >
-              Reseñas pendientes
-            </Boton>
+            {tieneReseniasPendientes && (
+              <Boton
+                style={styles.reseniasPendientes}
+                variante="link"
+                subrayado
+                textStyle={styles.textoReseniasPendientes}
+                onPress={handleVerReseniasPendientes}
+              >
+                Reseñas pendientes
+              </Boton>
+            )}
           </View>
 
-          {reseniasDeOtrosUsuarios.slice(0, 3).map((resenia, index) => (
-            <CardResenia
-              key={index}
-              style={styles.cardResenia}
-              puntaje={resenia.puntaje}
-              foto={resenia.foto}
-              resenia={resenia.comentario}
-            />
-          ))}
+          {perfil.resenias && (
+            <>
+              {perfil.resenias.slice(0, 3).map((resenia, index) => (
+                <CardResenia
+                  key={index}
+                  style={styles.cardResenia}
+                  puntaje={resenia.puntaje}
+                  foto={resenia.foto}
+                  resenia={resenia.comentario}
+                />
+              ))}
 
-          {reseniasDeOtrosUsuarios.length > 3 && (
-            <View style={styles.verMas}>
-              <Boton variante="link" onPress={handleVerMasClick}>
-                Ver mas
-              </Boton>
-            </View>
+              {perfil.resenias.length > 3 && (
+                <View style={styles.verMas}>
+                  <Boton variante="link" onPress={handleVerMasClick}>
+                    Ver mas
+                  </Boton>
+                </View>
+              )}
+            </>
           )}
         </View>
         <View style={styles.botonesSesion}>
