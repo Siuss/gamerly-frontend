@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Color } from "../../estilos/colores";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
-import Icons from "@expo/vector-icons/AntDesign";
+import {Puntuacion} from "../atomos/puntuacion/Puntuacion";
 
 export const CardResenia = (props) => {
   const { style, puntaje, foto, resenia, ...restProps } = props;
@@ -16,11 +16,7 @@ export const CardResenia = (props) => {
         <View style={styles.contenidoArriva}>
           <Text style={styles.texto}>
             Reseña{" "}
-            <View style={styles.iconos}>
-              {[...Array(puntaje).keys()].map((index) => (
-                <Icons style={styles.estrella} key={index} name="star" size={14} />
-              ))}
-            </View>
+            <Puntuacion puntuacion={puntaje}/>
           </Text>
         </View>
         <View style={styles.contenidoAbajo}>
@@ -58,11 +54,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
-  iconos: {
-    display: "flex",
-    flexDirection: "row",
-  },
   textoResenia: {
+    flexShrink: 1,
     marginLeft: 10,
   },
   estrella: {

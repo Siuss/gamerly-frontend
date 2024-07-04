@@ -1,9 +1,13 @@
 import React, { useState, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Boton } from "../atomos/boton/Boton";
-import { useFocusEffect, useRoute, useNavigation } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useRoute,
+  useNavigation,
+} from "@react-navigation/native";
 import { Color } from "../../estilos/colores";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import TextArea from "../atomos/TextArea/TextArea";
@@ -14,14 +18,15 @@ import { Toast } from "toastify-react-native";
 
 export const ReseniaJugador = () => {
   const route = useRoute();
-  const { getIdUsuarioLogueado } = useStore()
+  const { getIdUsuarioLogueado } = useStore();
   const { id: jugadorId } = route.params;
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
-  const [jugador, setJugador] = useState({})
+  const [jugador, setJugador] = useState({});
   const [puntaje, setPuntaje] = useState(1);
   const [comentario, setComentario] = useState("");
 
+  const Dimensions = useWindowDimensions();
 
   const handlePuntajeChange = (puntajeRaw) => {
     const nuevoPuntaje = puntajeRaw === 0 ? undefined : puntajeRaw;
@@ -29,59 +34,71 @@ export const ReseniaJugador = () => {
   };
 
   const handleComentarioChange = (nuevoComentario) => {
-    setComentario(nuevoComentario)
-  }
+    setComentario(nuevoComentario);
+  };
 
   const handleEnviarResenia = async () => {
     try {
-      const usuarioLogueadoId = await getIdUsuarioLogueado()
-      const resenia = { comentario, puntaje }
+      const usuarioLogueadoId = await getIdUsuarioLogueado();
+      const resenia = { comentario, puntaje };
 
-      await ReseniaService.enviarResenia(usuarioLogueadoId, jugadorId, resenia)
+      await ReseniaService.enviarResenia(usuarioLogueadoId, jugadorId, resenia);
       const rutaAnterior = navigation.getState().routes.at(-2);
-      navigation.navigate(rutaAnterior)    
-       
-      Toast.success("La reseña se envio satisfactoriamente")
+      navigation.navigate(rutaAnterior);
+
+      Toast.success("La reseña se envio satisfactoriamente");
     } catch {
-      Toast.error("Error inesperado intenta mas tarde")
+      Toast.error("Error inesperado intenta mas tarde");
     }
+  };
+
+  const handleCancelar = () => {
+    const rutaAnterior = navigation.getState().routes.at(-2);
+    navigation.navigate(rutaAnterior)
   }
 
   useFocusEffect(
     useCallback(() => {
       const traerPerfil = async () => {
         try {
-          const perfilJugador = await JugadoresService.getPerfilUsuario(jugadorId)
-          setJugador(perfilJugador)
+          const perfilJugador = await JugadoresService.getPerfilUsuario(
+            jugadorId
+          );
+          setJugador(perfilJugador);
         } catch {
-          Toast.error("Error inesperado intenta mas tarde")
+          Toast.error("Error inesperado intenta mas tarde");
         }
-      }
+      };
 
-      if (!jugadorId) return
+      if (!jugadorId) return;
 
-      traerPerfil()
+      traerPerfil();
 
       return () => {
-        setJugador({})
+        setJugador({});
       };
     }, [jugadorId])
   );
 
+  const dynamicStyle = StyleSheet.create({
+    contenedorSlider: {
+      padding: 16,
+      width: Dimensions.width * 0.75,
+    },
+  });
+
   return (
     <View style={styles.container}>
       <View>
-        <FotoDePerfil
-          src={jugador.foto || ''}
-          height={64}
-          width={64}
-        />
+        <FotoDePerfil src={jugador.foto} height={64} width={64} />
         <Parrafo variante="blancoM">{jugador.nombre}</Parrafo>
       </View>
       <View style={styles.espaciador}>
         <View style={styles.puntuacion}>
-          <Parrafo variante="blancoM" style={styles.textoPuntuacion}>Puntuación:</Parrafo>
-          <View style={styles.contenedorSlider}>
+          <Parrafo variante="blancoM" style={styles.textoPuntuacion}>
+            Puntuación:
+          </Parrafo>
+          <View style={dynamicStyle.contenedorSlider}>
             <Slider
               onValueChange={handlePuntajeChange}
               style={styles.input}
@@ -95,13 +112,21 @@ export const ReseniaJugador = () => {
           </View>
         </View>
         <View style={styles.espaciador}>
-          <Parrafo style={styles.dejarResenia} variante="blancoM">Dejar una reseña:</Parrafo>
-          <TextArea onChangeText={handleComentarioChange} placeholder="Deja tu mensaje" />
+          <Parrafo style={styles.dejarResenia} variante="blancoM">
+            Dejar una reseña:
+          </Parrafo>
+          <TextArea
+            onChangeText={handleComentarioChange}
+            placeholder="Deja tu mensaje"
+          />
         </View>
       </View>
 
       <View style={styles.botonera}>
-        <Boton variante="primario" onPress={handleEnviarResenia}>
+      <Boton variante="secundario" onPress={handleCancelar}>
+          Cancelar
+        </Boton>
+        <Boton disabled={!comentario} variante="primario" onPress={handleEnviarResenia}>
           Enviar
         </Boton>
       </View>
@@ -130,14 +155,11 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 32,
   },
-  contenedorSlider: {
-    padding: 16,
-    width: "75vw",
-  },
   input: {
     width: "100%",
   },
   espaciador: {
+    width: "100%",
     paddingVertical: 3,
   },
   parrafoCentrado: {

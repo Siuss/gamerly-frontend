@@ -6,6 +6,7 @@ import Busqueda from "../bloques/Busqueda";
 import { JuegosService } from "../../services/JuegosService";
 import { useFocusEffect , useNavigation } from '@react-navigation/native';
 import { rutas } from "../rutas/rutas";
+import Slider from "@react-native-community/slider";
 
 export const Juegos = () => {
   const [juegos, setJuegos] = useState([]);
@@ -39,7 +40,6 @@ export const Juegos = () => {
 
     setJuegos(nuevosJuegos)
   }
-
 
   return (
     <View style={styles.containerExterior}>

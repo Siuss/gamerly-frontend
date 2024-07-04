@@ -16,7 +16,6 @@ import { rutas } from "../rutas/rutas";
 import { SolicitudService } from "../../services/SolicitudService";
 import { Toast } from "toastify-react-native";
 import { juegaEnEsteDia , getHorariosPreferidos } from "../../utils/diasMapper.js";
-
 import { ReseniaService } from "../../services/ReseniaService.js";
 
 export const PerfilJugador = (props) => {

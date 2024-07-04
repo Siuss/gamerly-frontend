@@ -32,7 +32,7 @@ export const SolicitudesPendientes = () => {
       {solicitudes.length > 0 ? (
         solicitudes.map((solicitud) => (
           <CardInvitacion
-            key={solicitud.id}
+            key={solicitud.idSolicitud}
             discord={solicitud.discord}
             idSolicitud={solicitud.idSolicitud}
             idUsuario={solicitud.idUsuario}

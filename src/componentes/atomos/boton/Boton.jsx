@@ -3,23 +3,29 @@ import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Color } from "../../../estilos/colores";
 
 export const Boton = (props) => {
-  const { style, textStyle, outline, variante = "primario", ...restProps } = props;
+  const { style, textStyle, outline, disabled, subrayado, variante = "primario", ...restProps } = props;
   return (
     <TouchableOpacity
-      style={[styles.boton, styles[variante], outline && styles.outline[outline], style]}
+      disabled={disabled}
+      style={[styles.boton, styles[variante], outline && styles.outline[outline], disabled && styles.disabled, style]}
       {...restProps}
     >
-      <Text style={[styles.texto, textStyle]}>{props.children}</Text>
+      <Text style={[styles.texto, subrayado && styles.subrayado, textStyle]} subrayado={subrayado}>{props.children}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  subrayado: {
+    textDecorationLine: "underline",
+  },
   boton: {
     borderRadius: 100,
     paddingVertical: 8,
-    paddingHorizontal: 32,
-    width: "fit-content",
+    paddingHorizontal: 32
+  },
+  disabled: {
+    opacity: 0.4
   },
   texto: {
     color: Color.blanco,
@@ -27,6 +33,9 @@ const styles = StyleSheet.create({
   },
   acento: {
     backgroundColor: Color.acento,
+  },
+  grisS: {
+    color: Color.gris,
   },
   gris: {
     backgroundColor: "#606D5D",

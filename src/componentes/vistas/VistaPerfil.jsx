@@ -5,56 +5,63 @@ import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Color } from "../../estilos/colores";
 import { Divisor } from "../atomos/divisor/Divisor";
 import { BotonFlotante } from "../atomos/botonFlotante/BotonFlotante";
-import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { ListaDePildoras } from "../bloques/ListaDePildoras";
 import { CardResenia } from "../bloques/CardResenia";
 import { Boton } from "../atomos/boton/Boton";
-import { SesionService } from "../../services/SesionService"
+import { SesionService } from "../../services/SesionService";
 import useStore from "../../hooks/useStore";
 import { Toast } from "react-native-toast-message";
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
-import { TablaHorarios } from "../bloques/TablaHorarios"
-import { getHorariosPreferidos } from '../../utils/diasMapper'
+import { TablaHorarios } from "../bloques/TablaHorarios";
+import { getHorariosPreferidos } from "../../utils/diasMapper";
 
 export const VistaPerfil = () => {
   const route = useRoute();
   const [posicionAnteriorScroll, setPosicionAnteriorScroll] = useState(0);
   const [direccionScroll, setDireccionScroll] = useState("arriba");
   const [perfil, setPerfil] = useState({});
-  const { logout } = useStore()
+  const { logout } = useStore();
   const { id } = route.params;
 
   const navigation = useNavigation();
 
   const traerPerfil = async () => {
-    const idUsuarioLogueado = await getUsuarioLogueadoId()
+    const idUsuarioLogueado = await getUsuarioLogueadoId();
 
     try {
       if (idUsuarioLogueado === undefined) {
-        throw new Error("El usuario no está autenticado o el userId no está disponible");
+        throw new Error(
+          "El usuario no está autenticado o el userId no está disponible"
+        );
       }
-      const infoPerfil = await SesionService.obtenerDetalleUsuario(idUsuarioLogueado)
+      const infoPerfil = await SesionService.obtenerDetalleUsuario(
+        idUsuarioLogueado
+      );
 
       setPerfil(infoPerfil);
-
     } catch {
-      Toast.error("Error inesperado intentalo mas tarde")
+      Toast.error("Error inesperado intentalo mas tarde");
     }
   };
 
   useFocusEffect(
     useCallback(() => {
-      if (!id) return
+      if (!id) return;
 
-      traerPerfil()
+      traerPerfil();
     }, [id])
   );
 
-
-
   const obtenerReseniasDeOtrosUsuarios = () => {
     if (!perfil.resenias) return [];
-    const resenias = Array.isArray(perfil.resenias) ? perfil.resenias : [perfil.resenias];
+    const resenias = Array.isArray(perfil.resenias)
+      ? perfil.resenias
+      : [perfil.resenias];
     return resenias.filter((resenia) => resenia.nombre !== perfil.nombre);
   };
 
@@ -91,15 +98,15 @@ export const VistaPerfil = () => {
   };
 
   const handleLogout = async () => {
-    await logout()
+    await logout();
     setPerfil({});
     navigation.navigate("login");
-  }
+  };
 
   const handleEliminarCuenta = async () => {
     await SesionService.eliminarCuenta(id);
     await handleLogout();
-  }
+  };
   return (
     <View style={styles.container}>
       <ScrollView
@@ -129,25 +136,38 @@ export const VistaPerfil = () => {
           </Parrafo>
           <Divisor />
 
-
           <Parrafo variante="grisS" style={styles.descripcionplataformas}>
             Mis Plataformas
           </Parrafo>
           <View style={styles.pildora1}>
-            <ListaDePildoras disabled items={perfil.plataformas ? perfil.plataformas.map((plataforma, index) => ({
-              id: index,
-              contenido: plataforma
-            })) : []} />
+            <ListaDePildoras
+              disabled
+              items={
+                perfil.plataformas
+                  ? perfil.plataformas.map((plataforma, index) => ({
+                      id: index,
+                      contenido: plataforma,
+                    }))
+                  : []
+              }
+            />
           </View>
 
           <Parrafo variante="grisS" style={styles.descripcionplataformas}>
             Mis Juegos
           </Parrafo>
           <View style={styles.pildora1}>
-            <ListaDePildoras disabled items={perfil.juegosPreferidos ? perfil.juegosPreferidos.map((juego, index) => ({
-              id: index,
-              contenido: juego
-            })) : []} />
+            <ListaDePildoras
+              disabled
+              items={
+                perfil.juegosPreferidos
+                  ? perfil.juegosPreferidos.map((juego, index) => ({
+                      id: index,
+                      contenido: juego,
+                    }))
+                  : []
+              }
+            />
           </View>
           <View style={styles.conatainerEditarJuego}>
             <Parrafo variante="grisS" style={styles.descripcionplataformas}>
@@ -155,31 +175,57 @@ export const VistaPerfil = () => {
             </Parrafo>
           </View>
           <View style={styles.containerTable}>
-            {perfil.diasHorariosPreferidos && <TablaHorarios
-              horarios={getHorariosPreferidos(perfil.diasHorariosPreferidos)}
-              onHorarioChange={onHorarioChange}
-            />}
-
+            {perfil.diasHorariosPreferidos && (
+              <TablaHorarios
+                horarios={getHorariosPreferidos(perfil.diasHorariosPreferidos)}
+                onHorarioChange={onHorarioChange}
+              />
+            )}
           </View>
-          {reseniasDeOtrosUsuarios.map((resenia, index) => (
+
+          <View style={styles.reseniasHeader}>
+            <Parrafo variante="grisS" style={styles.descripcionplataformas}>
+              Mis Reseñas
+            </Parrafo>
+
+            <Boton
+              style={styles.reseniasPendientes}
+              variante="link"
+              subrayado
+              textStyle={styles.textoReseniasPendientes}
+              onPress={handleVerMasClick}
+            >
+              Reseñas pendientes
+            </Boton>
+          </View>
+
+          {reseniasDeOtrosUsuarios.slice(0, 3).map((resenia, index) => (
             <CardResenia
               key={index}
+              style={styles.cardResenia}
               puntaje={resenia.puntaje}
               foto={resenia.foto}
               resenia={resenia.comentario}
             />
           ))}
-          <View style={styles.verMas}>
-            <Boton variante="link" onPress={handleVerMasClick}>
-              Ver mas
-            </Boton>
-          </View>
+
+          {reseniasDeOtrosUsuarios.length > 3 && (
+            <View style={styles.verMas}>
+              <Boton variante="link" onPress={handleVerMasClick}>
+                Ver mas
+              </Boton>
+            </View>
+          )}
         </View>
         <View style={styles.botonesSesion}>
           <Divisor />
-          <Boton variante="transparente" onPress={handleEliminarCuenta}>Eliminar Cuenta</Boton>
+          <Boton variante="transparente" onPress={handleEliminarCuenta}>
+            Eliminar Cuenta
+          </Boton>
           <Divisor />
-          <Boton variante="transparente" onPress={handleLogout}>Cerrar Sesion</Boton>
+          <Boton variante="transparente" onPress={handleLogout}>
+            Cerrar Sesion
+          </Boton>
           <Divisor />
         </View>
       </ScrollView>
@@ -233,6 +279,7 @@ const styles = StyleSheet.create({
   },
 
   botonFlotante: {
+    backgroundColor: Color.secundario,
     position: "absolute",
     right: 16,
     bottom: 32,
@@ -256,15 +303,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  reseniasHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  reseniasPendientes: {
+    paddingRight: 0
+  },
+  textoReseniasPendientes: {
+    color: Color.gris
+  },
   cardResenia: {
-    marginTop: 16,
+    marginBottom: 16,
   },
   verMas: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    paddingVertical: 16,
+    marginBottom: 16,
   },
   botonesSesion: {
     display: "flex",

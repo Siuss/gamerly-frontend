@@ -15,8 +15,7 @@ const NavBar = (props) => {
 
     useEffect(() => {
         if (
-            currentRouteName === rutas.miPerfil ||
-            currentRouteName === rutas.perfilJugador
+            currentRouteName === rutas.miPerfil
         ) {
             setActiveButton(rutas.miPerfil);
         } else {
@@ -50,11 +49,11 @@ const NavBar = (props) => {
   return (
         <View style={[styles.navBar, styles.contenido]} {...restProps}>
           <Pressable
-              style={({ pressed }) => [
+              style={() => [
                 styles.botonDeNavegacion,
                 {
                   backgroundColor:
-                      activeButton === rutas.juegos || pressed
+                      activeButton === rutas.juegos
                           ? Color.acento
                           : "transparent",
                 },
@@ -72,11 +71,11 @@ const NavBar = (props) => {
             />
           </Pressable>
           <Pressable
-              style={({ pressed }) => [
+              style={() => [
                 styles.botonDeNavegacion,
                 {
                   backgroundColor:
-                      activeButton === rutas.amigos || pressed
+                      activeButton === rutas.amigos
                           ? Color.acento
                           : "transparent",
                 },
@@ -90,11 +89,11 @@ const NavBar = (props) => {
             />
           </Pressable>
           <Pressable
-              style={({ pressed }) => [
+              style={() => [
                 styles.botonDeNavegacion,
                 {
                   backgroundColor:
-                      activeButton === rutas.miPerfil || pressed
+                      activeButton === rutas.miPerfil
                           ? Color.acento
                           : "transparent",
                 },

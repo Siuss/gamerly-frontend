@@ -1,21 +1,22 @@
 import { StyleSheet, View } from "react-native";
 import { Color } from "../../../estilos/colores";
-import { Parrafo } from "../parrafo/Parrafo";
 import Icons from "@expo/vector-icons/AntDesign";
 
-export const Puntuacion = (props) => {
-  return (
-    <View style={styles.puntuacion}>
-      <Parrafo variante="blancoXS">{props.puntuacion} / 5</Parrafo>
-      <Icons name="star" size={14} color={Color.blanco}></Icons>
-    </View>
-  );
-};
+export const Puntuacion = ({ puntuacion }) => (
+  <View style={styles.puntuacion}>
+    {[...Array(puntuacion).keys()].map((index) => (
+      <Icons style={styles.estrella} key={index} name="star" size={14} />
+    ))}
+  </View>
+);
 
 const styles = StyleSheet.create({
   puntuacion: {
     display: "flex",
     flexDirection: "row",
-    gap:4,
+    gap: 4,
+  },
+  estrella: {
+    color: Color.blanco,
   },
 });

@@ -52,9 +52,7 @@ export const Card = (props) => {
               </Parrafo>
             </View>}
         </View>
-        <View style={styles.contenidoDerecho}>
           <Puntuacion puntuacion={props.puntuacion} />
-        </View>
       </TouchableOpacity>
     </View>
 
@@ -84,8 +82,5 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     gap: 16,
-  },
-  contenidoDerecho: {
-    position: "relative",
   },
 });
