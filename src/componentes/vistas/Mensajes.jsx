@@ -9,7 +9,7 @@ const mockUsers = [
   { id: 3, name: "Charlie", message: "Good afternoon!", photo: "https://example.com/photo3.jpg", messageCount: 8 },
 ];
 
-const MessagesList = () => {
+export const MessagesList = () => {
   const handleCardClick = (id) => {
     console.log(`Message ${id} clicked`);
   };
@@ -32,8 +32,6 @@ const MessagesList = () => {
     </View>
   );
 };
-
-export default MessagesList;
 
 const styles = StyleSheet.create({
   container: {

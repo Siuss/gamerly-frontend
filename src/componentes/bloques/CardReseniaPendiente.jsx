@@ -14,36 +14,36 @@ export const CardReseniaPendiente = ({
   onRechazar,
   ...restProps
 }) => (
-    <View style={[styles.card, style]} {...restProps}>
-      <FotoDePerfil width={64} height={64} src={foto} />
-      <View style={styles.perfilInfo}>
-        <Parrafo variante="blancoM" style={styles.textoResenia}>
-          {nombre}
-        </Parrafo>
+  <View style={[styles.card, style]} {...restProps}>
+    <FotoDePerfil width={64} height={64} src={foto} />
+    <View style={styles.perfilInfo}>
+      <Parrafo variante="blancoM" style={styles.textoResenia}>
+        {nombre}
+      </Parrafo>
 
-        <Parrafo variante="blancoM" style={styles.textoResenia}>
-          Discord: {discord}
-        </Parrafo>
-      </View>
-
-      <View style={styles.botones}>
-        <BotonFlotante
-          size={14}
-          style={styles.rechazar}
-          name="close"
-          color={Color.secundario}
-          onPress={onRechazar}
-        />
-        <BotonFlotante
-          size={14}
-          style={styles.aceptar}
-          name="check"
-          color={Color.primario}
-          onPress={onAceptar}
-        />
-      </View>
+      <Parrafo variante="blancoM" style={styles.textoResenia}>
+        Discord: {discord}
+      </Parrafo>
     </View>
-  );
+
+    <View style={styles.botones}>
+      <BotonFlotante
+        size={14}
+        style={styles.rechazar}
+        name="close"
+        color={Color.secundario}
+        onPress={onRechazar}
+      />
+      <BotonFlotante
+        size={14}
+        style={styles.aceptar}
+        name="check"
+        color={Color.primario}
+        onPress={onAceptar}
+      />
+    </View>
+  </View>
+);
 
 const styles = StyleSheet.create({
   card: {

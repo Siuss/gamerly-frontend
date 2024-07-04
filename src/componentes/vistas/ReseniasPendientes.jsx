@@ -63,6 +63,12 @@ export const ReseniasPendientes = () => {
     }, [traerResenias])
   );
 
+  useFocusEffect(
+    useCallback(() => {
+      traerResenias();
+    }, [traerResenias])
+  );
+
   return (
     <View style={styles.container}>
       <Parrafo variante="blancoM">

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Resenias } from "../vistas/Reseñas.jsx";
-import { HeaderTitle } from "../header/HeaderTitle.jsx";
+import { HeaderTitle } from "../header/HeaderTitle";
 import { View, StyleSheet } from "react-native";
 import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada.jsx";
 import { VistaMiPerfil } from "../vistas/VistaMiPerfil.jsx";
@@ -24,6 +24,7 @@ import { useNotificationListener } from "../../hooks/useNotificationListener";
 import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
 import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
 import { MessagesList } from "../vistas/Mensajes";
+import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
 
 
 const Stack = createStackNavigator();
