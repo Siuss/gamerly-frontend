@@ -40,7 +40,7 @@ const Item = ({ name, message, image }) => (
   </View>
 );
 
-const MessagesList = () => {
+export const MessagesList = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mensajes</Text>
@@ -94,5 +94,3 @@ const styles = StyleSheet.create({
     color: Color.blanco,
   },
 });
-
-export default MessagesList;

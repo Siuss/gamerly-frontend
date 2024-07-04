@@ -5,7 +5,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Color } from "../../estilos/colores";
 import { rutas } from "../rutas/rutas";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {MessagesList} from  "...\src\componentes\vistas\Mensajes.jsx";
 
 const NavBar = (props) => {
     const { style, ...restProps } = props;
@@ -81,7 +80,7 @@ const NavBar = (props) => {
                           : "transparent",
                 },
               ]}
-              onPress={() => handleNavigateConId(rutas.MessagesList)}
+              onPress={() => handleNavigateConId(rutas.mensajes)}
           >
             <MaterialIcons
                 name="group"

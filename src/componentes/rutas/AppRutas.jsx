@@ -23,7 +23,8 @@ import { navigationRef } from "../../resolvers/NotificationResolver.js";
 import { useNotificationListener } from "../../hooks/useNotificationListener";
 import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
 import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
-import MessagesList from "../vistas/Mensajes.jsx";
+import { MessagesList } from "../vistas/Mensajes";
+
 
 const Stack = createStackNavigator();
 
@@ -65,7 +66,11 @@ const AppRutas = () => {
             component={Login}
             options={{ headerShown: false }}
           />
-          <Stack.Screen titulo="Amigos" name="amigos" component={MessagesList} />
+          <Stack.Screen
+            titulo={rutas.mensajes}
+            name={rutas.mensajes}
+            component={MessagesList}
+          />
           <Stack.Screen
             name="recuperarContrasena"
             component={RecuperarContrasena}
