@@ -9,6 +9,7 @@ export const titlesConfig = {
   reseniaJugador: "Reseña Jugador",
   solicitudesPendientes: "Solicitudes Pendientes",
   reseniasPendientes: "Reseñas Pendientes",
+  menssageslist:"Lista de mensajes"
 };
 
 export const rutas = {

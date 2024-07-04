@@ -12,18 +12,18 @@ import { Inicio } from "../vistas/Inicio.jsx";
 import { Registro } from "../vistas/Registro.jsx";
 import { RecuperarContrasena } from "../vistas/RecuperarContrasena.jsx";
 import { Jugadores } from "../vistas/Jugadores.jsx";
-import { Amigos } from "../vistas/Amigos.jsx";
 import NavBar from "../bloques/Navbar.jsx";
 import useNavBarStore from "../../hooks/useNavbarStore.jsx";
 import { Juegos } from "../vistas/Juegos.jsx";
 import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
 import { SolicitudesPendientes } from "../vistas/SolicitudesPendientes.jsx";
-import { rutas, titlesConfig, mostrarBotonDeVolver } from "./rutas.js";
+import { rutas, titlesConfig, mostrarBotonDeVolver } from "../rutas/rutas.js";
 import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
 import { navigationRef } from "../../resolvers/NotificationResolver.js";
 import { useNotificationListener } from "../../hooks/useNotificationListener";
 import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
 import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
+import MessagesList from "../vistas/Mensajes.jsx";
 
 const Stack = createStackNavigator();
 
@@ -65,7 +65,7 @@ const AppRutas = () => {
             component={Login}
             options={{ headerShown: false }}
           />
-          <Stack.Screen titulo="Amigos" name="amigos" component={Amigos} />
+          <Stack.Screen titulo="Amigos" name="amigos" component={MessagesList} />
           <Stack.Screen
             name="recuperarContrasena"
             component={RecuperarContrasena}
