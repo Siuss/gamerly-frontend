@@ -20,6 +20,8 @@ import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
 import { SolicitudesPendientes } from "../vistas/SolicitudesPendientes.jsx";
 import { rutas, titlesConfig } from "./rutas.js";
 import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
+import { navigationRef } from "../../resolvers/NotificationResolver.js";
+import { useNotificationListener } from "../../hooks/useNotificationListener";
 
 const Stack = createStackNavigator();
 
@@ -29,9 +31,14 @@ const AppRutas = () => {
     excludeLoading();
   }, [excludeLoading]);
 
+  useNotificationListener();
+
   return (
     <View style={styles.container}>
-      <NavigationContainer style={styles.navigationContainer}>
+      <NavigationContainer
+        style={styles.navigationContainer}
+        ref={navigationRef}
+      >
         <Stack.Navigator
           initialRouteName="inicio"
           screenOptions={({ route }) => ({

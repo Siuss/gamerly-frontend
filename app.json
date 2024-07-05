@@ -1,11 +1,21 @@
 {
   "expo": {
-    "name": "prueba",
+    "name": "gamerly",
     "slug": "gamerly",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "androidMode": "default",
+          "androidCollapsedTitle": "Gamerly"
+        }
+      ]
+    ],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -21,7 +31,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.stephaniepazos.gamerly"
     },
     "web": {
       "favicon": "./assets/favicon.png"

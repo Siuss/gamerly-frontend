@@ -94,10 +94,12 @@ export const PerfilJugador = (props) => {
           const amigos = await JugadoresService.getAmigosDelUsuario(
             idUsuarioLogueado
           );
-          const esAmigoDelUsuarioLogueado = amigos.some(
-            (amigo) => amigo.id === id
+          console.log(amigos)
+          const esAmigoDelUsuario = amigos.some(
+            (amigo) => amigo.id.toString() === id.toString()
           );
-          setEsAmigoDelUsuarioLogueado(esAmigoDelUsuarioLogueado);
+
+          setEsAmigoDelUsuarioLogueado(esAmigoDelUsuario);
         } catch {
           Toast.error("Error inesperado intentalo mas tarde");
         }
