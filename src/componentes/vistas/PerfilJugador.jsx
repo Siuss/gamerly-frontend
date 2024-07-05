@@ -15,7 +15,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { rutas } from "../rutas/rutas";
 import { SolicitudService } from "../../services/SolicitudService";
 import { Toast } from "toastify-react-native";
-import { juegaEnEsteDia , getHorariosPreferidos } from "../../utils/diasMapper.js";
+import {
+  juegaEnEsteDia,
+  getHorariosPreferidos,
+} from "../../utils/diasMapper.js";
 import { ReseniaService } from "../../services/ReseniaService.js";
 
 export const PerfilJugador = (props) => {
@@ -64,7 +67,7 @@ export const PerfilJugador = (props) => {
 
       // Si no fallo es que devolvio un 200 y encontro la solicitud, asi que actualizamos el estado
       setTieneSolicitudPendiente(true);
-    } catch{
+    } catch {
       // Ignoramos los errores
     }
   };
@@ -112,7 +115,7 @@ export const PerfilJugador = (props) => {
   useFocusEffect(
     useCallback(() => {
       chequearSolicitudDeAmistad();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [usuarioLogueado?.id, id])
   );
 
