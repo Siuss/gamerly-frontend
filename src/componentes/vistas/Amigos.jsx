@@ -55,7 +55,6 @@ export const Amigos = (props) => {
   useFocusEffect(
     useCallback(() => {
       if (!params.id) return;
-
       traerAmigos();
 
       return () => {
