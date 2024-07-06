@@ -18,7 +18,6 @@ export default function BarraBusqueda(props) {
 
 const styles = StyleSheet.create({
   input: {
-    width: "100%",
     height: 50,
     padding: 16,
     color: Color.secundario,

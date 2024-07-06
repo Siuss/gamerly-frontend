@@ -2,18 +2,15 @@ import React, { useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
-import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import { Divisor } from "../atomos/divisor/Divisor";
 import { Boton } from "../atomos/boton/Boton";
 import { useNavigation } from "@react-navigation/native";
 import { ListaDePildoras } from "../bloques/ListaDePildoras";
-import juegosData from "../.././data/juegos.json";
 import { Color } from "../../estilos/colores";
 import dias from "../../data/dias.json";
 import momentosDelDia from "../../data/momentosDelDia.json";
 
 const filtrosIniciales = {
-  juegos: [],
   momentosDelDia: momentosDelDia.map((contenido, index) => ({
     contenido,
     juega: false,
@@ -30,39 +27,11 @@ const filtrosIniciales = {
 export const BusquedaAvanzada = () => {
   const navigation = useNavigation();
   const { params: filtrosParam } = navigation.getState().routes.at(-1);
-
-  const [searchText, setSearchText] = useState("");
+console.log(filtrosParam)
   const [filtros, setFiltros] = useState({
     ...filtrosIniciales,
     ...filtrosParam,
   });
-
-  const handleEnter = (event) => {
-    if (event.target.value.length < 3) return;
-    const juego = juegosData.find((juego) =>
-      juego.contenido.toLowerCase().includes(event.target.value.toLowerCase())
-    );
-
-    if (!juego) return;
-
-    setSearchText("");
-
-    const juegos = filtros.juegos;
-
-    if (juegos.some((_juego) => _juego.id === juego.id)) return;
-
-    juegos.push(juego);
-
-    setFiltros((prevFiltros) => ({ ...prevFiltros, juegos }));
-  };
-
-  const handleJuegoRemove = (juegoABorrar) => {
-    const juegos = filtros.juegos.filter(
-      (juego) => juego.id !== juegoABorrar.id
-    );
-
-    setFiltros((prevFiltros) => ({ ...prevFiltros, juegos }));
-  };
 
   const handleDiaToggle = (diaBuscado) => {
     const dias = filtros.dias.map((momento) => {
@@ -104,26 +73,11 @@ export const BusquedaAvanzada = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Juegos en común</Parrafo>
-        <View style={styles.espaciador}>
-          <BarraBusqueda
-            style={styles.barraBusqueda}
-            text={searchText}
-            onChangeText={setSearchText}
-            onSubmitEditing={handleEnter}
-          />
-        </View>
-        <View style={styles.espaciador}>
-          <ListaDePildoras onPress={handleJuegoRemove} items={filtros.juegos} />
-        </View>
-      </View>
-      <Divisor />
+      
       <View style={styles.espaciador}>
         <View style={styles.espaciador}>
           <Parrafo variante="blancoM">Reseña</Parrafo>
         </View>
-        <View style={styles.espaciador}>
           <View style={styles.contenedorSlider}>
             <Slider
               onValueChange={handleReseniaChange}
@@ -131,12 +85,13 @@ export const BusquedaAvanzada = () => {
               minimumValue={0}
               maximumValue={5}
               step={1}
-            />
+              minimumTrackTintColor={Color.secundario}
+              maximumTrackTintColor={Color.gris}            />
           </View>
           <Parrafo style={styles.parrafoCentrado} variante="blancoM">
             {filtros.resenia || 0}
           </Parrafo>
-        </View>
+        
       </View>
       <Divisor />
       <View style={styles.espaciador}>
@@ -146,6 +101,7 @@ export const BusquedaAvanzada = () => {
         <Parrafo variante="blancoM">Días de la semana</Parrafo>
         <View style={styles.espaciador}>
           <ListaDePildoras
+          style={styles.espacioPildoras}
             onPress={handleDiaToggle}
             items={filtros.dias.map((dia) => ({
               ...dia,
@@ -156,7 +112,7 @@ export const BusquedaAvanzada = () => {
       </View>
       <View style={styles.espaciador}>
         <Parrafo variante="blancoM">Horario</Parrafo>
-        <View style={styles.espaciador}>
+        <View style={[styles.espaciador,styles.separacion]}>
           <ListaDePildoras
             onPress={handleMomentoToggle}
             items={filtros.momentosDelDia.map((momento) => ({
@@ -168,7 +124,7 @@ export const BusquedaAvanzada = () => {
       </View>
       <Divisor />
       <View style={styles.botonera}>
-        <Boton variante="acento"  onPress={handleAplicar}>Aplicar</Boton>
+        <Boton variante="secundario"  onPress={handleAplicar}>Aplicar</Boton>
         <Boton variante="primario" onPress={handleLimpiar}>Limpiar</Boton>
       </View>
     </ScrollView>
@@ -180,8 +136,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.neutro,
     width: "100%",
     height: "100%",
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 20,
+    paddingTop:0
   },
   barraBusqueda: {
     padding: 0,
@@ -200,9 +157,13 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   espaciador: {
-    paddingVertical: 3,
+    paddingVertical: 18,
+    paddingBottom: 18
   },
   parrafoCentrado: {
     textAlign: "center",
   },
+  separacion:{
+paddingBottom:10  
+}
 });

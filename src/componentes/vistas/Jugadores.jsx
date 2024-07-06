@@ -4,17 +4,36 @@ import { Color } from "../../estilos/colores";
 import Busqueda from "../bloques/Busqueda"
 import { JugadoresService } from '../../services/JugadoresService'
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores"
-import { useFocusEffect , useNavigation } from '@react-navigation/native'
-
+import { useFocusEffect , useNavigation, useRoute } from '@react-navigation/native'
+import dias from "../../data/dias.json";
+import momentosDelDia from "../../data/momentosDelDia.json";
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { Toast } from "toastify-react-native";
+
+const filtrosIniciales = {
+  momentosDelDia: momentosDelDia.map((contenido, index) => ({
+    contenido,
+    juega: false,
+    id: index,
+  })),
+  dias: dias.map((contenido, index) => ({
+    contenido,
+    juega: false,
+    id: index,
+  })),
+  resenia: undefined,
+};
 
 export const Jugadores = () => {
   const [jugadores, setJugadores] = useState([])
   const navigation = useNavigation();
   const [busqueda, setBusqueda] = useState("")
-  const { params: juegoId } = navigation.getState().routes.at(-1);
+  const route = useRoute();
 
+  const params = route.params;
+console.log(params);
+
+const [filtros, setFiltros] = useState(filtrosIniciales)
   const handleBusqueda = (busqueda) => {
     setBusqueda(busqueda)
   }
@@ -31,7 +50,7 @@ export const Jugadores = () => {
     useCallback(() => {
       const fetchJugadores = async () => {
         try {
-          const nuevosJugadores = await JugadoresService.getJugadoresConJuegosEnComun(juegoId)
+          const nuevosJugadores = await JugadoresService.getJugadoresConJuegosEnComun(params)
           const idUsuarioLogueado = await getUsuarioLogueadoId()
           const jugadoresMenosUsuarioLogueado = nuevosJugadores.filter(jugador => jugador.id !== idUsuarioLogueado)
           setJugadores(jugadoresMenosUsuarioLogueado)
@@ -41,6 +60,7 @@ export const Jugadores = () => {
       }
 
       fetchJugadores()
+      setFiltros(params)
 
       return () => {
         setJugadores([])
@@ -53,7 +73,7 @@ export const Jugadores = () => {
   return (
     <View style={styles.containerExterior}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Busqueda onChangeText={handleBusqueda} />
+        <Busqueda mostrarFiltro onChangeText={handleBusqueda} filtros={filtros} />
         {jugadores.length > 0 ? <ListaDeJugadores jugadores={jugadoresFiltrados} searchText="" /> : (
           <Text style={styles.texto}>
             Parece que no hay usuarios que jueguen a ese juego

@@ -4,12 +4,12 @@ import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import BarraBusquedaFiltro from "../atomos/barraBusquedaFiltro/BarraBusquedaFiltro";
 import { Color } from "../../estilos/colores";
 
-export default function Busqueda({text, onChangeText, mostrarFiltro = false}) {
+export default function Busqueda({text, onChangeText, mostrarFiltro = true, filtros}) {
   return (
     <View style={styles.container}>
       <Icons style={styles.icon} name="search1" />
       <BarraBusqueda text={text} onChangeText={onChangeText} />
-      {mostrarFiltro && <BarraBusquedaFiltro />}
+      {mostrarFiltro && <BarraBusquedaFiltro filtros={filtros} />}
     </View>
   );
 }
