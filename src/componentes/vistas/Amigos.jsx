@@ -14,6 +14,7 @@ export const Amigos = (props) => {
     const { params } = navigation.getState().routes.at(-1);
     const [amigos, setAmigos] = useState([])
     const [solicitudes, setSolicitudes] = useState([])
+    console.log('caimos atras', params)
 
     const traerAmigos = async () => {
         try {
@@ -41,7 +42,6 @@ export const Amigos = (props) => {
 
     useFocusEffect(
         useCallback(() => {
-
             if (!params.id) return
 
             traerAmigos()
@@ -51,7 +51,7 @@ export const Amigos = (props) => {
                 setSolicitudes([])
             };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [params?.id])
+        }, [])
     );
 
     return (

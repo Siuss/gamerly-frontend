@@ -13,7 +13,7 @@ export const Juegos = () => {
   const navigation = useNavigation();
 
   const handleJuegoPress = async (juego) => {
-    navigation.navigate(rutas.jugadores, { idJuego: juego.id });
+    navigation.navigate(rutas.jugadores, { idJuego: juego.id, juego: juego.nombre });
   };
 
   useFocusEffect(

@@ -15,7 +15,7 @@ export default function BarraBusquedaFiltro({ filtros, style, ...restProps }) {
 
   return (
     <Pressable
-      style={styles.button}
+      style={[styles.button, style]}
       {...restProps}
       onPress={() => handleNavigate()}
     >

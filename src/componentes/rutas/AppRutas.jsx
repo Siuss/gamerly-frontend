@@ -18,7 +18,7 @@ import useNavBarStore from "../../hooks/useNavbarStore.jsx";
 import { Juegos } from "../vistas/Juegos.jsx";
 import { ReseniaJugador } from "../vistas/ReseniaJugador.jsx";
 import { SolicitudesPendientes } from "../vistas/SolicitudesPendientes.jsx";
-import { rutas, titlesConfig } from "./rutas.js";
+import { rutas, titlesConfig, mostrarBotonDeVolver } from "./rutas.js";
 import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
 import { navigationRef } from "../../resolvers/NotificationResolver.js";
 import { useNotificationListener } from "../../hooks/useNotificationListener";
@@ -27,6 +27,7 @@ const Stack = createStackNavigator();
 
 const AppRutas = () => {
   const excludeLoading = useNavBarStore((state) => state.excludeLoading);
+
   useEffect(() => {
     excludeLoading();
   }, [excludeLoading]);
@@ -43,7 +44,11 @@ const AppRutas = () => {
           initialRouteName="inicio"
           screenOptions={({ route }) => ({
             header: (props) => (
-              <HeaderTitle {...props} title={titlesConfig[route.name]} />
+              <HeaderTitle
+                {...props}
+                title={titlesConfig[route.name]}
+                showBackButton={mostrarBotonDeVolver.includes(route.name)}
+              />
             ),
           })}
         >
@@ -70,18 +75,18 @@ const AppRutas = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            titulo="perfilJugador"
-            name="perfilJugador"
+            titulo={titlesConfig.perfilJugador}
+            name={rutas.perfilJugador}
             component={PerfilJugador}
           />
           <Stack.Screen
-            titulo="miPerfil"
-            name="miPerfil"
+            titulo={titlesConfig.miPerfil}
+            name={rutas.miPerfil}
             component={VistaMiPerfil}
           />
           <Stack.Screen
-            titulo="busquedaAvanzada"
-            name="busquedaAvanzada"
+            titulo={titlesConfig.busquedaAvanzada}
+            name={rutas.busquedaAvanzada}
             component={BusquedaAvanzada}
           />
           <Stack.Screen

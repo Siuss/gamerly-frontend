@@ -9,7 +9,8 @@ export const HeaderTitle = ({ title, showBackButton }) => {
   const navigation = useNavigation();
 
   const handleNavigateBack = () => {
-    navigation.goBack();
+    const rutaAnterior = navigation.getState().routes.at(-2);
+    navigation.navigate(rutaAnterior.name, rutaAnterior.params);
   };
 
   return (

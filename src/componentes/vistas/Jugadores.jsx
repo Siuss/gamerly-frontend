@@ -99,7 +99,7 @@ export const Jugadores = () => {
 
         {!cargando &&
           (jugadores.length > 0 ? (
-            <ListaDeJugadores jugadores={jugadores} searchText="" />
+            <ListaDeJugadores jugadores={jugadores} searchText="" juego={params.juego} />
           ) : (
             <Text style={styles.texto}>
               Parece que no hay usuarios que jueguen a ese juego

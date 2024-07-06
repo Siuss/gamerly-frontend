@@ -8,7 +8,7 @@ export const titlesConfig = {
   jugadores: "Jugadores",
   reseniaJugador: "Reseña Jugador",
   solicitudesPendientes: "Solicitudes Pendientes",
-  reseniasPendientes: "Reseñas Pendientes"
+  reseniasPendientes: "Reseñas Pendientes",
 };
 
 export const rutas = {
@@ -18,9 +18,18 @@ export const rutas = {
   perfilJugador: "perfilJugador",
   resenias: "resenias",
   miPerfil: "miPerfil",
+  busquedaAvanzada: "busquedaAvanzada",
   recuperarContrasena: "recuperarContrasena",
   jugadores: "jugadores",
   reseniaJugador: "reseniaJugador",
   solicitudesPendientes: "solicitudesPendientes",
-  reseniasPendientes: "reseniasPendientes"
+  reseniasPendientes: "reseniasPendientes",
 };
+
+export const mostrarBotonDeVolver = [
+  rutas.reseniasPendientes,
+  rutas.perfilJugador,
+  rutas.busquedaAvanzada,
+  rutas.solicitudesPendientes,
+  rutas.jugadores,
+];

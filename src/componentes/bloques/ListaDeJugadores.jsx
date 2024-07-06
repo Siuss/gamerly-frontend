@@ -3,7 +3,7 @@ import { Card } from "./Card";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { useMemo } from 'react'
 
-export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugeridos = true, ...restProps }) => {
+export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugeridos = true, juego, ...restProps }) => {
 
   const busquedaActiva = searchText !== ""
 
@@ -28,8 +28,8 @@ export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugerido
             id={jugador.id.toString()}
             foto={jugador.foto}
             nombreUsuario={jugador.nombre}
-            plataforma={jugador.plataformas?.[0]}
-            juego={jugador.juegosPreferidos?.[0]}
+            plataforma={jugador.plataformas ? jugador.plataformas?.[0] : jugador.plataforma}
+            juego={juego ? juego : jugador.juegosPreferidos?.[0] }
             amigos={jugador.amigos}
             puntuacion={jugador.puntaje}
           />
