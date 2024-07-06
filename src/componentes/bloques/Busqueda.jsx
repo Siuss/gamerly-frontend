@@ -4,9 +4,9 @@ import BarraBusqueda from "../atomos/barraBusqueda/BarraBusqueda";
 import BarraBusquedaFiltro from "../atomos/barraBusquedaFiltro/BarraBusquedaFiltro";
 import { Color } from "../../estilos/colores";
 
-export default function Busqueda({text, onChangeText, mostrarFiltro = true, filtros}) {
+export default function Busqueda({text, onChangeText, mostrarFiltro = false, filtros}) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, mostrarFiltro && styles.containerConFiltro]}>
       <Icons style={styles.icon} name="search1" />
       <BarraBusqueda text={text} onChangeText={onChangeText} />
       {mostrarFiltro && <BarraBusquedaFiltro filtros={filtros} />}
@@ -15,6 +15,9 @@ export default function Busqueda({text, onChangeText, mostrarFiltro = true, filt
 }
 
 const styles = StyleSheet.create({
+  containerConFiltro: {
+    justifyContent: "space-between"
+  },
   container: {
     width: "100%",
     height: 50,
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
   },
   icon: {
     color: Color.secundario,

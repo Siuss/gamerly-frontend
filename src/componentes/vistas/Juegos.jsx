@@ -4,59 +4,62 @@ import { CardJuegos } from "../bloques/CardJuegos";
 import { Color } from "../../estilos/colores";
 import Busqueda from "../bloques/Busqueda";
 import { JuegosService } from "../../services/JuegosService";
-import { useFocusEffect , useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { rutas } from "../rutas/rutas";
-import Slider from "@react-native-community/slider";
 
 export const Juegos = () => {
   const [juegos, setJuegos] = useState([]);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const navigation = useNavigation();
 
   const handleJuegoPress = async (juego) => {
-    navigation.navigate(rutas.jugadores, juego.id);
+    navigation.navigate(rutas.jugadores, { idJuego: juego.id });
   };
 
   useFocusEffect(
     useCallback(() => {
       const fetchJuegos = async () => {
-        setJuegos(await JuegosService.getJuegos());
+        const listaDeJuegos = await JuegosService.getJuegos();
+        setJuegos(listaDeJuegos);
       };
 
       fetchJuegos();
 
       return () => {
         setJuegos([]);
-        setSearchText('')
+        setSearchText("");
       };
     }, [])
   );
 
-
   const handleChange = async (text) => {
-    setSearchText(text)
+    setSearchText(text);
 
-    const nuevosJuegos = text ? await JuegosService.getJuegosPorNombre(text) : await JuegosService.getJuegos()
+    const nuevosJuegos = text
+      ? await JuegosService.getJuegosPorNombre(text)
+      : await JuegosService.getJuegos();
 
-    setJuegos(nuevosJuegos)
-  }
+    setJuegos(nuevosJuegos);
+  };
 
   return (
     <View style={styles.containerExterior}>
       <Busqueda
         placeholder="Buscar..."
         text={searchText}
-        onChangeText={text => handleChange(text)}
+        onChangeText={(text) => handleChange(text)}
       />
       <ScrollView contentContainerStyle={styles.container}>
-
-        {juegos.length > 0 && juegos.map((juego) => <CardJuegos
-          key={juego.id}
-          foto={juego.imagen}
-          juego={juego.nombre}
-          plataforma={juego.plataformas[0]}
-          onPress={async () => handleJuegoPress(juego)}
-        />)}
+        {juegos.length > 0 &&
+          juegos.map((juego) => (
+            <CardJuegos
+              key={juego.id}
+              foto={juego.imagen}
+              juego={juego.nombre}
+              plataforma={juego.plataformas[0]}
+              onPress={async () => handleJuegoPress(juego)}
+            />
+          ))}
       </ScrollView>
     </View>
   );
@@ -82,8 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
-    width: '100%',
+    width: "100%",
     color: Color.secundario,
-
   },
 });

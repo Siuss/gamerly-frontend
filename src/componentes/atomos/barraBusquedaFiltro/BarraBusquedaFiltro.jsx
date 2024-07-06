@@ -6,9 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icons from "@expo/vector-icons/AntDesign";
 import { Color } from "../../../estilos/colores";
 
-export default function BarraBusquedaFiltro(props) {
-  const { style, filtros, ...restProps } = props;
-
+export default function BarraBusquedaFiltro({ filtros, style, ...restProps }) {
   const navigation = useNavigation();
 
   const handleNavigate = () => {

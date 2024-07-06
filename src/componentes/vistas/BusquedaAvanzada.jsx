@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Divisor } from "../atomos/divisor/Divisor";
 import { Boton } from "../atomos/boton/Boton";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { ListaDePildoras } from "../bloques/ListaDePildoras";
 import { Color } from "../../estilos/colores";
 import dias from "../../data/dias.json";
@@ -21,28 +21,28 @@ const filtrosIniciales = {
     juega: false,
     id: index,
   })),
-  resenia: undefined,
+  resenia: 0,
 };
 
 export const BusquedaAvanzada = () => {
   const navigation = useNavigation();
   const { params: filtrosParam } = navigation.getState().routes.at(-1);
-console.log(filtrosParam)
+
   const [filtros, setFiltros] = useState({
     ...filtrosIniciales,
     ...filtrosParam,
   });
 
   const handleDiaToggle = (diaBuscado) => {
-    const dias = filtros.dias.map((momento) => {
-      if (momento.id === diaBuscado.id) {
-        return { ...momento, juega: !momento.juega };
+    const nuevosDias = filtros.dias.map((dia) => {
+      if (dia.id === diaBuscado.id) {
+        return { ...dia, juega: !dia.juega };
       } else {
-        return momento;
+        return dia;
       }
     });
 
-    setFiltros((prevFiltros) => ({ ...prevFiltros, dias }));
+    setFiltros((prevFiltros) => ({ ...prevFiltros, dias: nuevosDias }));
   };
 
   const handleMomentoToggle = (momentoBuscado) => {
@@ -58,40 +58,50 @@ console.log(filtrosParam)
   };
 
   const handleReseniaChange = (reseniaRaw) => {
-    const resenia = reseniaRaw === 0 ? undefined : reseniaRaw
+    const resenia = reseniaRaw === 0 ? undefined : reseniaRaw;
     setFiltros((prevFiltros) => ({ ...prevFiltros, resenia }));
   };
 
   const handleLimpiar = () => {
-    setFiltros(filtrosIniciales)
-  }
+    setFiltros((prevFiltros) => ({ ...prevFiltros, ...filtrosIniciales }));
+  };
 
   const handleAplicar = () => {
     const rutaAnterior = navigation.getState().routes.at(-2);
-    navigation.navigate(rutaAnterior, filtros)
-  }
+
+    navigation.navigate(rutaAnterior.name, filtros);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setFiltros({
+        ...filtrosIniciales,
+        ...filtrosParam,
+      });
+    }, [filtrosParam])
+  );
 
   return (
     <ScrollView style={styles.container}>
-      
       <View style={styles.espaciador}>
         <View style={styles.espaciador}>
           <Parrafo variante="blancoM">Reseña</Parrafo>
         </View>
-          <View style={styles.contenedorSlider}>
-            <Slider
-              onValueChange={handleReseniaChange}
-              style={styles.input}
-              minimumValue={0}
-              maximumValue={5}
-              step={1}
-              minimumTrackTintColor={Color.secundario}
-              maximumTrackTintColor={Color.gris}            />
-          </View>
-          <Parrafo style={styles.parrafoCentrado} variante="blancoM">
-            {filtros.resenia || 0}
-          </Parrafo>
-        
+        <View style={styles.contenedorSlider}>
+          <Slider
+            onValueChange={handleReseniaChange}
+            style={styles.input}
+            minimumValue={0}
+            maximumValue={5}
+            step={1}
+            minimumTrackTintColor={Color.secundario}
+            maximumTrackTintColor={Color.gris}
+            value={filtros.resenia}
+          />
+        </View>
+        <Parrafo style={styles.parrafoCentrado} variante="blancoM">
+          {filtros.resenia || 0}
+        </Parrafo>
       </View>
       <Divisor />
       <View style={styles.espaciador}>
@@ -101,7 +111,7 @@ console.log(filtrosParam)
         <Parrafo variante="blancoM">Días de la semana</Parrafo>
         <View style={styles.espaciador}>
           <ListaDePildoras
-          style={styles.espacioPildoras}
+            style={styles.espacioPildoras}
             onPress={handleDiaToggle}
             items={filtros.dias.map((dia) => ({
               ...dia,
@@ -112,7 +122,7 @@ console.log(filtrosParam)
       </View>
       <View style={styles.espaciador}>
         <Parrafo variante="blancoM">Horario</Parrafo>
-        <View style={[styles.espaciador,styles.separacion]}>
+        <View style={[styles.espaciador, styles.separacion]}>
           <ListaDePildoras
             onPress={handleMomentoToggle}
             items={filtros.momentosDelDia.map((momento) => ({
@@ -124,8 +134,12 @@ console.log(filtrosParam)
       </View>
       <Divisor />
       <View style={styles.botonera}>
-        <Boton variante="secundario"  onPress={handleAplicar}>Aplicar</Boton>
-        <Boton variante="primario" onPress={handleLimpiar}>Limpiar</Boton>
+        <Boton variante="secundario" onPress={handleAplicar}>
+          Aplicar
+        </Boton>
+        <Boton variante="primario" onPress={handleLimpiar}>
+          Limpiar
+        </Boton>
       </View>
     </ScrollView>
   );
@@ -138,7 +152,7 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    paddingTop:0
+    paddingTop: 0,
   },
   barraBusqueda: {
     padding: 0,
@@ -158,12 +172,12 @@ const styles = StyleSheet.create({
   },
   espaciador: {
     paddingVertical: 18,
-    paddingBottom: 18
+    paddingBottom: 18,
   },
   parrafoCentrado: {
     textAlign: "center",
   },
-  separacion:{
-paddingBottom:10  
-}
+  separacion: {
+    paddingBottom: 10,
+  },
 });
