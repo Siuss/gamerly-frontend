@@ -13,6 +13,7 @@ export const titlesConfig = {
 
 export const rutas = {
   amigos: "amigos",
+  login: "login",
   registro: "registro",
   juegos: "juegos",
   perfilJugador: "perfilJugador",
@@ -24,6 +25,8 @@ export const rutas = {
   reseniaJugador: "reseniaJugador",
   solicitudesPendientes: "solicitudesPendientes",
   reseniasPendientes: "reseniasPendientes",
+  ingresarTokenContrasenia: "ingresarTokenContrasenia",
+  crearNuevaClave: "crearNuevaClave",
 };
 
 export const mostrarBotonDeVolver = [

@@ -1,23 +1,30 @@
-import React, { useMemo, useState } from 'react';
-import { SesionService } from "../../services/SesionService"
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useMemo, useState } from "react";
+import { SesionService } from "../../services/SesionService";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { Color } from "../../estilos/colores";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
-import { Toast } from 'toastify-react-native';
+import { Toast } from "toastify-react-native";
+import { rutas } from "../rutas/rutas";
 
 const regexpFecha = /[^0-9/]/;
 const regexpContrasena = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
 const regexpEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const Registro = () => {
-  const [nombre, setNombre] = useState('');
-  const [discord, setDiscord] = useState('');
-  const [fechaNacimiento, setFechaNacimiento] = useState('');
-  const [nacionalidad, setNacionalidad] = useState('');
-  const [email, setEmail] = useState('');
-  const [contrasena, setContrasena] = useState('');
+  const [nombre, setNombre] = useState("");
+  const [discord, setDiscord] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [nacionalidad, setNacionalidad] = useState("");
+  const [email, setEmail] = useState("");
+  const [contrasena, setContrasena] = useState("");
   const [aceptoTerminos, setAceptoTerminos] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [fechaEsValida, setFechaEsValida] = useState(true);
@@ -28,108 +35,113 @@ export const Registro = () => {
   const [nacionalidadEsValida, setNacionalidadEsValida] = useState(true);
   const navigation = useNavigation();
 
-  const validadorFecha = () => (
-    fechaNacimiento.length === 10 &&
-    fechaEsValida
-  )
+  const validadorFecha = () => fechaNacimiento.length === 10 && fechaEsValida;
 
-  const validadorContrasena = () => (
-    contrasena && regexpContrasena.test(contrasena)
-  )
+  const validadorContrasena = () =>
+    contrasena && regexpContrasena.test(contrasena);
 
-  const validadorNombre = () => (
-    nombre.length > 2
-  )
+  const validadorNombre = () => nombre.length > 2;
 
-  const validadorEmail = () => (
-    email && regexpEmail.test(email)
-  )
+  const validadorEmail = () => email && regexpEmail.test(email);
 
-  const validadorNacionalidad = () => (
-    !!nacionalidad
-  )
+  const validadorNacionalidad = () => !!nacionalidad;
 
-  const validadorDiscord = () => (
-    discord.length > 2
-  )
+  const validadorDiscord = () => discord.length > 2;
 
   const validadorFormulario = () => {
-    return validadorNombre() && validadorDiscord() && validadorFecha() && validadorContrasena() && validadorEmail() && validadorNacionalidad() && aceptoTerminos
-  }
+    return (
+      validadorNombre() &&
+      validadorDiscord() &&
+      validadorFecha() &&
+      validadorContrasena() &&
+      validadorEmail() &&
+      validadorNacionalidad() &&
+      aceptoTerminos
+    );
+  };
 
   const formularioEsValido = useMemo(() => {
-    return validadorFormulario()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nombre, discord, fechaNacimiento, nacionalidad, email, contrasena, aceptoTerminos, fechaEsValida])
+    return validadorFormulario();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    nombre,
+    discord,
+    fechaNacimiento,
+    nacionalidad,
+    email,
+    contrasena,
+    aceptoTerminos,
+    fechaEsValida,
+  ]);
 
   const handleChangeContrasena = (password) => {
-    setContrasena(password)
-    setContrasenaEsValida(password === "" || regexpContrasena.test(password))
-  }
+    setContrasena(password);
+    setContrasenaEsValida(password === "" || regexpContrasena.test(password));
+  };
 
   const handleChangeNombre = (_nombre) => {
-    setNombre(_nombre)
-    setNombreEsValido(_nombre === "" || _nombre.length > 2)
-  }
+    setNombre(_nombre);
+    setNombreEsValido(_nombre === "" || _nombre.length > 2);
+  };
 
   const handleLimpiarNombre = () => {
-    clearInput(setNombre)
-    setNombreEsValido(true)
-  }
+    clearInput(setNombre);
+    setNombreEsValido(true);
+  };
 
   const handleChangeDiscord = (_discord) => {
-    setDiscord(_discord)
-    setDiscordEsValido(_discord === "" || _discord.length > 2)
-  }
+    setDiscord(_discord);
+    setDiscordEsValido(_discord === "" || _discord.length > 2);
+  };
 
   const handleLimpiarDiscord = () => {
-    clearInput(setDiscord)
-    setDiscordEsValido(true)
-  }
+    clearInput(setDiscord);
+    setDiscordEsValido(true);
+  };
 
   const handleChangeEmail = (mail) => {
-    setEmail(mail)
-    setEmailEsValido(mail === "" || regexpEmail.test(mail))
-  }
+    setEmail(mail);
+    setEmailEsValido(mail === "" || regexpEmail.test(mail));
+  };
 
   const handleLimpiarMail = () => {
-    clearInput(setEmail)
-    setEmailEsValido(true)
-  }
+    clearInput(setEmail);
+    setEmailEsValido(true);
+  };
 
   const handleChangeNacionalidad = (nacion) => {
-    setNacionalidad(nacion)
-    setNacionalidadEsValida(nacion === "" || nacion.length > 2)
-  }
+    setNacionalidad(nacion);
+    setNacionalidadEsValida(nacion === "" || nacion.length > 2);
+  };
 
   const handleLimpiarNacionalidad = () => {
-    clearInput(setNacionalidad)
-    setNacionalidadEsValida(true)
-  }
+    clearInput(setNacionalidad);
+    setNacionalidadEsValida(true);
+  };
 
   const handleChangeFechaNacimiento = (fecha) => {
-    const fechaMomentJs = moment(fecha, 'DD/MM/YYYY', true);
+    const fechaMomentJs = moment(fecha, "DD/MM/YYYY", true);
 
     if (fecha.length > 9) {
       setFechaEsValida(fechaMomentJs.isValid());
     } else {
-      setFechaEsValida(true)
+      setFechaEsValida(true);
     }
 
     if (regexpFecha.test(fecha)) {
-      setFechaEsValida(false)
+      setFechaEsValida(false);
     }
 
-    setFechaNacimiento(fecha)
-  }
+    setFechaNacimiento(fecha);
+  };
 
   const handleLimpiarFechaNacimiento = () => {
-    clearInput(setFechaNacimiento)
-    setFechaEsValida(true)
-  }
+    clearInput(setFechaNacimiento);
+    setFechaEsValida(true);
+  };
 
   const clearInput = (setState) => {
-    setState('');
+    setState("");
   };
 
   const handleRegistro = async () => {
@@ -140,13 +152,13 @@ export const Registro = () => {
         email,
         password: contrasena,
         discord,
-        nacionalidad
-      }
+        nacionalidad,
+      };
 
-      await SesionService.signUp(nuevoUsuario)
-      navigation.navigate("login")
+      await SesionService.signUp(nuevoUsuario);
+      navigation.navigate(rutas.login);
     } catch {
-      Toast.error("Error inesperado intentalo mas tarde")
+      Toast.error("Error inesperado intentalo mas tarde");
     }
   };
 
@@ -160,9 +172,16 @@ export const Registro = () => {
           value={nombre}
           onChangeText={handleChangeNombre}
         />
-        {nombre !== '' && (
-          <TouchableOpacity onPress={handleLimpiarNombre} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={nombreEsValido ? Color.secundario : Color.error} />
+        {nombre !== "" && (
+          <TouchableOpacity
+            onPress={handleLimpiarNombre}
+            style={styles.inputIcon}
+          >
+            <Ionicons
+              name="close"
+              size={24}
+              color={nombreEsValido ? Color.secundario : Color.error}
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -173,9 +192,16 @@ export const Registro = () => {
           value={discord}
           onChangeText={handleChangeDiscord}
         />
-        {discord !== '' && (
-          <TouchableOpacity onPress={handleLimpiarDiscord} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={discordEsValido ? Color.secundario : Color.error} />
+        {discord !== "" && (
+          <TouchableOpacity
+            onPress={handleLimpiarDiscord}
+            style={styles.inputIcon}
+          >
+            <Ionicons
+              name="close"
+              size={24}
+              color={discordEsValido ? Color.secundario : Color.error}
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -186,9 +212,16 @@ export const Registro = () => {
           value={fechaNacimiento}
           onChangeText={handleChangeFechaNacimiento}
         />
-        {fechaNacimiento !== '' && (
-          <TouchableOpacity onPress={handleLimpiarFechaNacimiento} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={fechaEsValida ? Color.secundario : Color.error} />
+        {fechaNacimiento !== "" && (
+          <TouchableOpacity
+            onPress={handleLimpiarFechaNacimiento}
+            style={styles.inputIcon}
+          >
+            <Ionicons
+              name="close"
+              size={24}
+              color={fechaEsValida ? Color.secundario : Color.error}
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -199,9 +232,16 @@ export const Registro = () => {
           value={nacionalidad}
           onChangeText={handleChangeNacionalidad}
         />
-        {nacionalidad !== '' && (
-          <TouchableOpacity onPress={handleLimpiarNacionalidad} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={nacionalidadEsValida ? Color.secundario : Color.error} />
+        {nacionalidad !== "" && (
+          <TouchableOpacity
+            onPress={handleLimpiarNacionalidad}
+            style={styles.inputIcon}
+          >
+            <Ionicons
+              name="close"
+              size={24}
+              color={nacionalidadEsValida ? Color.secundario : Color.error}
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -212,15 +252,26 @@ export const Registro = () => {
           value={email}
           onChangeText={handleChangeEmail}
         />
-        {email !== '' && (
-          <TouchableOpacity onPress={handleLimpiarMail} style={styles.inputIcon}>
-            <Ionicons name="close" size={24} color={emailEsValido ? Color.secundario : Color.error} />
+        {email !== "" && (
+          <TouchableOpacity
+            onPress={handleLimpiarMail}
+            style={styles.inputIcon}
+          >
+            <Ionicons
+              name="close"
+              size={24}
+              color={emailEsValido ? Color.secundario : Color.error}
+            />
           </TouchableOpacity>
         )}
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={[styles.input, styles.inputContrasenia, !contrasenaEsValida && styles.inputError]}
+          style={[
+            styles.input,
+            styles.inputContrasenia,
+            !contrasenaEsValida && styles.inputError,
+          ]}
           placeholder="Contraseña"
           secureTextEntry={!showPassword}
           value={contrasena}
@@ -230,7 +281,11 @@ export const Registro = () => {
           onPress={() => setShowPassword(!showPassword)}
           style={styles.inputIcon}
         >
-          <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color={Color.secundario} />
+          <Ionicons
+            name={showPassword ? "eye" : "eye-off"}
+            size={24}
+            color={contrasenaEsValida ? Color.secundario : Color.error}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.checkboxContainer}>
@@ -239,13 +294,26 @@ export const Registro = () => {
           onPress={() => setAceptoTerminos(!aceptoTerminos)}
         >
           <View style={styles.checkboxInnerContainer}>
-            <View style={[styles.checkboxSquare, aceptoTerminos && styles.checkboxSquareChecked]} />
-            <Text style={styles.checkboxText}>Acepto términos y condiciones</Text>
-
+            <View
+              style={[
+                styles.checkboxSquare,
+                aceptoTerminos && styles.checkboxSquareChecked,
+              ]}
+            />
+            <Text style={styles.checkboxText}>
+              Acepto términos y condiciones
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={[styles.button, !formularioEsValido && styles.botonDeshabilitado]} onPress={handleRegistro} disabled={!formularioEsValido}>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          !formularioEsValido && styles.botonDeshabilitado,
+        ]}
+        onPress={handleRegistro}
+        disabled={!formularioEsValido}
+      >
         <Text style={styles.buttonText}>Registrarme</Text>
       </TouchableOpacity>
     </View>
@@ -255,27 +323,27 @@ export const Registro = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Color.neutro,
     padding: 16,
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 32,
     color: Color.blanco,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
   },
   input: {
     flex: 1,
     height: 40,
-    width: '100%',
+    width: "100%",
     borderColor: Color.secundario,
     borderWidth: 1,
     marginBottom: 16,
@@ -289,25 +357,24 @@ const styles = StyleSheet.create({
     color: Color.error,
   },
   inputIcon: {
-    position: 'absolute',
+    position: "absolute",
     marginBottom: "5%",
     right: 10,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
     marginBottom: 16,
-    width: '100%',
+    width: "100%",
   },
   checkbox: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   checkboxInnerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-
+    flexDirection: "row",
+    alignItems: "center",
   },
   checkboxSquare: {
     width: 20,
@@ -327,21 +394,20 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '7%',
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "7%",
   },
   botonDeshabilitado: {
-    opacity: 0.4
+    opacity: 0.4,
   },
   buttonText: {
     color: Color.blanco,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   inputContrasenia: {
-    paddingRight: 48
-  }
+    paddingRight: 48,
+  },
 });
-

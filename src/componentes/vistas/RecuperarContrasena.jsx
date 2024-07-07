@@ -1,26 +1,58 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { Color } from "../../estilos/colores";
 import { useNavigation } from "@react-navigation/native";
+import { SesionService } from "../../services/SesionService";
+import { Toast } from "toastify-react-native";
+import { rutas } from "../rutas/rutas";
+import { Boton } from "../atomos/boton/Boton";
+import { Spinner } from "../atomos/spinner/Spinner";
+import { Parrafo } from "../atomos/parrafo/Parrafo";
 
 export const RecuperarContrasena = () => {
-    const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [cargando, setCargando] = useState(false);
+  const navigation = useNavigation();
 
-    const handleRecuperar = () => {
-        navigation.navigate("login");
-      };
+  const handleEmailChange = (nuevoEmail) => {
+    setEmail(nuevoEmail);
+  };
+
+  const handleRecuperar = async () => {
+    try {
+      setCargando(true);
+      await SesionService.solicitarClave(email);
+      navigation.navigate(rutas.ingresarTokenContrasenia, email);
+    } catch {
+      Toast.error("Hubo un error inesperado intentalo mas tarde");
+    } finally {
+      setCargando(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recuperar Contraseña</Text>
-      <TextInput
-        style={[styles.input, { color: Color.secundario }]}
-        placeholder="Correo electrónico"
-        placeholderTextColor={Color.secundario}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleRecuperar}>
-        <Text style={styles.buttonText}>Enviar</Text>
-      </TouchableOpacity>
+      <View style={styles.contenido}>
+        <Parrafo style={styles.title} variante="blancoL">Recuperar Contraseña</Parrafo>
+        <TextInput
+          value={email}
+          onChangeText={handleEmailChange}
+          style={[styles.input]}
+          placeholder="Correo electrónico"
+          placeholderTextColor={Color.secundario}
+        />
+        <View style={styles.boton}>
+          {cargando && <Spinner size={32} style={styles.spinner} />}
+          <Boton disabled={cargando} onPress={handleRecuperar}>
+            Enviar
+          </Boton>
+        </View>
+      </View>
     </View>
   );
 };
@@ -28,39 +60,34 @@ export const RecuperarContrasena = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Color.neutro,
     padding: 16,
   },
+  contenido: {
+    width: "100%",
+    gap: 16,
+  },
   title: {
-    fontSize: 30,
-    fontWeight: 'bold',
     marginBottom: 32,
-    color: Color.blanco,
   },
   input: {
-    width: '90%',
+    width: "100%",
     height: 40,
+    color: Color.secundario,
     borderColor: Color.secundario,
     borderWidth: 1,
     marginBottom: 16,
     paddingLeft: 8,
     borderRadius: 4,
   },
-  button: {
-    backgroundColor: Color.primario,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    width: "60%",
+  boton: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
-  buttonText: {
-    color: Color.blanco,
-    fontSize: 16,
-    fontWeight: 'bold',
+  spinner: {
+    paddingRight: 16,
   },
 });

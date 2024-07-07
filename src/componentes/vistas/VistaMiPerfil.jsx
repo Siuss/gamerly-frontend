@@ -111,7 +111,7 @@ export const VistaMiPerfil = () => {
   const handleLogout = async () => {
     await logout();
     setPerfil({});
-    navigation.navigate("login");
+    navigation.navigate(rutas.login);
   };
 
   const handleEliminarCuenta = async () => {

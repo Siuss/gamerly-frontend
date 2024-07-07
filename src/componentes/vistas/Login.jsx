@@ -39,6 +39,11 @@ export const Login = () => {
     navigation.navigate(rutas.registro);
   };
 
+  const handleRecuperarContrasenia = () => {
+    navigation.navigate(rutas.recuperarContrasena);
+  };
+
+
   useEffect(() => {
     const rellenarEmail = async () => {
       handleCredencialesChange("email", (await getUsuarioLogueado()).email)
@@ -77,6 +82,9 @@ export const Login = () => {
           />
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.forgotPasswordContainer} onPress={handleRecuperarContrasenia}>
+          <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
+        </TouchableOpacity>
       <View style={styles.buttonContainer}>
         <TouchableOpacity disabled={formularioEstaVacio} style={[styles.button, formularioEstaVacio && styles.deshabilitado]} onPress={iniciarSesion}>
           <Text style={styles.buttonText}>Iniciar sesión</Text>

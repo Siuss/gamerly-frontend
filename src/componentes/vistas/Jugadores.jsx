@@ -95,11 +95,15 @@ export const Jugadores = () => {
           filtros={params}
         />
 
-        {cargando && <Spinner />}
+        {cargando && <Spinner style={styles.spinner} />}
 
         {!cargando &&
           (jugadores.length > 0 ? (
-            <ListaDeJugadores jugadores={jugadores} searchText="" juego={params.juego} />
+            <ListaDeJugadores
+              jugadores={jugadores}
+              searchText=""
+              juego={params.juego}
+            />
           ) : (
             <Text style={styles.texto}>
               Parece que no hay usuarios que jueguen a ese juego
@@ -124,5 +128,8 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: "center",
     padding: 8,
+  },
+  spinner: {
+    flex: 1,
   },
 });

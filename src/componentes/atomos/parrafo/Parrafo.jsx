@@ -18,6 +18,11 @@ export const Parrafo = (props) => {
 };
 
 const styles = StyleSheet.create({
+  blancoL: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: Color.blanco,
+  },
   blancoXS: {
     color: Color.blanco,
     fontSize: 12,

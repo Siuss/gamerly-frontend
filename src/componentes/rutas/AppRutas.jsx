@@ -22,6 +22,8 @@ import { rutas, titlesConfig, mostrarBotonDeVolver } from "./rutas.js";
 import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
 import { navigationRef } from "../../resolvers/NotificationResolver.js";
 import { useNotificationListener } from "../../hooks/useNotificationListener";
+import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
+import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
 
 const Stack = createStackNavigator();
 
@@ -59,7 +61,7 @@ const AppRutas = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="login"
+            name={rutas.login}
             component={Login}
             options={{ headerShown: false }}
           />
@@ -67,6 +69,16 @@ const AppRutas = () => {
           <Stack.Screen
             name="recuperarContrasena"
             component={RecuperarContrasena}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={rutas.ingresarTokenContrasenia}
+            component={IngresarTokenContrasena}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={rutas.crearNuevaClave}
+            component={CrearNuevaClave}
             options={{ headerShown: false }}
           />
           <Stack.Screen
