@@ -27,6 +27,8 @@ import { MessagesList } from "../vistas/Mensajes";
 import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
 import { navigationRef } from "../../resolvers/NotificationResolver.js";
 import { useNotificationListener } from "../../hooks/useNotificationListener";
+import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
+import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
 
 const Stack = createStackNavigator();
 
