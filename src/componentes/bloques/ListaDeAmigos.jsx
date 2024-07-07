@@ -14,8 +14,7 @@ export const ListaDeAmigos = (props) => {
       onBorrarAmigo(amigo)
 
       Toast.success("Se ha eleminado al jugador exitosamente")
-    } catch (error) {
-      console.log(error)
+    } catch {
       Toast.error("Hubo un error inesperado intentalo mas tarde")
     }
   }

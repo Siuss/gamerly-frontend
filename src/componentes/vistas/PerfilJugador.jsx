@@ -94,7 +94,7 @@ export const PerfilJugador = (props) => {
           const amigos = await JugadoresService.getAmigosDelUsuario(
             idUsuarioLogueado
           );
-          console.log(amigos)
+
           const esAmigoDelUsuario = amigos.some(
             (amigo) => amigo.id.toString() === id.toString()
           );
