@@ -29,6 +29,7 @@ import { navigationRef } from "../../resolvers/NotificationResolver.js";
 import { useNotificationListener } from "../../hooks/useNotificationListener";
 import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
 import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
+import ChatScreen from "../vistas/Chat.jsx"
 
 const Stack = createStackNavigator();
 
@@ -134,6 +135,11 @@ const AppRutas = () => {
             titulo={rutas.reseniasPendientes}
             name={rutas.reseniasPendientes}
             component={ReseniasPendientes}
+          />
+          <Stack.Screen
+            titulo={rutas.chat}
+            name={rutas.chat}
+            component={ChatScreen}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />

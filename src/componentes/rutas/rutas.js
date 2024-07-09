@@ -10,6 +10,7 @@ export const titlesConfig = {
   solicitudesPendientes: "Solicitudes Pendientes",
   reseniasPendientes: "Reseñas Pendientes",
   mensajes: "Lista de mensajes",
+  chat: "Chat"
 };
 
 export const rutas = {
@@ -29,6 +30,7 @@ export const rutas = {
   ingresarTokenContrasenia: "ingresarTokenContrasenia",
   crearNuevaClave: "crearNuevaClave",
   mensajes: "mensajes",
+  chat: "chat",
 };
 
 export const mostrarBotonDeVolver = [

@@ -97,7 +97,27 @@ const NavBar = (props) => {
                 name="person"
                 size={24}
                 color={
-                  activeButton === rutas.miPerfil ? Color.neutro : Color.blanco
+                  activeButton === rutas.chat ? Color.neutro : Color.blanco
+                }
+            />
+          </Pressable>
+          <Pressable
+              style={() => [
+                styles.botonDeNavegacion,
+                {
+                  backgroundColor:
+                      activeButton === rutas.chat
+                          ? Color.acento
+                          : "transparent",
+                },
+              ]}
+              onPress={() => handleNavigateConId(rutas.chat)}
+          >
+            <MaterialIcons
+                name="chat"
+                size={24}
+                color={
+                  activeButton === rutas.chat ? Color.neutro : Color.blanco
                 }
             />
           </Pressable>

@@ -1,7 +1,8 @@
 // ChatScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import MessageBubble from './MessageBubble';
+// La comente porque esta rompiendo
+//import MessageBubble from './MessageBubble';
 import { Color } from '../../estilos/colores';
 
 const ChatScreen = () => {
@@ -40,9 +41,10 @@ const ChatScreen = () => {
         </View>
       </View>
       <ScrollView style={styles.chatContainer}>
-        {messages.map(message => (
+        {/* Lo comente porque esta rompiendo
+        messages.map(message => (
           <MessageBubble key={message.id} message={message.text} isOwnMessage={message.isOwnMessage} />
-        ))}
+        ))*/}
       </ScrollView>
       <View style={styles.inputContainer}>
         <TextInput
