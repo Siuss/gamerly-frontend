@@ -1,10 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import {
   StyleSheet,
-  Text,
-  TextInput,
   View,
-  TouchableOpacity,
 } from "react-native";
 import { Color } from "../../estilos/colores";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";

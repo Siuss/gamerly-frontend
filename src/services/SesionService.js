@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BASE_URL } from "./requestConfig";
-import { getUsuarioLogueado } from "../utils/usuarioLogueado";
 
 const SesionEndpoints = {
   CREAR_CUENTA: "/sign-up",
