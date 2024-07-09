@@ -38,3 +38,13 @@ export const mostrarBotonDeVolver = [
   rutas.solicitudesPendientes,
   rutas.jugadores,
 ];
+
+
+export const ocultarNavbar = [
+  rutas.recuperarContrasena,
+  rutas.login,
+  rutas.registro,
+  rutas.inicio,
+  rutas.ingresarTokenContrasenia,
+  rutas.crearNuevaClave
+];

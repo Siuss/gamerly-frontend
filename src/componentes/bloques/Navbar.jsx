@@ -3,7 +3,7 @@ import { View, Pressable, StyleSheet } from "react-native";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Color } from "../../estilos/colores";
-import { rutas } from "../rutas/rutas";
+import { rutas, ocultarNavbar } from "../rutas/rutas";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const NavBar = (props) => {
@@ -36,14 +36,7 @@ const NavBar = (props) => {
         setActiveButton(buttonName);
     };
 
-    const routesToHideNavBar = [
-        'recuperarContrasena',
-        'login',
-        'registro',
-        'inicio'
-    ];
-
-    if (routesToHideNavBar.includes(currentRouteName) || !currentRouteName) {
+    if (ocultarNavbar.includes(currentRouteName) || !currentRouteName) {
         return null;
     }
   return (
