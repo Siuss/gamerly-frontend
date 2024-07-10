@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from "react-native";
 import { Color } from "../../estilos/colores";
 import { useNavigation } from "@react-navigation/native";
 import { SesionService } from "../../services/SesionService";
-import { Toast } from "toastify-react-native";
+import { useToast } from "../../hooks/useToast";
 import { rutas } from "../rutas/rutas";
 import { Boton } from "../atomos/boton/Boton";
 import { Spinner } from "../atomos/spinner/Spinner";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 
 export const RecuperarContrasena = () => {
+  const { show } = useToast();
   const [email, setEmail] = useState("");
   const [cargando, setCargando] = useState(false);
   const navigation = useNavigation();
@@ -29,7 +29,7 @@ export const RecuperarContrasena = () => {
       await SesionService.solicitarClave(email);
       navigation.navigate(rutas.ingresarTokenContrasenia, email);
     } catch {
-      Toast.error("Hubo un error inesperado intentalo mas tarde");
+      show("error", "Hubo un error inesperado intentalo mas tarde");
     } finally {
       setCargando(false);
     }

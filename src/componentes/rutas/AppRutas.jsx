@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Resenias } from "../vistas/Reseñas.jsx";
 import { HeaderTitle } from "../header/HeaderTitle";
 import { View, StyleSheet } from "react-native";
+import { HeaderTitle } from "../header/HeaderTitle.jsx";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada.jsx";
 import { VistaMiPerfil } from "../vistas/VistaMiPerfil.jsx";
 import { PerfilJugador } from "../vistas/PerfilJugador.jsx";
@@ -29,12 +31,15 @@ import { navigationRef } from "../../resolvers/NotificationResolver.js";
 import { useNotificationListener } from "../../hooks/useNotificationListener";
 import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
 import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
-import ChatScreen from "../vistas/Chat.jsx"
+import ChatScreen from "../vistas/Chat.jsx";
+import { Toast } from "../bloques/Toast.jsx";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Stack = createStackNavigator();
 
 const AppRutas = () => {
   const excludeLoading = useNavBarStore((state) => state.excludeLoading);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     excludeLoading();
@@ -42,8 +47,17 @@ const AppRutas = () => {
 
   useNotificationListener();
 
+  const dynamicStyles = StyleSheet.create({
+    container: {
+      paddingTop: insets.top,
+      paddingBottom: insets.bottom,
+      paddingLeft: insets.left,
+      paddingRight: insets.right,
+    },
+  });
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, dynamicStyles.container]}>
       <NavigationContainer
         style={styles.navigationContainer}
         ref={navigationRef}
@@ -144,6 +158,7 @@ const AppRutas = () => {
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
       </NavigationContainer>
+      <Toast />
     </View>
   );
 };

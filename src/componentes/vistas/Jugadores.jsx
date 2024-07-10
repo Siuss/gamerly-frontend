@@ -6,10 +6,11 @@ import { JugadoresService } from "../../services/JugadoresService";
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
-import { Toast } from "toastify-react-native";
+import { useToast } from "../../hooks/useToast";
 import { Spinner } from "../atomos/spinner/Spinner";
 
 export const Jugadores = () => {
+  const { show } = useToast();
   const [jugadores, setJugadores] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [cargando, setCargando] = useState(true);
@@ -68,7 +69,7 @@ export const Jugadores = () => {
 
       setJugadores(jugadoresSinUsuarioLogueado);
     } catch {
-      Toast.error("Error inesperado intentalo mas tarde");
+      show("error", "Error inesperado intentalo mas tarde");
       setJugadores([]);
     } finally {
       setCargando(false);

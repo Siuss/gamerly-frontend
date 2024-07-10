@@ -7,10 +7,11 @@ import { BotonFlotante } from "../atomos/botonFlotante/BotonFlotante";
 import { useState, useCallback } from "react";
 import { JugadoresService } from "../../services/JugadoresService";
 import { SolicitudService } from "../../services/SolicitudService";
-import { Toast } from "toastify-react-native";
+import { useToast } from "../../hooks/useToast";
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 
 export const Amigos = (props) => {
+  const { show } = useToast();
   const navigation = useNavigation();
   const { params } = navigation.getState().routes.at(-1);
   const [amigos, setAmigos] = useState([]);
@@ -28,7 +29,7 @@ export const Amigos = (props) => {
       );
       setSolicitudes(peticiones);
     } catch {
-      Toast.error("Error inesperado intenta mas tarde");
+      show("error", "Error inesperado intenta mas tarde");
     }
   };
 
@@ -42,9 +43,9 @@ export const Amigos = (props) => {
       await JugadoresService.borrarAmigo(idUsuarioLogueado, amigo.id);
       await traerAmigos();
 
-      Toast.error(`${amigo.nombre} y tu ya no son amigos`);
+      show("success", `${amigo.nombre} y tu ya no son amigos`);
     } catch {
-      Toast.error("Error inesperado intenta mas tarde");
+      show("error", "Error inesperado intenta mas tarde");
     }
   };
 

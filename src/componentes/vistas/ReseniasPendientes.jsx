@@ -6,9 +6,10 @@ import { useState, useCallback } from "react";
 import { CardReseniaPendiente } from "../bloques/CardReseniaPendiente";
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
-import { Toast } from "toastify-react-native";
+import { useToast } from "../../hooks/useToast";
 
 export const ReseniasPendientes = () => {
+  const { show } = useToast();
   const navigation = useNavigation();
   const [resenias, setResenias] = useState([]);
 
@@ -21,8 +22,9 @@ export const ReseniasPendientes = () => {
 
       setResenias(reseniasPendientes);
     } catch {
-      Toast.error("Error inesperado intenta mas tarde");
+      show("error", "Error inesperado intenta mas tarde");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleAceptar = async (reseniaId) => {
@@ -33,11 +35,11 @@ export const ReseniasPendientes = () => {
         idUsuarioLogueado
       );
 
-      Toast.success("Reseña aceptada con éxito");
+      show("success", "Reseña aceptada con éxito");
       const rutaAnterior = navigation.getState().routes.at(-2);
       navigation.navigate(rutaAnterior);
     } catch {
-      Toast.error("Error inesperado intentalo mas tarde");
+      show("error", "Error inesperado intentalo mas tarde");
     }
   };
 
@@ -49,11 +51,11 @@ export const ReseniasPendientes = () => {
         idUsuarioLogueado
       );
 
-      Toast.success("Reseña rechazada con éxito");
+      show("success", "Reseña rechazada con éxito");
       const rutaAnterior = navigation.getState().routes.at(-2);
       navigation.navigate(rutaAnterior);
     } catch {
-      Toast.error("Error inesperado intentalo mas tarde");
+      show("error", "Error inesperado intentalo mas tarde");
     }
   };
 

@@ -1,15 +1,17 @@
 import React from "react";
 import AppRutas from "./src/componentes/rutas/AppRutas";
 import { StyleSheet } from "react-native";
-import ToastManager from "toastify-react-native";
 import { Color } from "./src/estilos/colores";
+import { ToastProvider } from "./src/providers/toast-provider/ToastProvider";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const App = () => {
   return (
-    <>
-      <ToastManager style={styles.toast} textStyle={styles.toastText} />
-      <AppRutas />
-    </>
+    <SafeAreaProvider>
+      <ToastProvider>
+        <AppRutas />
+      </ToastProvider>
+    </SafeAreaProvider>
   );
 };
 

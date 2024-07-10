@@ -11,7 +11,7 @@ import { Color } from "../../estilos/colores";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
-import { Toast } from "toastify-react-native";
+import { useToast } from "../../hooks/useToast";
 import { rutas } from "../rutas/rutas";
 
 const regexpFecha = /[^0-9/]/;
@@ -19,6 +19,7 @@ const regexpContrasena = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
 const regexpEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const Registro = () => {
+  const { show } = useToast();
   const [nombre, setNombre] = useState("");
   const [discord, setDiscord] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
@@ -158,7 +159,7 @@ export const Registro = () => {
       await SesionService.signUp(nuevoUsuario);
       navigation.navigate(rutas.login);
     } catch {
-      Toast.error("Error inesperado intentalo mas tarde");
+      show("error", "Error inesperado intentalo mas tarde");
     }
   };
 

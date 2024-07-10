@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, TextInput, View } from "react-native";
 import { Color } from "../../estilos/colores";
 import { useNavigation } from "@react-navigation/native";
 import { SesionService } from "../../services/SesionService";
-import { Toast } from "toastify-react-native";
+import { useToast } from "../../hooks/useToast";
 import { rutas } from "../rutas/rutas";
 import { Boton } from "../atomos/boton/Boton";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 const regexpContrasenia = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
 
 export const CrearNuevaClave = () => {
+  const { show } = useToast();
   const [contrasenia, setContrasenia] = useState("");
   const [repeticion, setRepeticion] = useState("");
   const [contraseniaEsValida, setContrasenaEsValida] = useState(true);
@@ -42,9 +43,9 @@ export const CrearNuevaClave = () => {
     try {
       await SesionService.nuevaClave(email, contrasenia);
       navigation.navigate(rutas.login);
-      Toast.success("Contraseña restablecida con exito");
+      show("success", "Contraseña restablecida con exito");
     } catch {
-      Toast.error("Hubo un error inesperado intentalo mas tarde");
+      show("error", "Hubo un error inesperado intentalo mas tarde");
     }
   };
 

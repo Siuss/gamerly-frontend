@@ -14,14 +14,15 @@ import { JugadoresService } from "../../services/JugadoresService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { rutas } from "../rutas/rutas";
 import { SolicitudService } from "../../services/SolicitudService";
-import { Toast } from "toastify-react-native";
 import {
   juegaEnEsteDia,
   getHorariosPreferidos,
 } from "../../utils/diasMapper.js";
+import { useToast } from "../../hooks/useToast";
 import { ReseniaService } from "../../services/ReseniaService.js";
 
 export const PerfilJugador = (props) => {
+  const { show } = useToast();
   const [perfilInfo, setPerfilInfo] = useState(null);
   const [usuarioLogueado, setusuarioLogueado] = useState(null);
   const [esAmigoDelUsuarioLogueado, setEsAmigoDelUsuarioLogueado] =
@@ -104,11 +105,12 @@ export const PerfilJugador = (props) => {
 
           setEsAmigoDelUsuarioLogueado(esAmigoDelUsuario);
         } catch {
-          Toast.error("Error inesperado intentalo mas tarde");
+          show("error", "Error inesperado intentalo mas tarde");
         }
       };
 
       traerUsuario();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
   );
 

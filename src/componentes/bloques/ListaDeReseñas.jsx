@@ -19,6 +19,7 @@ export const ListaDeResenias = (props) => {
           puntaje={resenia.puntaje}
           foto={resenia.foto}
           resenia={resenia.comentario}
+          verificada={resenia.verificada}
         />
       ))}
     </View>

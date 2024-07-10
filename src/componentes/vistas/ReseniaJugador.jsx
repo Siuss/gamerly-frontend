@@ -14,9 +14,10 @@ import TextArea from "../atomos/TextArea/TextArea";
 import { JugadoresService } from "../../services/JugadoresService";
 import { ReseniaService } from "../../services/ReseniaService";
 import useStore from "../../hooks/useStore";
-import { Toast } from "toastify-react-native";
+import { useToast } from "../../hooks/useToast";
 
 export const ReseniaJugador = () => {
+  const { show } = useToast();
   const route = useRoute();
   const { getIdUsuarioLogueado } = useStore();
   const { id: jugadorId } = route.params;
@@ -46,9 +47,9 @@ export const ReseniaJugador = () => {
       const rutaAnterior = navigation.getState().routes.at(-2);
       navigation.navigate(rutaAnterior);
 
-      Toast.success("La reseña se envio satisfactoriamente");
+      show("success", "La reseña se envio satisfactoriamente");
     } catch {
-      Toast.error("Error inesperado intenta mas tarde");
+      show("error", "Error inesperado intenta mas tarde");
     }
   };
 
@@ -66,7 +67,7 @@ export const ReseniaJugador = () => {
           );
           setJugador(perfilJugador);
         } catch {
-          Toast.error("Error inesperado intenta mas tarde");
+          show("error", "Error inesperado intenta mas tarde");
         }
       };
 

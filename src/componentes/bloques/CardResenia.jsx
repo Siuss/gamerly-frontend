@@ -2,22 +2,19 @@ import { StyleSheet, Text, View } from "react-native";
 import { Color } from "../../estilos/colores";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
-import {Puntuacion} from "../atomos/puntuacion/Puntuacion";
+import { Puntuacion } from "../atomos/puntuacion/Puntuacion";
+import Icons from "@expo/vector-icons/Octicons";
 
-export const CardResenia = (props) => {
-  const { style, puntaje, foto, resenia, ...restProps } = props;
-
+export const CardResenia = ({ style, puntaje, foto, resenia, verificada=false, ...props }) => {
   return (
-    <View
-      style={[styles.card, style]}
-      {...restProps}
-    >
+    <View style={[styles.card, style]} {...props}>
       <View>
-        <View style={styles.contenidoArriva}>
+        <View style={styles.contenidoArriba}>
           <Text style={styles.texto}>
-            Reseña{" "}
-            <Puntuacion puntuacion={puntaje}/>
+            Reseña <Puntuacion puntuacion={puntaje} />
           </Text>
+
+          <Icons size={20} color={Color.blanco} style={styles.iconoVerificacion} name={verificada ? "verified" : "unverified"} />
         </View>
         <View style={styles.contenidoAbajo}>
           <FotoDePerfil width={30} height={30} src={foto} />
@@ -43,11 +40,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
   },
-  contenidoArriva: {
+  contenidoArriba: {
     marginBottom: 5,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "flex-start",
   },
   contenidoAbajo: {
@@ -59,6 +56,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   estrella: {
-    color: Color.blanco
-  }
+    color: Color.blanco,
+  },
 });

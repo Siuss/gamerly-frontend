@@ -15,7 +15,7 @@ import { CardResenia } from "../bloques/CardResenia";
 import { Boton } from "../atomos/boton/Boton";
 import { SesionService } from "../../services/SesionService";
 import useStore from "../../hooks/useStore";
-import { Toast } from "react-native-toast-message";
+import { useToast } from "../../hooks/useToast";
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { TablaHorarios } from "../bloques/TablaHorarios";
 import { getHorariosPreferidos } from "../../utils/diasMapper";
@@ -23,6 +23,7 @@ import { rutas } from "../rutas/rutas";
 import { ReseniaService } from "../../services/ReseniaService";
 
 export const VistaMiPerfil = () => {
+  const { show } = useToast();
   const route = useRoute();
   const [posicionAnteriorScroll, setPosicionAnteriorScroll] = useState(0);
   const [direccionScroll, setDireccionScroll] = useState("arriba");
@@ -53,7 +54,7 @@ export const VistaMiPerfil = () => {
 
       setPerfil(infoPerfil);
     } catch {
-      Toast.error("Error inesperado intentalo mas tarde");
+      show("error", "Error inesperado intentalo mas tarde");
     }
   };
 
@@ -71,6 +72,7 @@ export const VistaMiPerfil = () => {
 
       traerPerfil();
       traerReseniasPendientes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
   );
 
@@ -222,6 +224,7 @@ export const VistaMiPerfil = () => {
                   puntaje={resenia.puntaje}
                   foto={resenia.foto}
                   resenia={resenia.comentario}
+                  verificada={resenia.verificada}
                 />
               ))}
 

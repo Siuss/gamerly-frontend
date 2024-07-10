@@ -1,26 +1,28 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { CardAmigo } from "./CardAmigo"
+import { CardAmigo } from "./CardAmigo";
 import { JugadoresService } from "../../services/JugadoresService";
-import { Toast } from "toastify-react-native";
 import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
+import { useToast } from "../../hooks/useToast";
 
 export const ListaDeAmigos = (props) => {
   const { style, amigos, onAmigoClick, onBorrarAmigo, ...restProps } = props;
+  const { show } = useToast();
 
   const handleBorrar = async (amigo) => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId()
-      await JugadoresService.borrarAmigo(idUsuarioLogueado, amigo.id)
-      onBorrarAmigo(amigo)
-
-      Toast.success("Se ha eleminado al jugador exitosamente")
+      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      await JugadoresService.borrarAmigo(idUsuarioLogueado, amigo.id);
+      onBorrarAmigo(amigo);
     } catch {
-      Toast.error("Hubo un error inesperado intentalo mas tarde")
+      show("error", "Hubo un error inesperado intentalo mas tarde");
     }
-  }
+  };
 
   return (
-    <ScrollView contentContainerStyle={[styles.container, style]} {...restProps}>
+    <ScrollView
+      contentContainerStyle={[styles.container, style]}
+      {...restProps}
+    >
       {amigos.map((amigo) => (
         <CardAmigo
           key={amigo.nombre}

@@ -10,11 +10,12 @@ import { TokenInput } from "../atomos/tokenInput/TokenInput";
 import { Boton } from "../atomos/boton/Boton";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { rutas } from "../rutas/rutas";
-import { Toast } from "toastify-react-native";
+import { useToast } from "../../hooks/useToast";
 
 const REENVIO_ESPERA_SEGUNDOS = 15;
 
 export const IngresarTokenContrasena = () => {
+  const { show } = useToast();
   const esperaRef = useRef({});
   const [codigo, setCodigo] = useState("");
   const [espera, setEspera] = useState(REENVIO_ESPERA_SEGUNDOS);
@@ -26,7 +27,7 @@ export const IngresarTokenContrasena = () => {
       await SesionService.verificarCodigoDeRecuperacion(codigo);
       navigation.navigate(rutas.crearNuevaClave, email)
     } catch {
-      Toast.error("Parece que el codigo es invalido");
+      show("error", "Parece que el codigo es invalido");
     }
   };
 
@@ -35,7 +36,7 @@ export const IngresarTokenContrasena = () => {
       setEspera(REENVIO_ESPERA_SEGUNDOS);
       await SesionService.solicitarClave(email);
     } catch {
-      Toast.error("Hubo un error inesperado intentalo mas tarde");
+      show("error", "Hubo un error inesperado intentalo mas tarde");
     }
   };
 
