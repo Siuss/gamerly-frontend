@@ -61,12 +61,28 @@ const NavBar = (props) => {
               activeButton === rutas.amigos ? Color.acento : "transparent",
           },
         ]}
-        onPress={() => handleNavigateConId(rutas.mensajes)}
+        onPress={() => handleNavigateConId(rutas.amigos)}
       >
         <MaterialIcons
           name="group"
           size={24}
           color={activeButton === rutas.amigos ? Color.neutro : Color.blanco}
+        />
+      </Pressable>
+      <Pressable
+        style={() => [
+          styles.botonDeNavegacion,
+          {
+            backgroundColor:
+              activeButton === rutas.chats ? Color.acento : "transparent",
+          },
+        ]}
+        onPress={() => handleNavigateConId(rutas.chats)}
+      >
+        <MaterialIcons
+          name="chat"
+          size={24}
+          color={activeButton === rutas.chats ? Color.neutro : Color.blanco}
         />
       </Pressable>
       <Pressable
@@ -82,23 +98,7 @@ const NavBar = (props) => {
         <MaterialIcons
           name="person"
           size={24}
-          color={activeButton === rutas.chat ? Color.neutro : Color.blanco}
-        />
-      </Pressable>
-      <Pressable
-        style={() => [
-          styles.botonDeNavegacion,
-          {
-            backgroundColor:
-              activeButton === rutas.chat ? Color.acento : "transparent",
-          },
-        ]}
-        onPress={() => handleNavigateConId(rutas.chat)}
-      >
-        <MaterialIcons
-          name="chat"
-          size={24}
-          color={activeButton === rutas.chat ? Color.neutro : Color.blanco}
+          color={activeButton === rutas.miPerfil ? Color.neutro : Color.blanco}
         />
       </Pressable>
     </View>

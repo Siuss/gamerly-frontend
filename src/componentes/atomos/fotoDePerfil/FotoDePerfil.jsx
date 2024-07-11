@@ -1,16 +1,16 @@
 import { StyleSheet, Image } from "react-native";
 import { Color } from "../../../estilos/colores";
 
-export const FotoDePerfil = (props) => {
+export const FotoDePerfil = ({ src, width, height }) => {
   const styles = StyleSheet.create({
     image: {
-      width: props.width,
-      height: props.height,
+      width: width,
+      height: height,
       borderRadius: 100,
       borderWidth: 2,
       borderColor: Color.rosa,
     },
   });
-  
-  return <Image style={styles.image} source={{ uri: props.src }}></Image>;
+
+  return <Image style={styles.image} source={{ uri: src }}></Image>;
 };

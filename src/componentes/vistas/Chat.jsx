@@ -1,67 +1,119 @@
-// ChatScreen.js
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-// La comente porque esta rompiendo
-//import MessageBubble from './MessageBubble';
-import { Color } from '../../estilos/colores';
+import React, { useState, useCallback, useRef } from "react";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { BurbujaChat } from "../bloques/BurbujaChat";
+import { Color } from "../../estilos/colores";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
+import { ChatService } from "../../services/ChatService";
+import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
+import { Ionicons } from "@expo/vector-icons";
+import { Parrafo } from "../atomos/parrafo/Parrafo";
+
+const REFRESCO_CHAT_MS = 500;
 
 const ChatScreen = () => {
-  // Mock de datos de usuario
-  const user = {
-    name: 'Pedro Diaz',
-    imageUrl: 'https://your-image-url.com', // Reemplaza con la URL de la imagen de perfil
-    status: 'En línea', // Puedes cambiarlo a 'Desconectado' para probar diferentes estados
+  const intervalRef = useRef(null);
+  const navigation = useNavigation();
+  const [chat, setChat] = useState({});
+  const [perfilAmigo, setPerfilAmigo] = useState({});
+  const [inputMensaje, setInputMensaje] = useState("");
+  const { params: idChat } = navigation.getState().routes.at(-1);
+
+  const [mensajes, setMensajes] = useState([]);
+
+  const handleEnviarMensaje = async () => {
+    setInputMensaje("");
+    if (!inputMensaje.trim()) return;
+    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    await ChatService.enviarMensaje(
+      chat.id,
+      idUsuarioLogueado,
+      perfilAmigo.id,
+      inputMensaje.trim()
+    );
+    await traerChat();
   };
 
-  const [inputText, setInputText] = useState('');
-  const [messages, setMessages] = useState([
-    { id: 1, text: 'Hola, Jugamos?', isOwnMessage: false },
-    { id: 2, text: 'Sí, dale', isOwnMessage: true },
-  ]);
-  const [isTyping, setIsTyping] = useState(false);
+  const traerChat = async () => {
+    const nuevoChat = await ChatService.getChatById(idChat);
+    const idUsuarioLogueado = await getUsuarioLogueadoId();
 
-  const handleSend = () => {
-    if (inputText.trim()) {
-      setMessages([...messages, { id: messages.length + 1, text: inputText, isOwnMessage: true }]);
-      setInputText('');
-      setIsTyping(false);
+    if (nuevoChat.usuario1.id === idUsuarioLogueado) {
+      setPerfilAmigo(nuevoChat.usuario2);
+    } else {
+      setPerfilAmigo(nuevoChat.usuario1);
     }
+
+    setChat(nuevoChat);
+    console.log(
+      nuevoChat.mensajes.map((mensaje) => ({
+        id: mensaje.id,
+        contenido: mensaje.contenido,
+        esPropio: mensaje.idCreador === idUsuarioLogueado,
+      }))
+    );
+
+    setMensajes(
+      nuevoChat.mensajes.map((mensaje) => ({
+        id: mensaje.id,
+        contenido: mensaje.contenido,
+        esPropio: mensaje.idCreador === idUsuarioLogueado,
+      }))
+    );
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      traerChat();
+
+      // eslint-disable-next-line no-undef, react-hooks/exhaustive-deps
+      intervalRef.current = setInterval(traerChat, REFRESCO_CHAT_MS);
+
+      return () => {
+        // eslint-disable-next-line no-undef
+        clearInterval(intervalRef.current);
+      };
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          source={{ uri: user.imageUrl }}
-          style={styles.profileImage}
-        />
-        <View>
-          <Text style={styles.username}>{user.name}</Text>
-          <Text style={styles.typingStatus}>{isTyping ? 'Escribiendo...' : user.status}</Text>
-        </View>
+        <FotoDePerfil src={perfilAmigo.foto} height={64} width={64} />
+        <Parrafo variante="blancoM" style={styles.nombre}>
+          {perfilAmigo.nombre}
+        </Parrafo>
       </View>
       <ScrollView style={styles.chatContainer}>
-        {/* Lo comente porque esta rompiendo
-        messages.map(message => (
-          <MessageBubble key={message.id} message={message.text} isOwnMessage={message.isOwnMessage} />
-        ))*/}
+        {mensajes.map((mensaje) => (
+          <BurbujaChat
+            key={mensaje.id}
+            mensaje={mensaje.contenido}
+            esPropio={mensaje.esPropio}
+          />
+        ))}
       </ScrollView>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Input text"
+          placeholder="Mensaje..."
           placeholderTextColor={Color.gris}
-          value={inputText}
-          onChangeText={text => {
-            setInputText(text);
-            setIsTyping(text.length > 0);
-          }}
+          value={inputMensaje}
+          onChangeText={setInputMensaje}
         />
-        <TouchableOpacity onPress={handleSend}>
-          <Image
-            source={{ uri: 'https://icon-url.com/send-icon' }} // Reemplaza con la URL del ícono de enviar
-            style={styles.sendIcon}
-          />
+        <TouchableOpacity
+          style={styles.botonEnviar}
+          onPress={handleEnviarMensaje}
+        >
+          <Ionicons name="send" size={24} color={Color.secundario} />
         </TouchableOpacity>
       </View>
     </View>
@@ -74,33 +126,24 @@ const styles = StyleSheet.create({
     backgroundColor: Color.neutro,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: Color.primario,
-    padding: 10,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    borderBottomRightRadius: 16,
+    borderBottomLeftRadius: 16,
   },
-  profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  username: {
-    color: Color.blanco,
-    marginLeft: 10,
-    fontSize: 18,
-  },
-  typingStatus: {
-    color: Color.blanco,
-    marginLeft: 10,
-    fontSize: 14,
+  nombre: {
+    marginLeft: 16,
   },
   chatContainer: {
     flex: 1,
     padding: 10,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: Color.primario,
     padding: 10,
   },
@@ -113,10 +156,8 @@ const styles = StyleSheet.create({
     borderColor: Color.bordeBoton,
     borderWidth: 1,
   },
-  sendIcon: {
-    width: 30,
-    height: 30,
-    marginLeft: 10,
+  botonEnviar: {
+    marginLeft: 8,
   },
 });
 

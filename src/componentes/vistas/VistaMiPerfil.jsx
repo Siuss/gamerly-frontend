@@ -133,24 +133,24 @@ export const VistaMiPerfil = () => {
             <FotoDePerfil width={100} height={100} src={perfil.foto} />
           </View>
           <Divisor />
-          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+          <Parrafo variante="grisXS" style={styles.descripcionUsuario}>
             {perfil.nombre}
           </Parrafo>
           <Divisor />
-          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+          <Parrafo variante="grisXS" style={styles.descripcionUsuario}>
             {perfil.edad} Años
           </Parrafo>
           <Divisor />
-          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+          <Parrafo variante="grisXS" style={styles.descripcionUsuario}>
             {perfil.nacionalidad}
           </Parrafo>
           <Divisor />
-          <Parrafo variante="grisS" style={styles.descripcionUsuario}>
+          <Parrafo variante="grisXS" style={styles.descripcionUsuario}>
             {perfil.discord}
           </Parrafo>
           <Divisor />
 
-          <Parrafo variante="grisS" style={styles.descripcionplataformas}>
+          <Parrafo variante="grisXS" style={styles.descripcionplataformas}>
             Mis Plataformas
           </Parrafo>
           <View style={styles.pildora1}>
@@ -167,7 +167,7 @@ export const VistaMiPerfil = () => {
             />
           </View>
 
-          <Parrafo variante="grisS" style={styles.descripcionplataformas}>
+          <Parrafo variante="grisXS" style={styles.descripcionplataformas}>
             Mis Juegos
           </Parrafo>
           <View style={styles.pildora1}>
@@ -184,7 +184,7 @@ export const VistaMiPerfil = () => {
             />
           </View>
           <View style={styles.conatainerEditarJuego}>
-            <Parrafo variante="grisS" style={styles.descripcionplataformas}>
+            <Parrafo variante="grisXS" style={styles.descripcionplataformas}>
               Mis Horarios
             </Parrafo>
           </View>
@@ -198,7 +198,7 @@ export const VistaMiPerfil = () => {
           </View>
 
           <View style={styles.reseniasHeader}>
-            <Parrafo variante="grisS" style={styles.descripcionplataformas}>
+            <Parrafo variante="grisXS" style={styles.descripcionplataformas}>
               Mis Reseñas
             </Parrafo>
 

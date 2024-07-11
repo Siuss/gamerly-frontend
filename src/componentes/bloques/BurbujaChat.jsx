@@ -1,34 +1,38 @@
 // MessageBubble.js
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Color } from '../../estilos/colores';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Color } from "../../estilos/colores";
+import { Parrafo } from "../atomos/parrafo/Parrafo";
 
-const MessageBubble = ({ message, isOwnMessage }) => {
+export const BurbujaChat = ({ mensaje, esPropio }) => {
   return (
-    <View style={[styles.bubbleContainer, isOwnMessage ? styles.ownBubble : styles.otherBubble]}>
-      <Text style={styles.messageText}>{message}</Text>
+    <View
+      style={[
+        styles.contenedor,
+        esPropio ? styles.propioMensaje : styles.otroMensaje,
+      ]}
+    >
+      <Parrafo>{mensaje}</Parrafo>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  bubbleContainer: {
-    maxWidth: '80%',
+  contenedor: {
+    maxWidth: "80%",
     padding: 10,
     borderRadius: 10,
     margin: 5,
   },
-  ownBubble: {
-    backgroundColor: Color.acento,
-    alignSelf: 'flex-end',
+  propioMensaje: {
+    backgroundColor: Color.secundario,
+    alignSelf: "flex-end",
   },
-  otherBubble: {
+  otroMensaje: {
     backgroundColor: Color.primario,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
   },
   messageText: {
     color: Color.blanco,
   },
 });
-
-export default MessageBubble;

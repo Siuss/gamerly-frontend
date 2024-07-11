@@ -2,10 +2,8 @@ import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Resenias } from "../vistas/Reseñas.jsx";
-import { HeaderTitle } from "../header/HeaderTitle";
-import { View, StyleSheet } from "react-native";
 import { HeaderTitle } from "../header/HeaderTitle.jsx";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada.jsx";
 import { VistaMiPerfil } from "../vistas/VistaMiPerfil.jsx";
 import { PerfilJugador } from "../vistas/PerfilJugador.jsx";
@@ -25,15 +23,11 @@ import { navigationRef } from "../../resolvers/NotificationResolver.js";
 import { useNotificationListener } from "../../hooks/useNotificationListener";
 import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
 import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
-import { MessagesList } from "../vistas/Mensajes";
-import { ReseniasPendientes } from "../vistas/ReseniasPendientes";
-import { navigationRef } from "../../resolvers/NotificationResolver.js";
-import { useNotificationListener } from "../../hooks/useNotificationListener";
-import { IngresarTokenContrasena } from "../vistas/IngresarTokenContrasena.jsx";
-import { CrearNuevaClave } from "../vistas/CrearNuevaClave.jsx";
+import { ListaDeChats } from "../vistas/ListaDeChats.jsx";
 import ChatScreen from "../vistas/Chat.jsx";
 import { Toast } from "../bloques/Toast.jsx";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Amigos } from "../vistas/Amigos.jsx"
 
 const Stack = createStackNavigator();
 
@@ -86,9 +80,9 @@ const AppRutas = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            titulo={rutas.mensajes}
-            name={rutas.mensajes}
-            component={MessagesList}
+            titulo={rutas.chats}
+            name={rutas.chats}
+            component={ListaDeChats}
           />
           <Stack.Screen
             name="recuperarContrasena"
@@ -124,6 +118,11 @@ const AppRutas = () => {
             titulo={titlesConfig.busquedaAvanzada}
             name={rutas.busquedaAvanzada}
             component={BusquedaAvanzada}
+          />
+           <Stack.Screen
+            titulo={rutas.amigos}
+            name={rutas.amigos}
+            component={Amigos}
           />
           <Stack.Screen
             titulo={rutas.jugadores}

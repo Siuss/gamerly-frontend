@@ -8,6 +8,7 @@ export const titlesConfig = {
   jugadores: "Jugadores",
   reseniaJugador: "Reseña Jugador",
   solicitudesPendientes: "Solicitudes Pendientes",
+  chats:"Lista de chats",
   reseniasPendientes: "Reseñas Pendientes",
   mensajes: "Lista de mensajes",
   chat: "Chat"
@@ -26,6 +27,7 @@ export const rutas = {
   jugadores: "jugadores",
   reseniaJugador: "reseniaJugador",
   solicitudesPendientes: "solicitudesPendientes",
+  chats:"chats",
   reseniasPendientes: "reseniasPendientes",
   ingresarTokenContrasenia: "ingresarTokenContrasenia",
   crearNuevaClave: "crearNuevaClave",
@@ -39,6 +41,7 @@ export const mostrarBotonDeVolver = [
   rutas.busquedaAvanzada,
   rutas.solicitudesPendientes,
   rutas.jugadores,
+  rutas.chat
 ];
 
 

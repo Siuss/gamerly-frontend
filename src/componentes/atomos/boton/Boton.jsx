@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   acento: {
     backgroundColor: Color.acento,
   },
-  grisS: {
+  grisXS: {
     color: Color.gris,
   },
   gris: {

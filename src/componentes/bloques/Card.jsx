@@ -34,7 +34,7 @@ export const Card = (props) => {
           {props.amigos?.length > 0 &&
             <View style={styles.amigos}>
               <Parrafo
-                variante="grisS"
+                variante="grisXS"
                 numberOfLines={1}
                 subrayado
               >
@@ -43,7 +43,7 @@ export const Card = (props) => {
               <Parrafo
                 numberOfLines={1}
                 ellipsizeMode="tail"
-                variante="grisS"
+                variante="grisXS"
                 subrayado
               >
                 {props.amigos.map((amigo, index) =>
