@@ -8,7 +8,7 @@ export const titlesConfig = {
   jugadores: "Jugadores",
   reseniaJugador: "Reseña Jugador",
   solicitudesPendientes: "Solicitudes Pendientes",
-  chats:"Lista de chats",
+  chats:"Chats",
   reseniasPendientes: "Reseñas Pendientes",
   mensajes: "Lista de mensajes",
   chat: "Chat"
