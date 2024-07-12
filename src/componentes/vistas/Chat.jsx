@@ -27,6 +27,11 @@ const ChatScreen = () => {
 
   const [mensajes, setMensajes] = useState([]);
 
+  const handleNavigateBack = () => {
+    const rutaAnterior = navigation.getState().routes.at(-2);
+    navigation.navigate(rutaAnterior.name, rutaAnterior.params);
+  };
+
   const handleEnviarMensaje = async () => {
     setInputMensaje("");
     if (!inputMensaje.trim()) return;
@@ -41,8 +46,8 @@ const ChatScreen = () => {
   };
 
   const traerChat = async () => {
-    const nuevoChat = await ChatService.getChatById(idChat);
     const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const nuevoChat = await ChatService.leerChat(idUsuarioLogueado, idChat);
 
     if (nuevoChat.usuario1.id === idUsuarioLogueado) {
       setPerfilAmigo(nuevoChat.usuario2);
@@ -81,7 +86,13 @@ const ChatScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <FotoDePerfil src={perfilAmigo.foto} height={64} width={64} />
+        <TouchableOpacity
+          onPress={handleNavigateBack}
+          style={styles.botonVolver}
+        >
+          <Ionicons name="arrow-back" size={24} color={Color.blanco} />
+        </TouchableOpacity>
+        <FotoDePerfil src={perfilAmigo.foto} height={48} width={48} />
         <Parrafo variante="blancoM" style={styles.nombre}>
           {perfilAmigo.nombre}
         </Parrafo>
@@ -124,10 +135,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: Color.primario,
-    paddingBottom: 16,
-    paddingHorizontal: 16,
+    padding: 16,
     borderBottomRightRadius: 16,
     borderBottomLeftRadius: 16,
+  },
+  botonVolver: {
+    marginRight: 16,
   },
   nombre: {
     marginLeft: 16,

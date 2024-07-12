@@ -153,6 +153,7 @@ const AppRutas = () => {
             titulo={rutas.chat}
             name={rutas.chat}
             component={ChatScreen}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />

@@ -9,6 +9,7 @@ export const CardChat = ({
   id,
   foto,
   nombre,
+  noLeidos,
   ultimoMensaje,
   onChatClick,
   ...props
@@ -23,8 +24,14 @@ export const CardChat = ({
 
       <View style={styles.contenido}>
         <Parrafo variante="blancoM">{nombre}</Parrafo>
-        {ultimoMensaje && <Parrafo variante="grisS" numberOfLines={1} ellipsizeMode='tail'>{ultimoMensaje}</Parrafo>}
+        {ultimoMensaje && (
+          <Parrafo variante="grisS" numberOfLines={1} ellipsizeMode="tail">
+            {ultimoMensaje}
+          </Parrafo>
+        )}
       </View>
+
+      {!!noLeidos && <Parrafo>{noLeidos}</Parrafo>}
     </TouchableOpacity>
   );
 };
@@ -33,6 +40,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Color.primario,
     padding: 16,
+    paddingRight: 32,
     borderRadius: 10,
     flexDirection: "row",
     alignItems: "center",

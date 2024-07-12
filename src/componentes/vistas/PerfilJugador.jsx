@@ -20,7 +20,7 @@ import {
 } from "../../utils/diasMapper.js";
 import { useToast } from "../../hooks/useToast";
 import { ReseniaService } from "../../services/ReseniaService.js";
-import Icon from "@expo/vector-icons/MaterialIcons";
+import Icon from "@expo/vector-icons/FontAwesome6.js";
 import { ModalReportarUsuario } from "../bloques/ModalReportarUsuario.jsx";
 
 export const PerfilJugador = (props) => {
@@ -164,7 +164,7 @@ export const PerfilJugador = (props) => {
                 </Parrafo>
               )}
               <TouchableOpacity onPress={handleMostrarModalReporte}>
-                <Icon name="report" size={24} color={Color.error} />
+                <Icon name="flag" size={24} color={Color.error} />
               </TouchableOpacity>
             </View>
             <Parrafo variante="blancoM">

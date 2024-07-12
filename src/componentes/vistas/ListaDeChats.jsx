@@ -21,8 +21,13 @@ export const ListaDeChats = () => {
   };
 
   const handleCardClick = (id) => {
-    console.log(id)
     navigation.navigate(rutas.chat, id);
+  };
+
+  const cantidadDeMensajesNoLeidos = (idUsuario, mensajes) => {
+    return mensajes.filter(
+      (mensaje) => mensaje.idReceptor === idUsuario && !mensaje.leido
+    ).length;
   };
 
   const traerChats = async () => {
@@ -31,7 +36,6 @@ export const ListaDeChats = () => {
       const listaChats = await ChatService.getChatsDelUsuario(
         idUsuarioLogueado
       );
-      console.log(listaChats)
 
       const listaChatsAdaptada = listaChats.map((chat) => {
         if (chat.usuario1.id === idUsuarioLogueado) {
@@ -39,7 +43,11 @@ export const ListaDeChats = () => {
             ...chat.usuario2,
             idUsuario: chat.usuario2.id,
             ultimoMensaje: chat.mensajes.at(-1)?.contenido,
-            id: chat.id
+            id: chat.id,
+            noLeidos: cantidadDeMensajesNoLeidos(
+              idUsuarioLogueado,
+              chat.mensajes
+            ),
           };
         }
 
@@ -47,7 +55,11 @@ export const ListaDeChats = () => {
           ...chat.usuario1,
           idUsuario: chat.usuario1.id,
           ultimoMensaje: chat.mensajes.at(-1)?.contenido,
-          id: chat.id
+          id: chat.id,
+          noLeidos: cantidadDeMensajesNoLeidos(
+            idUsuarioLogueado,
+            chat.mensajes
+          ),
         };
       });
 
@@ -80,6 +92,7 @@ export const ListaDeChats = () => {
             nombre={item.nombre}
             ultimoMensaje={item.ultimoMensaje}
             foto={item.foto}
+            noLeidos={item.noLeidos}
             onChatClick={() => handleCardClick(item.id)}
           />
         )}

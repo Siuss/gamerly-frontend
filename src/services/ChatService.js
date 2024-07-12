@@ -4,6 +4,7 @@ import { BASE_URL } from "./requestConfig";
 const ChatEndpoints = {
   CHATS: "/chats/",
   CHAT: "/chat/",
+  LEER_CHAT: "/leer-chat/",
   NUEVO_CHAT: "/nuevo-chat/",
   MENSAJE: "/mensaje/",
 };
@@ -33,14 +34,18 @@ const getChatById = async (idChat) => {
   return response.data;
 };
 
+const leerChat = async (idUsuario, idChat) => {
+  const response = await axios.get(`${BASE_URL}/${idUsuario}${ChatEndpoints.LEER_CHAT}${idChat}`);
+
+  return response.data;
+};
+
 const enviarMensaje = async (
   idChat,
   idUsuarioCreador,
   idUsuarioReceptor,
   contenido
 ) => {
-  console.log(`${BASE_URL}${ChatEndpoints.MENSAJE}${idChat}`)
-  console.log({ idUsuarioCreador, idUsuarioReceptor, contenido })
   const response = await axios.post(
     `${BASE_URL}${ChatEndpoints.MENSAJE}${idChat}`,
     { idUsuarioCreador, idUsuarioReceptor, contenido }
@@ -54,4 +59,5 @@ export const ChatService = {
   getChatsDelUsuario,
   getChatById,
   enviarMensaje,
+  leerChat
 };
