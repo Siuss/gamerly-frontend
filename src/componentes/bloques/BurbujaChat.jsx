@@ -4,7 +4,7 @@ import { View, StyleSheet } from "react-native";
 import { Color } from "../../estilos/colores";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 
-export const BurbujaChat = ({ mensaje, esPropio }) => {
+export const BurbujaChat = ({ mensaje, fecha, esPropio }) => {
   return (
     <View
       style={[
@@ -13,6 +13,7 @@ export const BurbujaChat = ({ mensaje, esPropio }) => {
       ]}
     >
       <Parrafo>{mensaje}</Parrafo>
+      <Parrafo style={esPropio ? styles.propioFecha : styles.otroFecha}variante="grisSuaveXS">{fecha}</Parrafo>
     </View>
   );
 };
@@ -32,7 +33,10 @@ const styles = StyleSheet.create({
     backgroundColor: Color.primario,
     alignSelf: "flex-start",
   },
-  messageText: {
-    color: Color.blanco,
+  propioFecha: {
+    alignSelf: 'flex-end'
   },
+  otroFecha: {
+    alignSelf: 'flex-start'
+  }
 });

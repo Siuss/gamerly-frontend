@@ -32,19 +32,20 @@ export const Login = () => {
 
   const iniciarSesion = async () => {
     try {
+      console.log('a')
       const tokenNotificaciones =
         await NotificacionesService.obtenerTokenDeNotificaciones();
       const usuario = await SesionService.login({
         ...credenciales,
         tokenNotificaciones,
       });
+      console.log(usuario)
 
       if (usuario) {
         await setUsuarioLogueado(usuario);
         navigation.navigate(rutas.juegos);
       }
     } catch (error) {
-
       if (error.response?.status === 401) {
         show("error", "Credenciales invalidas");
         return

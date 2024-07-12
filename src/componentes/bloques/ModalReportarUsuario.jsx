@@ -4,11 +4,11 @@ import { StyleSheet, View } from "react-native";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Boton } from "../atomos/boton/Boton";
 import Textarea from "../atomos/TextArea/TextArea";
-import { SolicitudService } from "../../services/SolicitudService";
+import { ReporteService } from "../../services/ReporteService";
 import { useToast } from "../../hooks/useToast";
 
-export const ModalAgregarAmigo = ({
-  idCreador,
+export const ModalReportarUsuario = ({
+  idUsuarioLogueado,
   idAmigo,
   visible,
   onOcultar,
@@ -23,14 +23,11 @@ export const ModalAgregarAmigo = ({
 
   const handleEnviar = async () => {
     try {
-      await SolicitudService.solicitarAmistad(idCreador, idAmigo, mensaje);
+      await ReporteService.enviarReporte(idUsuarioLogueado, idAmigo, mensaje);
       onOcultar();
-      show("success", "Solicitud enviada correctamente!");
+      show("success", "Se ha reportado al usuario correctamenteo");
     } catch {
-      show(
-        "error",
-        "Error inesperado: No se pudo enviar la solicitud, intente mas tarde"
-      );
+      show("error", "Hubo un error inesperado intentalo mas tarde");
     }
   };
 
@@ -45,8 +42,8 @@ export const ModalAgregarAmigo = ({
       style={styles.modal}
       {...props}
     >
-       <Parrafo style={styles.titulo} variante="blancoM">
-        Añadir amigo
+      <Parrafo style={styles.titulo} variante="blancoM">
+        Reportar usuario
       </Parrafo>
       <Parrafo variante="blancoM">Añadir mensaje</Parrafo>
       <Textarea onChangeText={handleMensajeChange} placeholder="Mensaje..." />
@@ -78,6 +75,9 @@ const styles = StyleSheet.create({
     display: "flex",
     gap: 16,
     borderRadius: 12,
+  },
+  titulo: {
+    fontWeight: "bold",
   },
   botones: {
     display: "flex",

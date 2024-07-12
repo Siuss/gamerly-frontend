@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Boton } from "../atomos/boton/Boton";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { Pildora } from "../atomos/pildora/Pildora";
@@ -20,6 +20,8 @@ import {
 } from "../../utils/diasMapper.js";
 import { useToast } from "../../hooks/useToast";
 import { ReseniaService } from "../../services/ReseniaService.js";
+import Icon from "@expo/vector-icons/MaterialIcons";
+import { ModalReportarUsuario } from "../bloques/ModalReportarUsuario.jsx";
 
 export const PerfilJugador = (props) => {
   const { show } = useToast();
@@ -31,6 +33,8 @@ export const PerfilJugador = (props) => {
     useState(false);
   const [tieneSolicitudPendiente, setTieneSolicitudPendiente] = useState(false);
   const [tieneResenia, setTieneResenia] = useState(false);
+  const [modalReportarUsuarioEsVisible, setModalReportarUsuarioEsVisible] =
+    useState(false);
 
   const navigation = useNavigation();
 
@@ -48,14 +52,22 @@ export const PerfilJugador = (props) => {
     navigation.navigate(rutas.reseniaJugador, { id });
   };
 
+  const handleMostrarModalReporte = () => {
+    setModalReportarUsuarioEsVisible(true);
+  };
+
   const handleAgregarAmigo = () => {
     setModalAgregarAmigoEsVisible(true);
   };
 
-  const handleOcultarModal = async () => {
+  const handleOcultarModalAmigo = async () => {
     setModalAgregarAmigoEsVisible(false);
     await chequearSolicitudDeAmistad();
   };
+
+  const handleOcultarModalReporte = async (mensaje) => {
+    setModalReportarUsuarioEsVisible(false)
+  }
 
   // Vamos a chequear si el usuario tiene una solicitud
   // de amistad pendiente para saber si habilitar el
@@ -129,7 +141,13 @@ export const PerfilJugador = (props) => {
         idCreador={usuarioLogueado?.id}
         idAmigo={id}
         visible={modalAgregarAmigoEsVisible}
-        onOcultar={handleOcultarModal}
+        onOcultar={handleOcultarModalAmigo}
+      />
+      <ModalReportarUsuario
+        idUsuarioLogueado={usuarioLogueado?.id}
+        idAmigo={id}
+        visible={modalReportarUsuarioEsVisible}
+        onOcultar={handleOcultarModalReporte}
       />
       <ScrollView style={styles.contenedor} {...props}>
         <View style={styles.perfilJugador}>
@@ -139,11 +157,16 @@ export const PerfilJugador = (props) => {
             foto={perfilInfo.foto}
           />
           <View style={styles.cardDetalles}>
-            {esAmigoDelUsuarioLogueado && (
-              <Parrafo variante="blancoM">
-                Discord: {perfilInfo.discord}
-              </Parrafo>
-            )}
+            <View style={styles.cardHeader}>
+              {esAmigoDelUsuarioLogueado && (
+                <Parrafo variante="blancoM">
+                  Discord: {perfilInfo.discord}
+                </Parrafo>
+              )}
+              <TouchableOpacity onPress={handleMostrarModalReporte}>
+                <Icon name="report" size={24} color={Color.error} />
+              </TouchableOpacity>
+            </View>
             <Parrafo variante="blancoM">
               Nacionalidad: {perfilInfo.nacionalidad}
             </Parrafo>
@@ -286,6 +309,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 8,
     backgroundColor: Color.primario,
+  },
+  cardHeader: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   pildora: {
     marginBottom: 8,

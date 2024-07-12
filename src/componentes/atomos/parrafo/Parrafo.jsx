@@ -34,6 +34,10 @@ const styles = StyleSheet.create({
     color: Color.blanco,
     fontSize: 16,
   },
+  grisSuaveXS: {
+    color: Color.grisSuave,
+    fontSize: 11,
+  },
   grisXS: {
     color: Color.gris,
     fontSize: 11,

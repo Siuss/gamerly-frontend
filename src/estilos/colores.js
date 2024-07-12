@@ -2,6 +2,7 @@ const acento = "#34E4E4";
 const blanco = "#FFFFFF";
 const bordeBoton = "#4B93E2";
 const gris = "#79747E";
+const grisSuave = "#D1D1D1"
 const primario = "#4C007E";
 const rosa = "#FFCAAC";
 const secundario = "#AC97FE";
@@ -14,6 +15,7 @@ export const Color = {
   blanco,
   bordeBoton,
   gris,
+  grisSuave,
   primario,
   rosa,
   secundario,

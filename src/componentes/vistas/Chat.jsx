@@ -51,17 +51,11 @@ const ChatScreen = () => {
     }
 
     setChat(nuevoChat);
-    console.log(
-      nuevoChat.mensajes.map((mensaje) => ({
-        id: mensaje.id,
-        contenido: mensaje.contenido,
-        esPropio: mensaje.idCreador === idUsuarioLogueado,
-      }))
-    );
 
     setMensajes(
       nuevoChat.mensajes.map((mensaje) => ({
         id: mensaje.id,
+        fecha: mensaje.fecha,
         contenido: mensaje.contenido,
         esPropio: mensaje.idCreador === idUsuarioLogueado,
       }))
@@ -97,6 +91,7 @@ const ChatScreen = () => {
           <BurbujaChat
             key={mensaje.id}
             mensaje={mensaje.contenido}
+            fecha={mensaje.fecha}
             esPropio={mensaje.esPropio}
           />
         ))}

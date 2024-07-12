@@ -23,7 +23,9 @@ const signUp = async (nuevoUsuario) => {
 const login = async (credenciales) => {
   const response = await axios.post(
     `${BASE_URL}${SesionEndpoints.LOGIN}`,
-    credenciales
+    credenciales,{
+      timeout: 500 //ms
+    }
   );
 
   return response.data;
