@@ -25,7 +25,7 @@ export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugerido
           <Card
             key={jugador.id}
             style={styles.card}
-            id={jugador.id.toString()}
+            id={jugador.id}
             foto={jugador.foto}
             nombreUsuario={jugador.nombre}
             plataforma={jugador.plataformas ? jugador.plataformas?.[0] : jugador.plataforma}

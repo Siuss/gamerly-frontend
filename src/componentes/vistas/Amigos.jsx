@@ -8,7 +8,6 @@ import { useState, useCallback } from "react";
 import { JugadoresService } from "../../services/JugadoresService";
 import { SolicitudService } from "../../services/SolicitudService";
 import { useToast } from "../../hooks/useToast";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 
 export const Amigos = (props) => {
   const { show } = useToast();
@@ -20,7 +19,8 @@ export const Amigos = (props) => {
   const traerAmigos = async () => {
     try {
       const amigosEncontrados = await JugadoresService.getAmigosDelUsuario(
-        params.id
+        params.id,
+        true
       );
       setAmigos(amigosEncontrados);
 
@@ -39,11 +39,15 @@ export const Amigos = (props) => {
 
   const handleBorrarAmigo = async (amigo) => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
-      await JugadoresService.borrarAmigo(idUsuarioLogueado, amigo.id);
       await traerAmigos();
+    } catch {
+      show("error", "Error inesperado intenta mas tarde");
+    }
+  };
 
-      show("success", `${amigo.nombre} y tu ya no son amigos`);
+  const handleBloquear = async (amigo) => {
+    try {
+      await traerAmigos();
     } catch {
       show("error", "Error inesperado intenta mas tarde");
     }
@@ -72,6 +76,7 @@ export const Amigos = (props) => {
         amigos={amigos}
         onAmigoClick={handleAmigoClick}
         onBorrarAmigo={handleBorrarAmigo}
+        onBloquear={handleBloquear}
       />
 
       <View style={styles.solicitudesPendientes}>

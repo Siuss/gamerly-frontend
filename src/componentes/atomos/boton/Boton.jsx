@@ -51,6 +51,10 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: Color.acento
     },
+    blanco: {
+      borderWidth: 1,
+      borderColor: Color.blanco,
+    },
     gris: {
       borderWidth: 1,
       borderColor: "#606D5D"

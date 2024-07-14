@@ -32,14 +32,12 @@ export const Login = () => {
 
   const iniciarSesion = async () => {
     try {
-      console.log('a')
       const tokenNotificaciones =
         await NotificacionesService.obtenerTokenDeNotificaciones();
       const usuario = await SesionService.login({
         ...credenciales,
         tokenNotificaciones,
       });
-      console.log(usuario)
 
       if (usuario) {
         await setUsuarioLogueado(usuario);

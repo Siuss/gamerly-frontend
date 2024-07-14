@@ -5,14 +5,47 @@ import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { useToast } from "../../hooks/useToast";
 
 export const ListaDeAmigos = (props) => {
-  const { style, amigos, onAmigoClick, onBorrarAmigo, ...restProps } = props;
+  const {
+    style,
+    amigos,
+    onAmigoClick,
+    onBorrarAmigo,
+    onBloquear,
+    ...restProps
+  } = props;
   const { show } = useToast();
 
   const handleBorrar = async (amigo) => {
     try {
       const idUsuarioLogueado = await getUsuarioLogueadoId();
-      await JugadoresService.borrarAmigo(idUsuarioLogueado, amigo.id);
+      const amigo = await JugadoresService.borrarAmigo(
+        idUsuarioLogueado,
+        amigo.id
+      );
+      show("success", `${amigo.nombre} y tu ya no son amigos`);
       onBorrarAmigo(amigo);
+    } catch {
+      show("error", "Hubo un error inesperado intentalo mas tarde");
+    }
+  };
+
+  const handleBloquear = async (amigo) => {
+    try {
+      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      await JugadoresService.bloquearJugador(idUsuarioLogueado, amigo.id);
+      show("success", `Has bloqueado a ${amigo.nombre}`);
+      onBloquear(amigo);
+    } catch(error) {
+      show("error", "Hubo un error inesperado intentalo mas tarde");
+    }
+  };
+
+  const handleDesbloquear = async (amigo) => {
+    try {
+      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      await JugadoresService.desbloquearJugador(idUsuarioLogueado, amigo.id);
+      show("success", `Has desbloqueado a ${amigo.nombre}`);
+      onBloquear(amigo);
     } catch {
       show("error", "Hubo un error inesperado intentalo mas tarde");
     }
@@ -27,11 +60,14 @@ export const ListaDeAmigos = (props) => {
         <CardAmigo
           key={amigo.nombre}
           style={styles.card}
+          bloqueado={amigo.bloqueado}
           foto={amigo.foto}
           nombreUsuario={amigo.nombre}
           plataforma={amigo.plataformas[0]}
           juego={amigo.juegosPreferidos[0]}
           onBorrar={() => handleBorrar(amigo)}
+          onBloquear={() => handleBloquear(amigo)}
+          onDesbloquear={() => handleDesbloquear(amigo)}
           onAmigoClick={() => onAmigoClick(amigo)}
         />
       ))}

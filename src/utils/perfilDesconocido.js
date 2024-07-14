@@ -1,0 +1,1 @@
+export const urlImagenPerfilDesconocido = "https://i.ibb.co/HG1GTNR/avatar.png"

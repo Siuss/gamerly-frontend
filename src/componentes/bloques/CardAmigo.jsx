@@ -1,34 +1,65 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { Color } from "../../estilos/colores";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
+import { Boton } from "../atomos/boton/Boton";
 
 export const CardAmigo = (props) => {
-  const { style, foto, nombreUsuario, plataforma, juego, onBloquear, onBorrar, onAmigoClick, ...restProps } = props;
+  const {
+    bloqueado,
+    style,
+    foto,
+    nombreUsuario,
+    plataforma,
+    juego,
+    onAmigoClick,
+    onBloquear,
+    onBorrar,
+    onDesbloquear,
+    ...restProps
+  } = props;
 
   return (
-    <TouchableOpacity onPress={onAmigoClick} style={[styles.card, style]} {...restProps}>
-        <FotoDePerfil width={45} height={45} src={foto} />
-        <View style={styles.info}>
-          <Parrafo variante="blancoM" style={styles.nombreUsuario}>
-            {nombreUsuario}
-          </Parrafo>
-          <Parrafo variante="blancoM" style={styles.texto}>
-            {plataforma}
-          </Parrafo>
-          <Parrafo variante="blancoM" style={styles.texto}>
-            {juego}
-          </Parrafo>
-        </View>
-        <View style={styles.botones}>
-          {/*<TouchableOpacity style={styles.boton} onPress={onBloquear}>
-            <Text style={styles.botonTexto}>Bloquear</Text>
-          </TouchableOpacity> */}
-          <TouchableOpacity style={styles.boton} onPress={onBorrar}>
-            <Text style={styles.botonTexto}>Borrar</Text>
-          </TouchableOpacity>
-        </View>
+    <TouchableOpacity
+      onPress={onAmigoClick}
+      style={[styles.card, style]}
+      {...restProps}
+    >
+      <FotoDePerfil width={45} height={45} src={foto} />
+      <View style={styles.info}>
+        <Parrafo variante="blancoM" style={styles.nombreUsuario}>
+          {nombreUsuario}
+        </Parrafo>
+        <Parrafo variante="blancoM" style={styles.texto}>
+          {plataforma}
+        </Parrafo>
+        <Parrafo variante="blancoM" style={styles.texto}>
+          {juego}
+        </Parrafo>
+      </View>
+      <View style={styles.botones}>
+        <Boton
+          textStyle={styles.botonTexto}
+          style={styles.boton}
+          variante="transparente"
+          outline="blanco"
+          onPress={bloqueado ? onDesbloquear : onBloquear}
+        >
+          {bloqueado ? "Desbloquear" : "Bloquear"}
+        </Boton>
+        {!bloqueado && (
+          <Boton
+            textStyle={styles.botonTexto}
+            style={styles.boton}
+            variante="transparente"
+            outline="blanco"
+            onPress={onBorrar}
+          >
+            Borrar
+          </Boton>
+        )}
+      </View>
     </TouchableOpacity>
   );
 };
@@ -58,19 +89,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     backgroundColor: Color.primario,
+    gap: 16,
   },
   boton: {
-    backgroundColor: Color.primario,
-    borderColor: Color.blanco,
-    borderWidth: 1,
-    borderRadius: 20,
     paddingVertical: 6,
     paddingHorizontal: 24,
-    marginVertical: 2,
     alignItems: "center",
-
   },
   botonTexto: {
+    fontSize: 14,
     color: Color.blanco,
   },
 });

@@ -19,9 +19,9 @@ const enviarResenia = async (idUsuarioEmisor, idUsuarioReceptor, resenia) => {
   return response.data;
 };
 
-const getResenias = async (idUsuario) => {
+const getResenias = async (idUsuarioLogueado, idUsuario) => {
   const response = await axios.get(
-    `${BASE_URL}${ReseniaEndpoints.RESENIAS}${idUsuario}`
+    `${BASE_URL}/${idUsuarioLogueado}${ReseniaEndpoints.RESENIAS}${idUsuario}`
   );
 
   return response.data;

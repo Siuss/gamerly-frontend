@@ -11,7 +11,6 @@ import momentos from "../../data/momentosDelDia.json";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useState, useCallback } from "react";
 import { JugadoresService } from "../../services/JugadoresService";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { rutas } from "../rutas/rutas";
 import { SolicitudService } from "../../services/SolicitudService";
 import {
@@ -22,11 +21,14 @@ import { useToast } from "../../hooks/useToast";
 import { ReseniaService } from "../../services/ReseniaService.js";
 import Icon from "@expo/vector-icons/FontAwesome6.js";
 import { ModalReportarUsuario } from "../bloques/ModalReportarUsuario.jsx";
+import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado.js";
+import { urlImagenPerfilDesconocido } from "../../utils/perfilDesconocido.js";
 
 export const PerfilJugador = (props) => {
   const { show } = useToast();
   const [perfilInfo, setPerfilInfo] = useState(null);
   const [usuarioLogueado, setusuarioLogueado] = useState(null);
+  const [usuarioEstaBloqueado, setUsuarioEstaBloqueado] = useState(null);
   const [esAmigoDelUsuarioLogueado, setEsAmigoDelUsuarioLogueado] =
     useState(false);
   const [modalAgregarAmigoEsVisible, setModalAgregarAmigoEsVisible] =
@@ -66,8 +68,8 @@ export const PerfilJugador = (props) => {
   };
 
   const handleOcultarModalReporte = async (mensaje) => {
-    setModalReportarUsuarioEsVisible(false)
-  }
+    setModalReportarUsuarioEsVisible(false);
+  };
 
   // Vamos a chequear si el usuario tiene una solicitud
   // de amistad pendiente para saber si habilitar el
@@ -88,14 +90,18 @@ export const PerfilJugador = (props) => {
   useFocusEffect(
     useCallback(() => {
       const traerUsuario = async () => {
-        const perfil = await JugadoresService.getPerfilUsuario(id);
-
         try {
+          const idUsuarioLogueado = await getUsuarioLogueadoId();
+          setUsuarioEstaBloqueado(
+            await JugadoresService.getUsuarioEstaBloqueado(
+              idUsuarioLogueado,
+              id
+            )
+          );
+          const perfil = await JugadoresService.getPerfilUsuario(id);
+
           setPerfilInfo(perfil);
 
-          const idUsuarioLogueado = JSON.parse(
-            await AsyncStorage.getItem("usuario")
-          ).id;
           const usuario = await JugadoresService.getPerfilUsuario(
             idUsuarioLogueado
           );
@@ -133,6 +139,19 @@ export const PerfilJugador = (props) => {
     }, [usuarioLogueado?.id, id])
   );
 
+  if (usuarioEstaBloqueado) {
+    return (
+      <View style={styles.contenedorBloqueado}>
+        <CardFotoPerfil
+          style={styles.cardFotoPerfil}
+          nombreUsuario={perfilInfo?.nombre}
+          foto={urlImagenPerfilDesconocido}
+        />
+        <Parrafo variante="blancoL">El usuario te ha bloqueado</Parrafo>
+      </View>
+    );
+  }
+
   if (!perfilInfo) return <></>;
 
   return (
@@ -163,7 +182,7 @@ export const PerfilJugador = (props) => {
                   Discord: {perfilInfo.discord}
                 </Parrafo>
               )}
-              <TouchableOpacity onPress={handleMostrarModalReporte}>
+              <TouchableOpacity style={styles.botonReportar} onPress={handleMostrarModalReporte}>
                 <Icon name="flag" size={24} color={Color.error} />
               </TouchableOpacity>
             </View>
@@ -289,6 +308,16 @@ const styles = StyleSheet.create({
   perfilJugador: {
     paddingBottom: 64,
   },
+  contenedorBloqueado: {
+    backgroundColor: Color.neutro,
+    paddingTop: 64,
+    paddingHorizontal: 8,
+    gap: 16,
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    alignItems: "center",
+  },
   contenedor: {
     backgroundColor: Color.neutro,
     padding: 16,
@@ -351,4 +380,7 @@ const styles = StyleSheet.create({
   disabled: {
     opacity: 0.4,
   },
+  botonReportar: {
+    marginLeft: "auto"
+  }
 });

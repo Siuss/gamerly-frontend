@@ -51,5 +51,6 @@ export const ocultarNavbar = [
   rutas.registro,
   rutas.inicio,
   rutas.ingresarTokenContrasenia,
-  rutas.crearNuevaClave
+  rutas.crearNuevaClave,
+  rutas.chat
 ];

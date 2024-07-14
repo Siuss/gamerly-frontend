@@ -37,9 +37,7 @@ export const ModalNuevoChat = ({ chats, visible, onOcultar, ...props }) => {
 
   const handleChatClick = async (amigoId) => {
     const idUsuarioLogueado = await getUsuarioLogueadoId();
-    console.log(idUsuarioLogueado, amigoId)
     const nuevoChat = await ChatService.crearChat(idUsuarioLogueado, amigoId);
-    console.log('supuesto nuevo chatid', nuevoChat.id)
     navigation.navigate(rutas.chat, nuevoChat.id);
   };
 

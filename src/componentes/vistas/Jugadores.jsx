@@ -63,11 +63,17 @@ export const Jugadores = () => {
       );
 
       const idUsuarioLogueado = await getUsuarioLogueadoId();
-      const jugadoresSinUsuarioLogueado = listaJugadores.filter(
-        (jugador) => jugador.id !== idUsuarioLogueado
+      const idsBloqueados = (
+        await JugadoresService.getBloqueados(idUsuarioLogueado)
+      ).map((jugador) => jugador.id);
+
+      const jugadoresAdaptados = listaJugadores.filter(
+        (jugador) =>
+          jugador.id !== idUsuarioLogueado &&
+          !idsBloqueados.includes(jugador.id)
       );
 
-      setJugadores(jugadoresSinUsuarioLogueado);
+      setJugadores(jugadoresAdaptados);
     } catch {
       show("error", "Error inesperado intentalo mas tarde");
       setJugadores([]);

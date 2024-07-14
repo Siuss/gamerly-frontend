@@ -10,9 +10,6 @@ const ChatEndpoints = {
 };
 
 const crearChat = async (idCreador, idReceptor) => {
-  console.log(
-    `${BASE_URL}/${idCreador}${ChatEndpoints.NUEVO_CHAT}${idReceptor}`
-  );
   const response = await axios.post(
     `${BASE_URL}/${idCreador}${ChatEndpoints.NUEVO_CHAT}${idReceptor}`
   );

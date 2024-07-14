@@ -21,6 +21,7 @@ import { TablaHorarios } from "../bloques/TablaHorarios";
 import { getHorariosPreferidos } from "../../utils/diasMapper";
 import { rutas } from "../rutas/rutas";
 import { ReseniaService } from "../../services/ReseniaService";
+import { JugadoresService } from "../../services/JugadoresService";
 
 export const VistaMiPerfil = () => {
   const { show } = useToast();
@@ -28,6 +29,7 @@ export const VistaMiPerfil = () => {
   const [posicionAnteriorScroll, setPosicionAnteriorScroll] = useState(0);
   const [direccionScroll, setDireccionScroll] = useState("arriba");
   const [perfil, setPerfil] = useState({});
+  const [ultimasResenias, setUltimasResenias] = useState([]);
   const [reseniasPendientes, setReseniasPendientes] = useState([]);
   const { logout } = useStore();
   const { id } = route.params;
@@ -53,6 +55,16 @@ export const VistaMiPerfil = () => {
       );
 
       setPerfil(infoPerfil);
+
+      const idsUsuariosBloqueados = (await JugadoresService.getBloqueados(
+        idUsuarioLogueado
+      )).map((usuario) => usuario.id);
+
+      const reseniasSinBloqueados = infoPerfil.resenias.filter(
+        (resenia) => !idsUsuariosBloqueados.includes(resenia.idUsuarioEmisor)
+      );
+
+      setUltimasResenias(reseniasSinBloqueados.slice(0, 3));
     } catch {
       show("error", "Error inesperado intentalo mas tarde");
     }
@@ -72,7 +84,7 @@ export const VistaMiPerfil = () => {
 
       traerPerfil();
       traerReseniasPendientes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
   );
 
@@ -217,7 +229,7 @@ export const VistaMiPerfil = () => {
 
           {perfil.resenias && (
             <>
-              {perfil.resenias.slice(0, 3).map((resenia, index) => (
+              {ultimasResenias.map((resenia, index) => (
                 <CardResenia
                   key={index}
                   style={styles.cardResenia}
