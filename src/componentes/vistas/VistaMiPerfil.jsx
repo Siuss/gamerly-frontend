@@ -50,15 +50,15 @@ export const VistaMiPerfil = () => {
           "El usuario no está autenticado o el userId no está disponible"
         );
       }
-      const infoPerfil = await SesionService.obtenerDetalleUsuario(
+      const infoPerfil = await JugadoresService.getPerfilUsuario(
         idUsuarioLogueado
       );
 
       setPerfil(infoPerfil);
 
-      const idsUsuariosBloqueados = (await JugadoresService.getBloqueados(
-        idUsuarioLogueado
-      )).map((usuario) => usuario.id);
+      const idsUsuariosBloqueados = (
+        await JugadoresService.getBloqueados(idUsuarioLogueado)
+      ).map((usuario) => usuario.id);
 
       const reseniasSinBloqueados = infoPerfil.resenias.filter(
         (resenia) => !idsUsuariosBloqueados.includes(resenia.idUsuarioEmisor)
@@ -88,14 +88,8 @@ export const VistaMiPerfil = () => {
     }, [id])
   );
 
-  const onHorarioChange = (dia, momento) => {
-    /* TODO: Decidir si se elimina,sirve para el editar
-
-    const nuevosHorarios = [...horarios];
-    nuevosHorarios[dia][momento] = !nuevosHorarios[dia][momento];
-
-    setHorarios(nuevosHorarios);
-    */
+  const handleActivarEdicion = () => {
+    navigation.navigate(rutas.editarMiPerfil, { id });
   };
 
   const handleScroll = (event) => {
@@ -203,8 +197,8 @@ export const VistaMiPerfil = () => {
           <View style={styles.containerTable}>
             {perfil.diasHorariosPreferidos && (
               <TablaHorarios
+                disabled
                 horarios={getHorariosPreferidos(perfil.diasHorariosPreferidos)}
-                onHorarioChange={onHorarioChange}
               />
             )}
           </View>
@@ -266,6 +260,7 @@ export const VistaMiPerfil = () => {
         <BotonFlotante
           name="mode-edit-outline"
           label="Editar"
+          onPress={handleActivarEdicion}
           style={styles.botonFlotante}
         />
       )}

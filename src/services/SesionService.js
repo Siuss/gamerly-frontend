@@ -38,13 +38,6 @@ const eliminarCuenta = async (id) => {
   return response.data;
 };
 
-const obtenerDetalleUsuario = async (id) => {
-  const response = await axios.get(
-    `${BASE_URL}${SesionEndpoints.DETALLE_USUARIO}${id}`
-  );
-  return response.data;
-};
-
 const solicitarClave = async (email) => {
   const response = await axios.post(
     `${BASE_URL}${SesionEndpoints.SOLICITUD_CLAVE}${email}`
@@ -70,7 +63,6 @@ const nuevaClave = async (email, contrasenia) => {
 export const SesionService = {
   eliminarCuenta,
   login,
-  obtenerDetalleUsuario,
   signUp,
   solicitarClave,
   verificarCodigoDeRecuperacion,

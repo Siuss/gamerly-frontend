@@ -1,39 +1,54 @@
-import { StyleSheet , TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Color } from "../../../estilos/colores";
-
 import { Parrafo } from "../parrafo/Parrafo";
+import { MaterialIcons } from "@expo/vector-icons";
 
-export const Pildora = (props) => {
-  const { style, variante, conBorde, ...restProps } = props;
+export const Pildora = ({
+  style,
+  variante,
+  conBorde,
+  children,
+  borrable = false,
+  ...props
+}) => {
   return (
     <TouchableOpacity
       style={[
         styles.pildora,
         styles[variante]?.pildora,
         conBorde && styles.conBorde,
+        borrable && styles.pildoraBorrable,
         style,
       ]}
-      {...restProps}
+      {...props}
     >
       <Parrafo variante="blancoS" style={styles[variante]?.parrafo}>
-        {props.children}
+        {children}
       </Parrafo>
+      {borrable && (
+        <MaterialIcons style={styles.icono} name="close" size={16} color={Color.blanco} />
+      )}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   pildora: {
+    position: "relative",
     backgroundColor: Color.primario,
     color: Color.blanco,
     fontSize: 16,
     alignItems: "center",
     paddingHorizontal: 24,
-    borderRadius: 100
+    borderRadius: 100,
+    flexDirection: "row",
   },
   conBorde: {
     borderColor: Color.bordeBoton,
     borderWidth: 1,
+  },
+  pildoraBorrable: {
+    paddingRight: 32
   },
   deseleccionado: {
     pildora: {
@@ -53,4 +68,8 @@ const styles = StyleSheet.create({
       color: Color.neutro,
     },
   },
+  icono: {
+    position: "absolute",
+    right: 8
+  }
 });

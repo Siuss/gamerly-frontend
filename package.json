@@ -33,7 +33,9 @@
     "react-native-screens": "^3.31.1",
     "react-native-web": "~0.19.6",
     "zustand": "^4.5.2",
-    "react-native-gesture-handler": "~2.16.1"
+    "react-native-gesture-handler": "~2.16.1",
+    "expo-image-picker": "~15.0.7",
+    "expo-file-system": "~17.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

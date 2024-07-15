@@ -168,6 +168,8 @@ export const Registro = () => {
       <Text style={styles.title}>Registro</Text>
       <View style={styles.inputContainer}>
         <TextInput
+          color={Color.blanco}
+          placeholderTextColor={Color.secundario}
           style={[styles.input, !nombreEsValido && styles.inputError]}
           placeholder="Nombre y Apellido"
           value={nombre}
@@ -190,6 +192,7 @@ export const Registro = () => {
         <TextInput
           style={[styles.input, !discordEsValido && styles.inputError]}
           placeholder="Usuario de discord"
+          placeholderTextColor={Color.secundario}
           value={discord}
           onChangeText={handleChangeDiscord}
         />
@@ -210,6 +213,7 @@ export const Registro = () => {
         <TextInput
           style={[styles.input, !fechaEsValida && styles.inputError]}
           placeholder="Fecha de Nacimiento (DD/MM/YYYY)"
+          placeholderTextColor={Color.secundario}
           value={fechaNacimiento}
           onChangeText={handleChangeFechaNacimiento}
         />
@@ -230,6 +234,7 @@ export const Registro = () => {
         <TextInput
           style={[styles.input, !nacionalidadEsValida && styles.inputError]}
           placeholder="Nacionalidad"
+          placeholderTextColor={Color.secundario}
           value={nacionalidad}
           onChangeText={handleChangeNacionalidad}
         />
@@ -250,6 +255,7 @@ export const Registro = () => {
         <TextInput
           style={[styles.input, !emailEsValido && styles.inputError]}
           placeholder="Email"
+          placeholderTextColor={Color.secundario}
           value={email}
           onChangeText={handleChangeEmail}
         />
@@ -274,6 +280,7 @@ export const Registro = () => {
             !contrasenaEsValida && styles.inputError,
           ]}
           placeholder="Contraseña"
+          placeholderTextColor={Color.secundario}
           secureTextEntry={!showPassword}
           value={contrasena}
           onChangeText={handleChangeContrasena}
@@ -359,7 +366,7 @@ const styles = StyleSheet.create({
   },
   inputIcon: {
     position: "absolute",
-    marginBottom: "5%",
+    bottom: 24,
     right: 10,
   },
   checkboxContainer: {

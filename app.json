@@ -14,6 +14,12 @@
           "androidMode": "default",
           "androidCollapsedTitle": "Gamerly"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "La aplicacion puede acceder a tus fotos para modificar tu foto de perfil."
+        }
       ]
     ],
     "splash": {

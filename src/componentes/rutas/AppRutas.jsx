@@ -27,7 +27,8 @@ import { ListaDeChats } from "../vistas/ListaDeChats.jsx";
 import ChatScreen from "../vistas/Chat.jsx";
 import { Toast } from "../bloques/Toast.jsx";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Amigos } from "../vistas/Amigos.jsx"
+import { Amigos } from "../vistas/Amigos.jsx";
+import { EditarMiPerfil } from "../vistas/EditarMiPerfil.jsx";
 
 const Stack = createStackNavigator();
 
@@ -119,7 +120,7 @@ const AppRutas = () => {
             name={rutas.busquedaAvanzada}
             component={BusquedaAvanzada}
           />
-           <Stack.Screen
+          <Stack.Screen
             titulo={rutas.amigos}
             name={rutas.amigos}
             component={Amigos}
@@ -154,6 +155,11 @@ const AppRutas = () => {
             name={rutas.chat}
             component={ChatScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            titulo={rutas.editarMiPerfil}
+            name={rutas.editarMiPerfil}
+            component={EditarMiPerfil}
           />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />

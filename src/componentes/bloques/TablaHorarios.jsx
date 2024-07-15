@@ -11,8 +11,7 @@ export const TablaHorarios = (props) => {
     props.onHorarioChange(dia, momento);
   };
 
-  useEffect(() => {
-  }, [props.horarios]);
+  useEffect(() => {}, [props.horarios]);
 
   return (
     <View style={styles.tabla}>
@@ -28,21 +27,24 @@ export const TablaHorarios = (props) => {
           <Parrafo style={styles.tituloFila} variante="blancoS">
             {dia}
           </Parrafo>
-         
+
           <Switch
+            disabled={props.disabled}
             style={styles.switch}
             value={props.horarios[index].mañana}
-            onChange={() => onSwitch(index, 0)}
+            onChange={() => onSwitch(dia.toUpperCase(), "MAÑANA")}
           />
           <Switch
+            disabled={props.disabled}
             style={styles.switch}
             value={props.horarios[index].tarde}
-            onChange={() => onSwitch(index, 1)}
+            onChange={() => onSwitch(dia.toUpperCase(), "TARDE")}
           />
           <Switch
+            disabled={props.disabled}
             style={styles.switch}
             value={props.horarios[index].noche}
-            onChange={() => onSwitch(index, 2)}
+            onChange={() => onSwitch(dia.toUpperCase(), "NOCHE")}
           />
         </View>
       ))}

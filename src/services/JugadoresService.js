@@ -4,12 +4,23 @@ import { BASE_URL } from "./requestConfig";
 const JugadoresEndpoints = {
   JUGADORES_CON_JUEGOS_EN_COMUN: "/jugadoresPorJuego/",
   PERFIL_USUARIO: "/detalle/",
+  PERFIL_EDICION_USUARIO: "/detalle-edicion/",
+  PERFIL: "/perfil",
   AMIGOS: "/amigos/",
   BUSQUEDA_AVANZADA: "/buscar/",
   ESTA_BLOQUEADO: "/esta-bloqueado/",
   BLOQUEADOS: "/bloqueados/",
   BLOQUEAR: "/bloquear/",
-  DESBLOQUEAR: "/desbloquear/"
+  DESBLOQUEAR: "/desbloquear/",
+};
+
+const actualizarPerfil = async (perfil) => {
+  const response = await axios.put(
+    `${BASE_URL}${JugadoresEndpoints.PERFIL}`,
+    perfil
+  );
+
+  return response.data;
 };
 
 const getJugadoresConJuegosEnComun = async (idJuego) => {
@@ -28,11 +39,22 @@ const getPerfilUsuario = async (idUsuario) => {
   return response.data;
 };
 
+const getPerfilEdicionUsuario = async (idUsuario) => {
+  const response = await axios.get(
+    `${BASE_URL}${JugadoresEndpoints.PERFIL_EDICION_USUARIO}${idUsuario}`
+  );
+
+  return response.data;
+};
+
 const getAmigosDelUsuario = async (idUsuario, traerBloqueados = false) => {
   const response = await axios.get(
-    `${BASE_URL}${JugadoresEndpoints.AMIGOS}${idUsuario}`,{params: {
-      bloqueados: traerBloqueados
-    }}
+    `${BASE_URL}${JugadoresEndpoints.AMIGOS}${idUsuario}`,
+    {
+      params: {
+        bloqueados: traerBloqueados,
+      },
+    }
   );
 
   return response.data;
@@ -88,13 +110,15 @@ const desbloquearJugador = async (idUsuarioLogueado, idUsuario) => {
 };
 
 export const JugadoresService = {
+  actualizarPerfil,
   getJugadoresConJuegosEnComun,
   getPerfilUsuario,
+  getPerfilEdicionUsuario,
   getAmigosDelUsuario,
   borrarAmigo,
   getJugadoresBusqueda,
   getUsuarioEstaBloqueado,
   getBloqueados,
   bloquearJugador,
-  desbloquearJugador
+  desbloquearJugador,
 };

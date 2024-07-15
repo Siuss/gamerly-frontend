@@ -2,11 +2,10 @@ import { StyleSheet , View } from "react-native";
 
 import { Pildora } from "../atomos/pildora/Pildora";
 
-export const ListaDePildoras = (props) => {
-  const { style, conBorde, variante, onPress, disabled, ...restProps } = props;
+export const ListaDePildoras = ( { style, items, conBorde, variante, onPress, disabled, borrable = false, ...props }) => {
   return (
-    <View style={styles.contenedorPildoras} {...restProps}>
-      {props.items.map((item) => (
+    <View style={[styles.contenedorPildoras, style]} {...props}>
+      {items.map((item) => (
         <Pildora
           key={item.id}
           style={styles.card}
@@ -14,6 +13,7 @@ export const ListaDePildoras = (props) => {
           variante={item.variante || variante}
           onPress={() => onPress(item)}
           disabled={disabled}
+          borrable={borrable}
         >
           {item.contenido}
         </Pildora>
