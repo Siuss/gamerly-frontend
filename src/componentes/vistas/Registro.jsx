@@ -257,7 +257,7 @@ export const Registro = () => {
           placeholder="Email"
           placeholderTextColor={Color.secundario}
           value={email}
-          onChangeText={handleChangeEmail}
+          onChangeText={(email) => handleChangeEmail(email.toLowerCase())}
         />
         {email !== "" && (
           <TouchableOpacity

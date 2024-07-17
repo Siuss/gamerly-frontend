@@ -35,7 +35,7 @@ export const ListaDeAmigos = (props) => {
       await JugadoresService.bloquearJugador(idUsuarioLogueado, amigo.id);
       show("success", `Has bloqueado a ${amigo.nombre}`);
       onBloquear(amigo);
-    } catch(error) {
+    } catch {
       show("error", "Hubo un error inesperado intentalo mas tarde");
     }
   };
