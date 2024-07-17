@@ -18,12 +18,12 @@ export const ListaDeAmigos = (props) => {
   const handleBorrar = async (amigo) => {
     try {
       const idUsuarioLogueado = await getUsuarioLogueadoId();
-      const amigo = await JugadoresService.borrarAmigo(
+      const amigoBorrado = await JugadoresService.borrarAmigo(
         idUsuarioLogueado,
         amigo.id
       );
-      show("success", `${amigo.nombre} y tu ya no son amigos`);
-      onBorrarAmigo(amigo);
+      show("success", `${amigoBorrado.nombre} y tu ya no son amigos`);
+      onBorrarAmigo(amigoBorrado);
     } catch {
       show("error", "Hubo un error inesperado intentalo mas tarde");
     }
