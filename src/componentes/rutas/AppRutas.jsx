@@ -69,7 +69,7 @@ const AppRutas = () => {
             ),
           })}
         >
-          <Stack.Screen titulo="reseñas" name="resenias" component={Resenias} />
+          <Stack.Screen titulo="reseñas" name={rutas.resenias} component={Resenias} />
           <Stack.Screen
             name="inicio"
             component={Inicio}

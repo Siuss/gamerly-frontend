@@ -44,7 +44,9 @@ export const mostrarBotonDeVolver = [
   rutas.solicitudesPendientes,
   rutas.jugadores,
   rutas.chat,
-  rutas.editarMiPerfil
+  rutas.editarMiPerfil,
+  rutas.reseniaJugador,
+  rutas.resenias
 ];
 
 
