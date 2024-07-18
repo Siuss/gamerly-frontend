@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
+import { Boton } from "../atomos/boton/Boton";
 import { Color } from "../../estilos/colores";
 import { Divisor } from "../atomos/divisor/Divisor";
 import {
@@ -81,15 +82,13 @@ export const EditarMiPerfil = () => {
 
   const handleGuardar = async () => {
     try {
-      console.log(perfil);
       await JugadoresService.actualizarPerfil(perfil);
       setPerfil(perfil);
 
       show("success", "Se han guardado los cambios exitosamente");
       const rutaAnterior = navigation.getState().routes.at(-2);
       navigation.navigate(rutaAnterior.name, rutaAnterior.params);
-    } catch (error) {
-      console.log(error);
+    } catch {
       show(
         "error",
         "Error inesperado al guardar los cambios, intentalo mas tarde"
@@ -97,8 +96,8 @@ export const EditarMiPerfil = () => {
     }
   };
 
-  const handleChange = (field, value) => {
-    setPerfil({ ...perfil, [field]: value });
+  const handleChange = (campo, valor) => {
+    setPerfil({ ...perfil, [campo]: valor });
   };
 
   const handleChangeFechaNacimiento = (fecha) => {
@@ -203,7 +202,7 @@ export const EditarMiPerfil = () => {
       ],
     }));
   };
-
+ 
   const handleQuitarJuego = (juegoABorrar) => {
     setPerfil((prevPerfil) => ({
       ...prevPerfil,
@@ -371,17 +370,19 @@ export const EditarMiPerfil = () => {
             )}
           </View>
         </View>
+        <View style={styles.footer}>
+        <Boton
+          style={[
+            styles.botonGuardar,
+            !formularioEsValido && styles.botonDeshabilitado,
+          ]}
+          disabled={!formularioEsValido}
+          onPress={handleGuardar}
+        >
+          Guardar
+        </Boton>
+        </View>
       </ScrollView>
-      <TouchableOpacity
-        disabled={!formularioEsValido}
-        onPress={handleGuardar}
-        style={[
-          styles.botonGuardar,
-          !formularioEsValido && styles.botonDeshabilitado,
-        ]}
-      >
-        <Parrafo variante="blancoM">Guardar</Parrafo>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -430,11 +431,16 @@ const styles = StyleSheet.create({
     borderColor: Color.error,
     color: Color.error,
   },
+  footer: {
+    paddingTop: 96,
+    paddingHorizontal: 32,
+    alignItems: "center"
+  },
   botonGuardar: {
     width: "100%",
     backgroundColor: Color.secundario,
     position: "absolute",
-    bottom: 0,
+    bottom: 16,
     paddingVertical: 16,
     alignItems: "center",
   },

@@ -25,12 +25,6 @@ const getChatsDelUsuario = async (idUsuario) => {
   return response.data;
 };
 
-const getChatById = async (idChat) => {
-  const response = await axios.get(`${BASE_URL}${ChatEndpoints.CHAT}${idChat}`);
-
-  return response.data;
-};
-
 const leerChat = async (idUsuario, idChat) => {
   const response = await axios.get(`${BASE_URL}/${idUsuario}${ChatEndpoints.LEER_CHAT}${idChat}`);
 
@@ -54,7 +48,6 @@ const enviarMensaje = async (
 export const ChatService = {
   crearChat,
   getChatsDelUsuario,
-  getChatById,
   enviarMensaje,
   leerChat
 };
