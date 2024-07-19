@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,12 +8,14 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Color } from "../../estilos/colores";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation , useFocusEffect } from "@react-navigation/native";
 import { SesionService } from "../../services/SesionService";
 import { rutas } from "../rutas/rutas";
 import { useToast } from "../../hooks/useToast";
 import useStore from "../../hooks/useStore";
 import { NotificacionesService } from "../../services/NotificacionesService";
+
+
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -61,14 +63,21 @@ export const Login = () => {
     navigation.navigate(rutas.recuperarContrasena);
   };
 
-  useEffect(() => {
-    const rellenarEmail = async () => {
-      handleCredencialesChange("email", (await getUsuarioLogueado()).email);
-    };
+  const rellenarEmail = async () => {
+    handleCredencialesChange("email", (await getUsuarioLogueado()).email);
+  };
 
-    rellenarEmail();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      rellenarEmail();
+
+      return () => {
+        setCredenciales({email: '', password: ''})
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+  );
+
 
   return (
     <View style={styles.container}>
@@ -89,6 +98,7 @@ export const Login = () => {
           placeholder="Contraseña"
           placeholderTextColor={Color.secundario}
           secureTextEntry={!passwordVisible}
+          value={credenciales.password}
         />
         <TouchableOpacity
           style={styles.eyeIcon}
