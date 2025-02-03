@@ -5,14 +5,15 @@ import { useRoute, useFocusEffect } from "@react-navigation/native";
 import { ReseniaService } from "../../services/ReseniaService";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { useState, useCallback } from "react";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 
 import { JugadoresService } from "../../services/JugadoresService";
+import useStore from "../../hooks/useStore";
 
 export const Resenias = (props) => {
   const route = useRoute();
   const [resenias, setResenias] = useState([]);
   const [perfilJugador, setPerfilJugador] = useState(null);
+  const {  getIdUsuarioLogueado } = useStore()
 
   const { id } = route.params;
 
@@ -22,7 +23,7 @@ export const Resenias = (props) => {
 
     setPerfilJugador(perfil);
 
-    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const idUsuarioLogueado = await  getIdUsuarioLogueado();
 
     const nuevasResenias = await ReseniaService.getResenias(
       idUsuarioLogueado,

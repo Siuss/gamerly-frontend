@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./apiConfig.js";
 import { BASE_URL } from "./requestConfig";
 
 const SesionEndpoints = {
@@ -11,50 +11,50 @@ const SesionEndpoints = {
   NUEVA_CLAVE: "/nueva-clave"
 };
 
-const signUp = async (nuevoUsuario) => {
-  const response = await axios.post(
-    `${BASE_URL}${SesionEndpoints.CREAR_CUENTA}`,
-    nuevoUsuario
-  );
+// const signUp = async (nuevoUsuario) => {
+//   const response = await api.post(
+//     `${SesionEndpoints.CREAR_CUENTA}`,
+//     nuevoUsuario
+//   );
 
-  return response.data;
-};
+//   return response.data;
+// };
 
-const login = async (credenciales) => {
-  const response = await axios.post(
-    `${BASE_URL}${SesionEndpoints.LOGIN}`,
-    credenciales,{
-      timeout: 500 //ms
-    }
-  );
+// const login = async (credenciales) => {
+//   const response = await api.post(
+//     `${SesionEndpoints.LOGIN}`,
+//     credenciales,{
+//       timeout: 500 //ms
+//     }
+//   );
 
-  return response.data;
-};
+//   return response.data;
+// };
 
 const eliminarCuenta = async (id) => {
-  const response = await axios.delete(
-    `${BASE_URL}${SesionEndpoints.ELIMINAR_CUENTA}${id}`
+  const response = await api.delete(
+    `${SesionEndpoints.ELIMINAR_CUENTA}${id}`
   );
   return response.data;
 };
 
 const solicitarClave = async (email) => {
-  const response = await axios.post(
-    `${BASE_URL}${SesionEndpoints.SOLICITUD_CLAVE}${email}`
+  const response = await api.post(
+    `${SesionEndpoints.SOLICITUD_CLAVE}${email}`
   );
   return response.data;
 };
 
 const verificarCodigoDeRecuperacion = async (token) => {
-  const response = await axios.post(
-    `${BASE_URL}${SesionEndpoints.VERIFICAR_CODIGO_RECUPERACION}${token}`
+  const response = await api.post(
+    `${SesionEndpoints.VERIFICAR_CODIGO_RECUPERACION}${token}`
   );
   return response.data;
 };
 
 const nuevaClave = async (email, contrasenia) => {
-  const response = await axios.post(
-    `${BASE_URL}${SesionEndpoints.NUEVA_CLAVE}`,
+  const response = await api.post(
+    `${SesionEndpoints.NUEVA_CLAVE}`,
     { email, contrasenia }
   );
   return response.data;
@@ -62,8 +62,8 @@ const nuevaClave = async (email, contrasenia) => {
 
 export const SesionService = {
   eliminarCuenta,
-  login,
-  signUp,
+  // login,
+  // signUp,
   solicitarClave,
   verificarCodigoDeRecuperacion,
   nuevaClave

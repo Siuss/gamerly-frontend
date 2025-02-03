@@ -1,8 +1,9 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { CardAmigo } from "./CardAmigo";
 import { JugadoresService } from "../../services/JugadoresService";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
+import { getIdUsuarioLogueado } from "../../utils/usuarioLogueado";
 import { useToast } from "../../hooks/useToast";
+import useStore from "../../hooks/useStore";
 
 export const ListaDeAmigos = (props) => {
   const {
@@ -14,10 +15,10 @@ export const ListaDeAmigos = (props) => {
     ...restProps
   } = props;
   const { show } = useToast();
-
+  const { getIdUsuarioLogueado } = useStore()
   const handleBorrar = async (amigo) => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       const amigoBorrado = await JugadoresService.borrarAmigo(
         idUsuarioLogueado,
         amigo.id
@@ -31,7 +32,7 @@ export const ListaDeAmigos = (props) => {
 
   const handleBloquear = async (amigo) => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       await JugadoresService.bloquearJugador(idUsuarioLogueado, amigo.id);
       show("success", `Has bloqueado a ${amigo.nombre}`);
       onBloquear(amigo);
@@ -42,7 +43,7 @@ export const ListaDeAmigos = (props) => {
 
   const handleDesbloquear = async (amigo) => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       await JugadoresService.desbloquearJugador(idUsuarioLogueado, amigo.id);
       show("success", `Has desbloqueado a ${amigo.nombre}`);
       onBloquear(amigo);

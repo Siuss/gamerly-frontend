@@ -16,7 +16,6 @@ import { Boton } from "../atomos/boton/Boton";
 import { SesionService } from "../../services/SesionService";
 import useStore from "../../hooks/useStore";
 import { useToast } from "../../hooks/useToast";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { TablaHorarios } from "../bloques/TablaHorarios";
 import { getHorariosPreferidos } from "../../utils/diasMapper";
 import { rutas } from "../rutas/rutas";
@@ -31,7 +30,7 @@ export const VistaMiPerfil = () => {
   const [perfil, setPerfil] = useState({});
   const [ultimasResenias, setUltimasResenias] = useState([]);
   const [reseniasPendientes, setReseniasPendientes] = useState([]);
-  const { logout } = useStore();
+  const { logout,  getIdUsuarioLogueado } = useStore();
   const { id } = route.params;
 
   const navigation = useNavigation();
@@ -42,7 +41,7 @@ export const VistaMiPerfil = () => {
   );
 
   const traerPerfil = async () => {
-    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const idUsuarioLogueado = await  getIdUsuarioLogueado();
 
     try {
       if (idUsuarioLogueado === undefined) {
@@ -71,7 +70,7 @@ export const VistaMiPerfil = () => {
   };
 
   const traerReseniasPendientes = async () => {
-    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const idUsuarioLogueado = await  getIdUsuarioLogueado();
     const resenias = await ReseniaService.getReseniasPendientes(
       idUsuarioLogueado
     );

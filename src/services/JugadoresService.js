@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./apiConfig.js";
 import { BASE_URL } from "./requestConfig";
 
 const JugadoresEndpoints = {
@@ -15,8 +15,8 @@ const JugadoresEndpoints = {
 };
 
 const actualizarPerfil = async (perfil) => {
-  const response = await axios.put(
-    `${BASE_URL}${JugadoresEndpoints.PERFIL}`,
+  const response = await api.put(
+    `${JugadoresEndpoints.PERFIL}`,
     perfil
   );
 
@@ -24,32 +24,32 @@ const actualizarPerfil = async (perfil) => {
 };
 
 const getJugadoresConJuegosEnComun = async (idJuego) => {
-  const response = await axios.get(
-    `${BASE_URL}${JugadoresEndpoints.JUGADORES_CON_JUEGOS_EN_COMUN}${idJuego}`
+  const response = await api.get(
+    `${JugadoresEndpoints.JUGADORES_CON_JUEGOS_EN_COMUN}${idJuego}`
   );
 
   return response.data;
 };
 
 const getPerfilUsuario = async (idUsuario) => {
-  const response = await axios.get(
-    `${BASE_URL}${JugadoresEndpoints.PERFIL_USUARIO}${idUsuario}`
+  const response = await api.get(
+    `${JugadoresEndpoints.PERFIL_USUARIO}${idUsuario}`
   );
 
   return response.data;
 };
 
 const getPerfilEdicionUsuario = async (idUsuario) => {
-  const response = await axios.get(
-    `${BASE_URL}${JugadoresEndpoints.PERFIL_EDICION_USUARIO}${idUsuario}`
+  const response = await api.get(
+    `${JugadoresEndpoints.PERFIL_EDICION_USUARIO}${idUsuario}`
   );
 
   return response.data;
 };
 
 const getAmigosDelUsuario = async (idUsuario, traerBloqueados = false) => {
-  const response = await axios.get(
-    `${BASE_URL}${JugadoresEndpoints.AMIGOS}${idUsuario}`,
+  const response = await api.get(
+    `${JugadoresEndpoints.AMIGOS}${idUsuario}`,
     {
       params: {
         bloqueados: traerBloqueados,
@@ -61,16 +61,16 @@ const getAmigosDelUsuario = async (idUsuario, traerBloqueados = false) => {
 };
 
 const borrarAmigo = async (idUsuario, idAmigo) => {
-  const response = await axios.post(
-    `${BASE_URL}/${idUsuario}${JugadoresEndpoints.AMIGOS}${idAmigo}`
+  const response = await api.post(
+    `/${idUsuario}${JugadoresEndpoints.AMIGOS}${idAmigo}`
   );
 
   return response.data;
 };
 
 const getJugadoresBusqueda = async (filtros, idJuego) => {
-  const response = await axios.post(
-    `${BASE_URL}${JugadoresEndpoints.BUSQUEDA_AVANZADA}${idJuego}`,
+  const response = await api.post(
+    `${JugadoresEndpoints.BUSQUEDA_AVANZADA}${idJuego}`,
     filtros
   );
 
@@ -78,32 +78,32 @@ const getJugadoresBusqueda = async (filtros, idJuego) => {
 };
 
 const getUsuarioEstaBloqueado = async (idUsuarioLogueado, idUsuario) => {
-  const response = await axios.get(
-    `${BASE_URL}/${idUsuarioLogueado}${JugadoresEndpoints.ESTA_BLOQUEADO}${idUsuario}`
+  const response = await api.get(
+    `/${idUsuarioLogueado}${JugadoresEndpoints.ESTA_BLOQUEADO}${idUsuario}`
   );
 
   return response.data;
 };
 
 const getBloqueados = async (idUsuario) => {
-  const response = await axios.get(
-    `${BASE_URL}${JugadoresEndpoints.BLOQUEADOS}${idUsuario}`
+  const response = await api.get(
+    `${JugadoresEndpoints.BLOQUEADOS}${idUsuario}`
   );
 
   return response.data;
 };
 
 const bloquearJugador = async (idUsuarioLogueado, idUsuario) => {
-  const response = await axios.post(
-    `${BASE_URL}/${idUsuarioLogueado}${JugadoresEndpoints.BLOQUEAR}${idUsuario}`
+  const response = await api.post(
+    `/${idUsuarioLogueado}${JugadoresEndpoints.BLOQUEAR}${idUsuario}`
   );
 
   return response.data;
 };
 
 const desbloquearJugador = async (idUsuarioLogueado, idUsuario) => {
-  const response = await axios.post(
-    `${BASE_URL}/${idUsuarioLogueado}${JugadoresEndpoints.DESBLOQUEAR}${idUsuario}`
+  const response = await api.post(
+    `/${idUsuarioLogueado}${JugadoresEndpoints.DESBLOQUEAR}${idUsuario}`
   );
 
   return response.data;

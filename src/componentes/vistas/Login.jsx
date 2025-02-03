@@ -9,12 +9,12 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { Color } from "../../estilos/colores";
 import { useNavigation , useFocusEffect } from "@react-navigation/native";
-import { SesionService } from "../../services/SesionService";
+import { AuthService } from "../../services/AuthService";
 import { rutas } from "../rutas/rutas";
 import { useToast } from "../../hooks/useToast";
 import useStore from "../../hooks/useStore";
 import { NotificacionesService } from "../../services/NotificacionesService";
-
+import { jwtDecode } from 'jwt-decode';
 
 
 export const Login = () => {
@@ -22,7 +22,7 @@ export const Login = () => {
   const [credenciales, setCredenciales] = useState({ email: "", password: "" });
   const navigation = useNavigation();
   const { show } = useToast();
-  const { getUsuarioLogueado, setUsuarioLogueado } = useStore();
+  const { getToken, setUsuarioLogueado } = useStore();
 
   const formularioEstaVacio = useMemo(
     () => !credenciales.email && !credenciales.password,
@@ -34,17 +34,29 @@ export const Login = () => {
 
   const iniciarSesion = async () => {
     try {
-      const tokenNotificaciones =
-        await NotificacionesService.obtenerTokenDeNotificaciones();
-      const usuario = await SesionService.login({
+
+      const tokenUsuario = await AuthService.login({
         ...credenciales,
-        tokenNotificaciones,
       });
 
-      if (usuario) {
-        await setUsuarioLogueado(usuario);
-        navigation.navigate(rutas.juegos);
-      }
+
+      /*
+      Descencripta el token y extrae el id y el email del usuario
+      
+      */
+      const decodedToken = jwtDecode(tokenUsuario);
+
+      const usuario = {
+        id: decodedToken.id,
+        email: decodedToken.email
+      };
+
+      /*
+      guardo el usuario y el token en el store
+      */
+      await setUsuarioLogueado(usuario, tokenUsuario);
+
+      navigation.navigate(rutas.juegos);
     } catch (error) {
       if (error.response?.status === 401) {
         show("error", "Credenciales invalidas");
@@ -64,7 +76,7 @@ export const Login = () => {
   };
 
   const rellenarEmail = async () => {
-    handleCredencialesChange("email", (await getUsuarioLogueado()).email);
+    handleCredencialesChange("email", (await getToken()).email);
   };
 
   useFocusEffect(

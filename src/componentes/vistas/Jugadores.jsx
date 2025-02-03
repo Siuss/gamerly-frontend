@@ -5,9 +5,9 @@ import Busqueda from "../bloques/Busqueda";
 import { JugadoresService } from "../../services/JugadoresService";
 import { ListaDeJugadores } from "../bloques/ListaDeJugadores";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { useToast } from "../../hooks/useToast";
 import { Spinner } from "../atomos/spinner/Spinner";
+import useStore from "../../hooks/useStore";
 
 export const Jugadores = () => {
   const { show } = useToast();
@@ -15,6 +15,7 @@ export const Jugadores = () => {
   const [busqueda, setBusqueda] = useState("");
   const [cargando, setCargando] = useState(true);
   const route = useRoute();
+  const { getIdUsuarioLogueado } = useStore()
 
   const params = route.params;
 
@@ -62,7 +63,7 @@ export const Jugadores = () => {
         params.idJuego
       );
 
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       const idsBloqueados = (
         await JugadoresService.getBloqueados(idUsuarioLogueado)
       ).map((jugador) => jugador.id);

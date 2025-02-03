@@ -18,7 +18,6 @@ import {
 } from "@react-navigation/native";
 import { TablaHorarios } from "../bloques/TablaHorarios";
 import { getHorariosPreferidos } from "../../utils/diasMapper";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
@@ -33,6 +32,7 @@ import { ListaDePildoras } from "../bloques/ListaDePildoras";
 import { JugadoresService } from "../../services/JugadoresService";
 import moment from "moment";
 import { urlImagenPerfilDesconocido } from "../../utils/perfilDesconocido.js";
+import useStore from "../../hooks/useStore.jsx";
 
 const regexpFecha = /[^0-9/]/;
 
@@ -45,6 +45,7 @@ export const EditarMiPerfil = () => {
   const [inputJuego, setInputJuego] = useState("");
   const [inputPlataforma, setInputPlataforma] = useState("");
   const [fechaEsValida, setFechaEsValida] = useState(true);
+  const { getIdUsuarioLogueado} = useStore()
 
   const { id } = route.params;
   const { show } = useToast();
@@ -63,7 +64,7 @@ export const EditarMiPerfil = () => {
   }, [perfil, fechaEsValida]);
 
   const traerPerfil = async () => {
-    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const idUsuarioLogueado = await getIdUsuarioLogueado();
     try {
       if (idUsuarioLogueado === undefined) {
         throw new Error(

@@ -3,7 +3,7 @@
 // Ejemplo: http://192.168.1.10:8090
 
 // Notebook
-export const BASE_URL = "http://192.168.1.9:8090"
+export const BASE_URL = "http://192.168.1.39:8090"
 
 // Escritorio
 //export const BASE_URL = "http://192.168.1.15:8090"

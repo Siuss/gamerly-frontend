@@ -9,11 +9,11 @@ import {
 import { BurbujaChat } from "../bloques/BurbujaChat";
 import { Color } from "../../estilos/colores";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { ChatService } from "../../services/ChatService";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Ionicons } from "@expo/vector-icons";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
+import useStore from "../../hooks/useStore";
 
 const REFRESCO_CHAT_MS = 500;
 
@@ -24,6 +24,7 @@ const ChatScreen = () => {
   const [perfilAmigo, setPerfilAmigo] = useState({});
   const [inputMensaje, setInputMensaje] = useState("");
   const { params: idChat } = navigation.getState().routes.at(-1);
+  const {getIdUsuarioLogueado } = useStore();
 
   const [mensajes, setMensajes] = useState([]);
 
@@ -35,7 +36,7 @@ const ChatScreen = () => {
   const handleEnviarMensaje = async () => {
     setInputMensaje("");
     if (!inputMensaje.trim()) return;
-    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const idUsuarioLogueado = await getIdUsuarioLogueado();
     await ChatService.enviarMensaje(
       chat.id,
       idUsuarioLogueado,
@@ -46,7 +47,7 @@ const ChatScreen = () => {
   };
 
   const traerChat = async () => {
-    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const idUsuarioLogueado = await getIdUsuarioLogueado();
     const nuevoChat = await ChatService.leerChat(idUsuarioLogueado, idChat);
 
     if (nuevoChat.usuario1.id === idUsuarioLogueado) {

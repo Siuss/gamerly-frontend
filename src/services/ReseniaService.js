@@ -1,5 +1,5 @@
-import axios from "axios";
-import { BASE_URL } from "./requestConfig";
+import api from "./apiConfig.js";
+// import { BASE_URL } from "./requestConfig";
 
 const ReseniaEndpoints = {
   AGREGAR_RESENIA: "/crear-resenia/",
@@ -11,8 +11,8 @@ const ReseniaEndpoints = {
 };
 
 const enviarResenia = async (idUsuarioEmisor, idUsuarioReceptor, resenia) => {
-  const response = await axios.post(
-    `${BASE_URL}${ReseniaEndpoints.AGREGAR_RESENIA}${idUsuarioEmisor}/${idUsuarioReceptor}`,
+  const response = await api.post(
+    `${ReseniaEndpoints.AGREGAR_RESENIA}${idUsuarioEmisor}/${idUsuarioReceptor}`,
     resenia
   );
 
@@ -20,40 +20,40 @@ const enviarResenia = async (idUsuarioEmisor, idUsuarioReceptor, resenia) => {
 };
 
 const getResenias = async (idUsuarioLogueado, idUsuario) => {
-  const response = await axios.get(
-    `${BASE_URL}/${idUsuarioLogueado}${ReseniaEndpoints.RESENIAS}${idUsuario}`
+  const response = await api.get(
+    `/${idUsuarioLogueado}${ReseniaEndpoints.RESENIAS}${idUsuario}`
   );
 
   return response.data;
 };
 
 const tieneUnaResenia = async (idUsuarioCreador, idUsuarioReceptor) => {
-  const response = await axios.get(
-    `${BASE_URL}/${idUsuarioReceptor}${ReseniaEndpoints.TIENE_RESENIA_DE}${idUsuarioCreador}`
+  const response = await api.get(
+    `/${idUsuarioReceptor}${ReseniaEndpoints.TIENE_RESENIA_DE}${idUsuarioCreador}`
   );
 
   return response.data;
 };
 
 const getReseniasPendientes = async (idUsuario) => {
-  const response = await axios.get(
-    `${BASE_URL}${ReseniaEndpoints.RESENIAS_PENDIENTES}${idUsuario}`
+  const response = await api.get(
+    `${ReseniaEndpoints.RESENIAS_PENDIENTES}${idUsuario}`
   );
 
   return response.data;
 };
 
 const aceptarReseniaPendiente = async (idResenia, idUsuarioLogueado) => {
-  const response = await axios.post(
-    `${BASE_URL}${ReseniaEndpoints.RESENIAS}${idResenia}${ReseniaEndpoints.ACEPTAR}${idUsuarioLogueado}`
+  const response = await api.post(
+    `${ReseniaEndpoints.RESENIAS}${idResenia}${ReseniaEndpoints.ACEPTAR}${idUsuarioLogueado}`
   );
 
   return response.data;
 };
 
 const rechazarReseniaPendiente = async (idResenia, idUsuarioLogueado) => {
-  const response = await axios.post(
-    `${BASE_URL}${ReseniaEndpoints.RESENIAS}${idResenia}${ReseniaEndpoints.RECHAZAR}${idUsuarioLogueado}`
+  const response = await api.post(
+    `${ReseniaEndpoints.RESENIAS}${idResenia}${ReseniaEndpoints.RECHAZAR}${idUsuarioLogueado}`
   );
 
   return response.data;

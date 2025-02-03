@@ -21,8 +21,8 @@ import { useToast } from "../../hooks/useToast";
 import { ReseniaService } from "../../services/ReseniaService.js";
 import Icon from "@expo/vector-icons/FontAwesome6.js";
 import { ModalReportarUsuario } from "../bloques/ModalReportarUsuario.jsx";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado.js";
 import { urlImagenPerfilDesconocido } from "../../utils/perfilDesconocido.js";
+import useStore from "../../hooks/useStore.jsx";
 
 export const PerfilJugador = (props) => {
   const { show } = useToast();
@@ -41,6 +41,8 @@ export const PerfilJugador = (props) => {
   const navigation = useNavigation();
 
   const { params: id } = navigation.getState().routes.at(-1);
+
+  const { getIdUsuarioLogueado } = useStore()
 
   const juegaEnAlgunMomentoDeEsteDia = (diaDeLaSemana) => {
     return juegaEnEsteDia(perfilInfo.diasHorariosPreferidos, diaDeLaSemana);
@@ -91,7 +93,7 @@ export const PerfilJugador = (props) => {
     useCallback(() => {
       const traerUsuario = async () => {
         try {
-          const idUsuarioLogueado = await getUsuarioLogueadoId();
+          const idUsuarioLogueado = await getIdUsuarioLogueado();
           setUsuarioEstaBloqueado(
             await JugadoresService.getUsuarioEstaBloqueado(
               idUsuarioLogueado,
