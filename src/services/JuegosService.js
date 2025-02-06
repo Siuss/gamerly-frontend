@@ -1,21 +1,20 @@
-import axios from "axios";
-import { BASE_URL } from "./requestConfig";
+import api from "./apiConfig.js";
 
 const JuegosEndpoints = {
   LISTA_JUEGOS: "/listaJuegos",
 };
 
 const getJuegos = async () => {
-  const response = await axios.get(
-    `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}`
+  const response = await api.get(
+    `${JuegosEndpoints.LISTA_JUEGOS}`
   );
 
   return response.data;
 };
 
 const getJuegosPorNombre = async (Nombre) => {
-  const response = await axios.get(
-    `${BASE_URL}${JuegosEndpoints.LISTA_JUEGOS}/${Nombre}`
+  const response = await api.get(
+    `${JuegosEndpoints.LISTA_JUEGOS}/${Nombre}`
   );
 
   return response.data;

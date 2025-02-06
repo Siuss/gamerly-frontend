@@ -3,18 +3,19 @@ import { View, FlatList, StyleSheet } from "react-native";
 import { CardChat } from "../bloques/CardChat";
 import { Color } from "../../estilos/colores";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { ChatService } from "../../services/ChatService";
 import { useToast } from "../../hooks/useToast";
 import { rutas } from "../rutas/rutas";
 import { BotonFlotante } from "../atomos/botonFlotante/BotonFlotante";
 import { ModalNuevoChat } from "../bloques/ModalNuevoChat";
+import useStore from "../../hooks/useStore";
 
 export const ListaDeChats = () => {
   const { show } = useToast();
   const [chats, setChats] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+  const { getIdUsuarioLogueado } = useStore()
 
   const handleVisibilidadModal = () => {
     setModalVisible((esVisible) => !esVisible);
@@ -32,7 +33,7 @@ export const ListaDeChats = () => {
 
   const traerChats = async () => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       const listaChats = await ChatService.getChatsDelUsuario(
         idUsuarioLogueado
       );

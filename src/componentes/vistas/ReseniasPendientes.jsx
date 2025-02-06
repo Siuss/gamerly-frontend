@@ -4,18 +4,19 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ReseniaService } from "../../services/ReseniaService";
 import { useState, useCallback } from "react";
 import { CardReseniaPendiente } from "../bloques/CardReseniaPendiente";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { useToast } from "../../hooks/useToast";
+import useStore from "../../hooks/useStore";
 
 export const ReseniasPendientes = () => {
   const { show } = useToast();
   const navigation = useNavigation();
   const [resenias, setResenias] = useState([]);
+  const { getIdUsuarioLogueado } = useStore()
 
   const traerResenias = useCallback(async () => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       const reseniasPendientes = await ReseniaService.getReseniasPendientes(
         idUsuarioLogueado
       );
@@ -29,7 +30,7 @@ export const ReseniasPendientes = () => {
 
   const handleAceptar = async (reseniaId) => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       await ReseniaService.aceptarReseniaPendiente(
         reseniaId,
         idUsuarioLogueado
@@ -45,7 +46,7 @@ export const ReseniasPendientes = () => {
 
   const handleRechazar = async (reseniaId) => {
     try {
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       await ReseniaService.rechazarReseniaPendiente(
         reseniaId,
         idUsuarioLogueado

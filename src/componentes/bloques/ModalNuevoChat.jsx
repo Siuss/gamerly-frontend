@@ -5,24 +5,24 @@ import { CardChat } from "../bloques/CardChat";
 import { Boton } from "../atomos/boton/Boton";
 import { JugadoresService } from "../../services/JugadoresService";
 import { useToast } from "../../hooks/useToast";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import hexToRgba from "hex-to-rgba";
 import { Color } from "../../estilos/colores";
 import { ChatService } from "../../services/ChatService";
 import { useNavigation } from "@react-navigation/native";
 import { rutas } from "../rutas/rutas"
+import useStore from "../../hooks/useStore";
 
 export const ModalNuevoChat = ({ chats, visible, onOcultar, ...props }) => {
   const navigation = useNavigation();
   const [amigos, setAmigos] = useState([]);
   const { show } = useToast();
-
+  const { getIdUsuarioLogueado } = useStore()
   const handleCancelar = () => {
     onOcultar();
   };
 
   const traerAmigos = async () => {
-    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const idUsuarioLogueado = await getIdUsuarioLogueado();
     const amigosEncontrados = await JugadoresService.getAmigosDelUsuario(
       idUsuarioLogueado
     );
@@ -36,7 +36,7 @@ export const ModalNuevoChat = ({ chats, visible, onOcultar, ...props }) => {
   };
 
   const handleChatClick = async (amigoId) => {
-    const idUsuarioLogueado = await getUsuarioLogueadoId();
+    const idUsuarioLogueado = await getIdUsuarioLogueado();
     const nuevoChat = await ChatService.crearChat(idUsuarioLogueado, amigoId);
     navigation.navigate(rutas.chat, nuevoChat.id);
   };

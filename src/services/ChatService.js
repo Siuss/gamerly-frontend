@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./apiConfig.js"
 import { BASE_URL } from "./requestConfig";
 
 const ChatEndpoints = {
@@ -10,23 +10,23 @@ const ChatEndpoints = {
 };
 
 const crearChat = async (idCreador, idReceptor) => {
-  const response = await axios.post(
-    `${BASE_URL}/${idCreador}${ChatEndpoints.NUEVO_CHAT}${idReceptor}`
+  const response = await api.post(
+    `/${idCreador}${ChatEndpoints.NUEVO_CHAT}${idReceptor}`
   );
 
   return response.data;
 };
 
 const getChatsDelUsuario = async (idUsuario) => {
-  const response = await axios.get(
-    `${BASE_URL}${ChatEndpoints.CHATS}${idUsuario}`
+  const response = await api.get(
+    `${ChatEndpoints.CHATS}${idUsuario}`
   );
 
   return response.data;
 };
 
 const leerChat = async (idUsuario, idChat) => {
-  const response = await axios.get(`${BASE_URL}/${idUsuario}${ChatEndpoints.LEER_CHAT}${idChat}`);
+  const response = await api.get(`/${idUsuario}${ChatEndpoints.LEER_CHAT}${idChat}`);
 
   return response.data;
 };
@@ -37,8 +37,8 @@ const enviarMensaje = async (
   idUsuarioReceptor,
   contenido
 ) => {
-  const response = await axios.post(
-    `${BASE_URL}${ChatEndpoints.MENSAJE}${idChat}`,
+  const response = await api.post(
+    `${ChatEndpoints.MENSAJE}${idChat}`,
     { idUsuarioCreador, idUsuarioReceptor, contenido }
   );
 

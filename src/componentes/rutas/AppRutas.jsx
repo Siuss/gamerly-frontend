@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Resenias } from "../vistas/Reseñas.jsx";
-import { HeaderTitle } from "../header/HeaderTitle.jsx";
+import { HeaderTitle } from "../header/headerTitle.jsx";
 import { View, StyleSheet } from "react-native";
 import { BusquedaAvanzada } from "../vistas/BusquedaAvanzada.jsx";
 import { VistaMiPerfil } from "../vistas/VistaMiPerfil.jsx";

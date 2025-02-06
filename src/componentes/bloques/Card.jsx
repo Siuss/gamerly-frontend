@@ -7,10 +7,10 @@ import { Puntuacion } from "../atomos/puntuacion/Puntuacion";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { rutas } from "../rutas/rutas";
 import { JugadoresService } from "../../services/JugadoresService";
-import { getUsuarioLogueadoId } from "../../utils/usuarioLogueado";
 import { urlImagenPerfilDesconocido } from "../../utils/perfilDesconocido.js";
 import { Spinner } from "../atomos/spinner/Spinner";
 import { useToast } from "../../hooks/useToast";
+import useStore from "../../hooks/useStore.jsx";
 
 export const Card = ({
   amigos,
@@ -27,6 +27,7 @@ export const Card = ({
   const navigation = useNavigation();
   const [estaBloqueado, setEstaBloqueado] = useState(false);
   const [cargando, setCargando] = useState(true);
+  const { getIdUsuarioLogueado } = useStore()
 
   const handleCardClick = () => {
     navigation.navigate(rutas.perfilJugador, id.toString());
@@ -35,7 +36,7 @@ export const Card = ({
   const verificarEstaBloqueado = async () => {
     try {
       setCargando(true);
-      const idUsuarioLogueado = await getUsuarioLogueadoId();
+      const idUsuarioLogueado = await getIdUsuarioLogueado();
       const bloqueado = await JugadoresService.getUsuarioEstaBloqueado(
         idUsuarioLogueado,
         id
