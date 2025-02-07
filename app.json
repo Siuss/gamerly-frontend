@@ -41,7 +41,10 @@
       "package": "com.stephaniepazos.gamerly"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "pushNotification": {
+        "vapidPublicKey": "BE-2l0zB6FHDS9i2KeFYjUxq2J5qsiCFmLGCbHKWynUCip2GqgPlSabZh3TCxF1OCyFGNZcp6qWHVTvghoU1XK8"
+      }
     },
     "extra": {
       "eas": {

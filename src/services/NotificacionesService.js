@@ -1,7 +1,8 @@
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants'
+import { sendTokenService } from './sendTokenService';
 
-const obtenerTokenDeNotificaciones = async () => {
+const obtenerTokenDeNotificaciones = async (userId) => {
     let token;
 
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -20,6 +21,10 @@ const obtenerTokenDeNotificaciones = async () => {
     })).data;
 
     habilitarNotificacionesForeground()
+
+    if (token) {
+        await sendTokenService(userId, token);
+    }
 
     return token;
 }

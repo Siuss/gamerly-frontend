@@ -15,14 +15,14 @@ import useStore from "../../hooks/useStore";
 import { jwtDecode } from 'jwt-decode';
 import useToastStore from "../../hooks/useToastStore";
 import { Formik } from "formik";
-
+import {NotificacionesService} from "../../services/NotificacionesService";
 import { loginValidationSchema } from "../../utils/validators";
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigation = useNavigation();
   const { setUsuarioLogueado } = useStore();
-  const { errorToast } = useToastStore()
+  const { show } = useToastStore()
 
   const navigateJuegos = () => { navigation.navigate(rutas.juegos) }
 
@@ -49,9 +49,11 @@ export const Login = () => {
       */
       await setUsuarioLogueado(usuario, tokenUsuario);
 
+      // await NotificacionesService.obtenerTokenDeNotificaciones(usuario.id);
+
       navigateJuegos()
     } catch (error) {
-      errorToast(error)
+      console.log(error)
     } finally {
       setSubmitting(false)
     }
