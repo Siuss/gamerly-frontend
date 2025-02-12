@@ -135,7 +135,7 @@ export const VistaMiPerfil = () => {
       >
         <View style={styles.informacionUsuario}>
           <View style={styles.fotoDePerfil}>
-            <FotoDePerfil width={100} height={100} src={perfil.foto} />
+            <FotoDePerfil width={100} height={100} src={perfil.fileName} />
           </View>
           <Divisor />
           <Parrafo variante="grisXS" style={styles.descripcionUsuario}>

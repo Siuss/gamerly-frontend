@@ -1,10 +1,11 @@
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants'
 import { sendTokenService } from './sendTokenService';
+import useStore from '../hooks/useStore'
 
-const obtenerTokenDeNotificaciones = async (userId) => {
+const obtenerTokenDeNotificaciones = async () => {
     let token;
-
+    const userId = await useStore.getState().getIdUsuarioLogueado();
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
 
@@ -19,7 +20,12 @@ const obtenerTokenDeNotificaciones = async (userId) => {
     token = (await Notifications.getExpoPushTokenAsync({
         projectId: Constants.expoConfig.extra.eas.projectId
     })).data;
+    console.log(`📲 Token de notificación obtenido: ${token}`);
 
+    if (token) {
+        const response = await sendTokenService(userId, token);
+        console.log('📡 Respuesta del backend:', response);
+    }
     habilitarNotificacionesForeground()
 
     if (token) {

@@ -216,25 +216,36 @@ export const EditarMiPerfil = () => {
   const handleFotoChange = async () => {
     try {
       setCargandoFoto(true);
+  
+      // Solicitar permisos para acceder a la galería
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Se necesitan permisos para acceder a la galería.');
+        return;
+      }
+  
+      // Abrir la galería de imágenes
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
+        mediaTypes: ['images'], // Solo imágenes
+        allowsEditing: true, // Permitir edición
+        aspect: [1, 1], // Relación de aspecto 1:1
+        quality: 1, // Calidad máxima
       });
+  
 
-      if (result.canceled) return;
-
-      const image = result.assets[0];
-
-      // eslint-disable-next-line import/namespace
-      const b64image = await FileSystem.readAsStringAsync(image.uri, {
-        encoding: "base64",
-      });
-      const { data } = await FileServerService.subirImagen(b64image);
-      handleChange("foto", data.display_url);
-    } catch {
-      show("error", "Hubo un error inesperado intentalo mas tarde");
+      if (!result.canceled) {
+        // Subir la imagen al servidor de archivos
+        console.log('Subiendo imagen...', result.assets[0]);
+        const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
+      
+  
+        setPerfil({ ...perfil, fileName: imgResponse  });
+        show("success", "Imagen actualizada correctamente.");
+      }
+      ;
+    } catch (error) {
+      console.error('Error al seleccionar o subir la imagen:', error);
+      show('error', 'Hubo un error inesperado. Inténtalo más tarde.');
     } finally {
       setCargandoFoto(false);
     }
@@ -264,7 +275,7 @@ export const EditarMiPerfil = () => {
               <FotoDePerfil
                 width={100}
                 height={100}
-                src={perfil.foto || urlImagenPerfilDesconocido}
+                src={perfil.fileName || urlImagenPerfilDesconocido}
               />
               {cargandoFoto && <Spinner style={styles.spinnerFoto} />}
               <TouchableOpacity onPress={handleFotoChange}>
