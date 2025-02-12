@@ -1,5 +1,4 @@
 import api from "./apiConfig.js";
-import { BASE_URL } from "./requestConfig";
 
 const JugadoresEndpoints = {
   JUGADORES_CON_JUEGOS_EN_COMUN: "/jugadoresPorJuego/",
@@ -12,6 +11,7 @@ const JugadoresEndpoints = {
   BLOQUEADOS: "/bloqueados/",
   BLOQUEAR: "/bloquear/",
   DESBLOQUEAR: "/desbloquear/",
+  UPDATEFOTO: "/update-img/"
 };
 
 const actualizarPerfil = async (perfil) => {
@@ -108,6 +108,8 @@ const desbloquearJugador = async (idUsuarioLogueado, idUsuario) => {
 
   return response.data;
 };
+
+
 
 export const JugadoresService = {
   actualizarPerfil,
