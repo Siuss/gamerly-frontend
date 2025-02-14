@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Modal,
   TouchableOpacity,
@@ -16,9 +16,10 @@ const NacionalidadSelect = ({ onSelect }) => {
   const [visible, setVisible] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
 
-  const sortedCountries = [...countries].sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  const sortedCountries = useMemo(() => {
+    return [...countries].sort((a, b) => a.name.localeCompare(b.name));
+  }, [countries]);
+
 
   const handleSelect = (country) => {
     setSelectedCountry(country.name);

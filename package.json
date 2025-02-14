@@ -18,7 +18,7 @@
     "@react-navigation/stack": "^6.3.29",
     "axios": "^1.7.2",
     "eslint-plugin-import": "^2.29.1",
-    "expo": "~52.0.32",
+    "expo": "~52.0.33",
     "expo-constants": "~17.0.5",
     "expo-file-system": "~18.0.10",
     "expo-image-picker": "~16.0.6",
