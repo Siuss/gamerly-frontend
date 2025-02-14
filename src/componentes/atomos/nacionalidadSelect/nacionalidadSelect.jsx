@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   Modal,
   TouchableOpacity,
@@ -20,12 +20,27 @@ const NacionalidadSelect = ({ onSelect }) => {
     return [...countries].sort((a, b) => a.name.localeCompare(b.name));
   }, [countries]);
 
-
   const handleSelect = (country) => {
     setSelectedCountry(country.name);
     onSelect(country.name);
     setVisible(false);
   };
+
+  const renderItemListo = useCallback(
+    ({ item }) => (
+      <TouchableOpacity
+        style={styles.countryItem}
+        onPress={() => handleSelect(item)}
+      >
+        <Text style={styles.countryText}>{item.name}</Text>
+      </TouchableOpacity>
+    ),
+    [handleSelect]
+  );
+
+
+
+
 
   return (
     <View style={styles.inputContainer}>
@@ -47,16 +62,7 @@ const NacionalidadSelect = ({ onSelect }) => {
           <FlatList
             data={sortedCountries}
             keyExtractor={(item) => item.code}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.countryItem}
-                onPress={() => handleSelect(item)}
-              >
-                <Text style={styles.countryText}>
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            )}
+            renderItem={renderItemListo}
           />
           <TouchableOpacity
             onPress={() => setVisible(false)}
