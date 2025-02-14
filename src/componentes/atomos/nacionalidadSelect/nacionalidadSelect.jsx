@@ -20,6 +20,7 @@ const NacionalidadSelect = ({ onSelect }) => {
     return [...countries].sort((a, b) => a.name.localeCompare(b.name));
   }, [countries]);
 
+
   const handleSelect = (country) => {
     setSelectedCountry(country.name);
     onSelect(country.name);
@@ -37,9 +38,6 @@ const NacionalidadSelect = ({ onSelect }) => {
     ),
     [handleSelect]
   );
-
-
-
 
 
   return (
