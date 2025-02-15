@@ -33,6 +33,7 @@ import { JugadoresService } from "../../services/JugadoresService";
 import moment from "moment";
 import { urlImagenPerfilDesconocido } from "../../utils/perfilDesconocido.js";
 import useStore from "../../hooks/useStore.jsx";
+import NacionalidadSelect from "../atomos/nacionalidadSelect/nacionalidadSelect.jsx";
 
 const regexpFecha = /[^0-9/]/;
 
@@ -45,7 +46,7 @@ export const EditarMiPerfil = () => {
   const [inputJuego, setInputJuego] = useState("");
   const [inputPlataforma, setInputPlataforma] = useState("");
   const [fechaEsValida, setFechaEsValida] = useState(true);
-  const { getIdUsuarioLogueado} = useStore()
+  const { getIdUsuarioLogueado } = useStore()
 
   const { id } = route.params;
   const { show } = useToast();
@@ -203,7 +204,7 @@ export const EditarMiPerfil = () => {
       ],
     }));
   };
- 
+
   const handleQuitarJuego = (juegoABorrar) => {
     setPerfil((prevPerfil) => ({
       ...prevPerfil,
@@ -216,14 +217,14 @@ export const EditarMiPerfil = () => {
   const handleFotoChange = async () => {
     try {
       setCargandoFoto(true);
-  
+
       // Solicitar permisos para acceder a la galería
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
         alert('Se necesitan permisos para acceder a la galería.');
         return;
       }
-  
+
       // Abrir la galería de imágenes
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ['images'], // Solo imágenes
@@ -231,15 +232,15 @@ export const EditarMiPerfil = () => {
         aspect: [1, 1], // Relación de aspecto 1:1
         quality: 1, // Calidad máxima
       });
-  
+
 
       if (!result.canceled) {
         // Subir la imagen al servidor de archivos
         console.log('Subiendo imagen...', result.assets[0]);
         const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
-      
-  
-        setPerfil({ ...perfil, fileName: imgResponse  });
+
+
+        setPerfil({ ...perfil, fileName: imgResponse });
         show("success", "Imagen actualizada correctamente.");
       }
       ;
@@ -305,12 +306,9 @@ export const EditarMiPerfil = () => {
             onChangeText={handleChangeFechaNacimiento}
           />
           <Divisor />
-          <TextInput
-            placeholder="Nacionalidad"
-            placeholderTextColor={Color.gris}
-            style={styles.input}
-            value={perfil.nacionalidad}
-            onChangeText={(text) => handleChange("nacionalidad", text)}
+          <NacionalidadSelect
+            onSelect={(nacionalidad) => handleChange("nacionalidad", nacionalidad)}
+            selectedCountry={perfil.nacionalidad}
           />
           <Divisor />
           <TextInput
@@ -383,16 +381,16 @@ export const EditarMiPerfil = () => {
           </View>
         </View>
         <View style={styles.footer}>
-        <Boton
-          style={[
-            styles.botonGuardar,
-            !formularioEsValido && styles.botonDeshabilitado,
-          ]}
-          disabled={!formularioEsValido}
-          onPress={handleGuardar}
-        >
-          Guardar
-        </Boton>
+          <Boton
+            style={[
+              styles.botonGuardar,
+              !formularioEsValido && styles.botonDeshabilitado,
+            ]}
+            disabled={!formularioEsValido}
+            onPress={handleGuardar}
+          >
+            Guardar
+          </Boton>
         </View>
       </ScrollView>
     </View>
