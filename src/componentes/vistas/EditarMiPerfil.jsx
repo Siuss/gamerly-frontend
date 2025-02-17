@@ -28,6 +28,10 @@ import { urlImagenPerfilDesconocido } from "../../utils/perfilDesconocido.js";
 import useStore from "../../hooks/useStore.jsx";
 import NacionalidadSelect from "../atomos/nacionalidadSelect/nacionalidadSelect.jsx";
 import { Spinner } from "../atomos/spinner/Spinner";
+import * as ImagePicker from 'expo-image-picker';
+import { FileServerService } from "../../services/FileServerService";
+
+
 const validationSchema = Yup.object().shape({
   nombre: Yup.string()
     .min(3, 'El nombre debe tener al menos 3 caracteres')
@@ -200,7 +204,7 @@ export const EditarMiPerfil = () => {
           >
             <View style={styles.informacionUsuario}>
               <View style={styles.fotoDePerfil}>
-                <TouchableOpacity style={styles.contenedorFoto}>
+                <TouchableOpacity style={styles.contenedorFoto} onPress={handleFotoChange}>
                   <FotoDePerfil
                     width={100}
                     height={100}
@@ -492,4 +496,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditarMiPerfil;
+export default EditarMiPerfil;
