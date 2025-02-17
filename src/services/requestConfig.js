@@ -2,8 +2,8 @@
 // La ip la conseguis corriendo ipconfig
 // Ejemplo: http://192.168.1.10:8090
 
-// Notebook
-// export const BASE_URL = "http://192.168.1.41:8090"
+
+export const BASE_URL = "http://192.168.1.41:9000"
 
 // Escritorio
 //export const BASE_URL = "http://192.168.1.15:8090"

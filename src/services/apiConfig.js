@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "@env";
+import { BASE_URL } from "../services/requestConfig";
 import useStore from "./../hooks/useStore";
 
 const api = axios.create({
