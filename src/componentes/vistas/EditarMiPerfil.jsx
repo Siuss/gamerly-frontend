@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -19,459 +19,174 @@ import {
 import { TablaHorarios } from "../bloques/TablaHorarios";
 import { getHorariosPreferidos } from "../../utils/diasMapper";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import * as ImagePicker from "expo-image-picker";
-import * as FileSystem from "expo-file-system";
 import { useToast } from "../../hooks/useToast";
-import { FileServerService } from "../../services/FileServerService";
-import { Spinner } from "../atomos/spinner/Spinner";
-import hexToRgba from "hex-to-rgba";
-import { InputPredictivo } from "../atomos/inputPredictivo/InputPredictivo";
-import { PlataformaService } from "../../services/PlataformaService";
-import { JuegosService } from "../../services/JuegosService";
-import { ListaDePildoras } from "../bloques/ListaDePildoras";
 import { JugadoresService } from "../../services/JugadoresService";
-import moment from "moment";
 import { urlImagenPerfilDesconocido } from "../../utils/perfilDesconocido.js";
 import useStore from "../../hooks/useStore.jsx";
 import NacionalidadSelect from "../atomos/nacionalidadSelect/nacionalidadSelect.jsx";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import moment from "moment";
 
-const regexpFecha = /[^0-9/]/;
+const editMyProfileSchema = Yup.object().shape({
+  nombre: Yup.string().required("El nombre es obligatorio"),
+  discord: Yup.string().required("El Discord es obligatorio"),
+  fechaDeNacimiento: Yup.string()
+    .test(
+      "valid-date",
+      "Formato inválido, tiene que ser DD/MM/YYYY",
+      (value) => {
+        return moment(value, "DD/MM/YYYY", true).isValid();
+      }
+    )
+    .required("Se requiere fecha de nacimiento"),
+  nacionalidad: Yup.string().required("La nacionalidad es obligatoria"),
+  juegosPreferidos: Yup.array()
+    .of(Yup.string())
+    .test(
+      "unique",
+      "No se pueden repetir juegos",
+      (value) => new Set(value).size === value.length
+    ),
+  plataformas: Yup.array()
+    .of(Yup.string())
+    .test(
+      "unique",
+      "No se pueden repetir plataformas",
+      (value) => new Set(value).size === value.length
+    ),
+});
 
 export const EditarMiPerfil = () => {
   const route = useRoute();
-  const [perfil, setPerfil] = useState({});
-  const [cargandoFoto, setCargandoFoto] = useState(false);
-  const [plataformas, setPlataformas] = useState([]);
-  const [juegos, setJuegos] = useState([]);
-  const [inputJuego, setInputJuego] = useState("");
-  const [inputPlataforma, setInputPlataforma] = useState("");
-  const [fechaEsValida, setFechaEsValida] = useState(true);
-  const { getIdUsuarioLogueado } = useStore()
-
-  const { id } = route.params;
-  const { show } = useToast();
   const navigation = useNavigation();
-
-  const validadorFormulario = () =>
-    perfil.nombre?.length > 2 &&
-    perfil.fechaDeNacimiento?.length === 10 &&
-    fechaEsValida &&
-    !!perfil.nacionalidad &&
-    perfil.discord?.length > 2;
-
-  const formularioEsValido = useMemo(() => {
-    return validadorFormulario();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perfil, fechaEsValida]);
-
-  const traerPerfil = async () => {
-    const idUsuarioLogueado = await getIdUsuarioLogueado();
-    try {
-      if (idUsuarioLogueado === undefined) {
-        throw new Error(
-          "El usuario no está autenticado o el userId no está disponible"
-        );
-      }
-      const infoPerfil = await JugadoresService.getPerfilEdicionUsuario(
-        idUsuarioLogueado
-      );
-
-      setPerfil(infoPerfil);
-    } catch {
-      show("error", "Error inesperado intentalo más tarde");
-    }
-  };
-
-  const handleGuardar = async () => {
-    try {
-      await JugadoresService.actualizarPerfil(perfil);
-      setPerfil(perfil);
-
-      show("success", "Se han guardado los cambios exitosamente");
-      const rutaAnterior = navigation.getState().routes.at(-2);
-      navigation.navigate(rutaAnterior.name, rutaAnterior.params);
-    } catch {
-      show(
-        "error",
-        "Error inesperado al guardar los cambios, intentalo mas tarde"
-      );
-    }
-  };
-
-  const handleChange = (campo, valor) => {
-    setPerfil({ ...perfil, [campo]: valor });
-  };
-
-  const handleChangeFechaNacimiento = (fecha) => {
-    const fechaMomentJs = moment(fecha, "DD/MM/YYYY", true);
-
-    if (fecha.length > 9) {
-      setFechaEsValida(fechaMomentJs.isValid());
-    } else {
-      setFechaEsValida(true);
-    }
-
-    if (regexpFecha.test(fecha)) {
-      setFechaEsValida(false);
-    }
-
-    handleChange("fechaDeNacimiento", fecha);
-  };
-
-  const handleHorarioChange = (dia, momento) => {
-    if (
-      perfil.diasHorariosPreferidos.some(
-        (sesion) =>
-          sesion.diaDeLaSemana === dia && sesion.horarioFavorito === momento
-      )
-    ) {
-      setPerfil((prevPerfil) => ({
-        ...prevPerfil,
-        diasHorariosPreferidos: prevPerfil.diasHorariosPreferidos.filter(
-          (sesion) =>
-            sesion.diaDeLaSemana !== dia || sesion.horarioFavorito !== momento
-        ),
-      }));
-
-      return;
-    }
-
-    setPerfil((prevPerfil) => ({
-      ...prevPerfil,
-      diasHorariosPreferidos: [
-        ...new Set([
-          ...prevPerfil.diasHorariosPreferidos,
-          { diaDeLaSemana: dia, horarioFavorito: momento },
-        ]),
-      ],
-    }));
-  };
-
-  const handleInputChangePlataformas = async (plataforma) => {
-    setInputPlataforma(plataforma);
-
-    if (!plataforma) {
-      setPlataformas([]);
-      return;
-    }
-
-    const nuevasPlataformas = await PlataformaService.getPlataformasPorNombre(
-      plataforma
-    );
-
-    setPlataformas(nuevasPlataformas);
-  };
-
-  const handleAgregarPlataforma = async (plataforma) => {
-    setInputPlataforma("");
-    setPlataformas([]);
-
-    setPerfil((prevPerfil) => ({
-      ...prevPerfil,
-      plataformas: [...new Set([...prevPerfil.plataformas, plataforma.nombre])],
-    }));
-  };
-
-  const handleQuitarPlataforma = (plataformaABorrar) => {
-    setPerfil((prevPerfil) => ({
-      ...prevPerfil,
-      plataformas: prevPerfil.plataformas.filter(
-        (juego) => juego !== plataformaABorrar.contenido
-      ),
-    }));
-  };
-
-  const handleInputChangeJuegos = async (juego) => {
-    setInputJuego(juego);
-
-    if (!juego) {
-      setJuegos([]);
-      return;
-    }
-
-    const nuevosJuegos = await JuegosService.getJuegosPorNombre(juego);
-    setJuegos(nuevosJuegos);
-  };
-
-  const handleAgregarJuego = (juego) => {
-    setInputJuego("");
-    setJuegos([]);
-
-    setPerfil((prevPerfil) => ({
-      ...prevPerfil,
-      juegosPreferidos: [
-        ...new Set([...prevPerfil.juegosPreferidos, juego.nombre]),
-      ],
-    }));
-  };
-
-  const handleQuitarJuego = (juegoABorrar) => {
-    setPerfil((prevPerfil) => ({
-      ...prevPerfil,
-      juegosPreferidos: prevPerfil.juegosPreferidos.filter(
-        (juego) => juego !== juegoABorrar.contenido
-      ),
-    }));
-  };
-
-  const handleFotoChange = async () => {
-    try {
-      setCargandoFoto(true);
-
-      // Solicitar permisos para acceder a la galería
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Se necesitan permisos para acceder a la galería.');
-        return;
-      }
-
-      // Abrir la galería de imágenes
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'], // Solo imágenes
-        allowsEditing: true, // Permitir edición
-        aspect: [1, 1], // Relación de aspecto 1:1
-        quality: 1, // Calidad máxima
-      });
-
-
-      if (!result.canceled) {
-        // Subir la imagen al servidor de archivos
-        console.log('Subiendo imagen...', result.assets[0]);
-        const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
-
-
-        setPerfil({ ...perfil, fileName: imgResponse });
-        show("success", "Imagen actualizada correctamente.");
-      }
-      ;
-    } catch (error) {
-      console.error('Error al seleccionar o subir la imagen:', error);
-      show('error', 'Hubo un error inesperado. Inténtalo más tarde.');
-    } finally {
-      setCargandoFoto(false);
-    }
-  };
+  const { getIdUsuarioLogueado } = useStore();
+  const { show } = useToast();
+  const [perfil, setPerfil] = useState(null);
 
   useFocusEffect(
     useCallback(() => {
-      if (!id) return;
+      const traerPerfil = async () => {
+        const idUsuarioLogueado = await getIdUsuarioLogueado();
+        if (!idUsuarioLogueado) return;
+
+        try {
+          const infoPerfil = await JugadoresService.getPerfilEdicionUsuario(
+            idUsuarioLogueado
+          );
+          setPerfil(infoPerfil);
+        } catch {
+          show("error", "Error inesperado, intentalo más tarde");
+        }
+      };
       traerPerfil();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id])
+    }, [])
   );
 
+  if (!perfil) return null;
+
   return (
-    <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        style={{ flex: 1 }}
-        scrollEventThrottle={8}
-      >
-        <View style={styles.informacionUsuario}>
-          <View style={styles.fotoDePerfil}>
-            <TouchableOpacity
-              onPress={handleFotoChange}
-              style={styles.contenedorFoto}
-            >
-              <FotoDePerfil
-                width={100}
-                height={100}
-                src={perfil.fileName || urlImagenPerfilDesconocido}
+    <Formik
+      initialValues={perfil}
+      validationSchema={editMyProfileSchema}
+      onSubmit={async (values) => {
+        try {
+          await JugadoresService.actualizarPerfil(values);
+          show("success", "Perfil actualizado correctamente");
+          navigation.goBack();
+        } catch {
+          show("error", "Error al guardar cambios, intenta más tarde");
+        }
+      }}
+    >
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
+        <View style={styles.container}>
+          <ScrollView contentContainerStyle={styles.scrollView}>
+            <View style={styles.informacionUsuario}>
+              <TextInput
+                style={[
+                  styles.input,
+                  errors.nombre && touched.nombre && styles.inputError,
+                ]}
+                placeholder="Nombre"
+                value={values.nombre}
+                onChangeText={handleChange("nombre")}
               />
-              {cargandoFoto && <Spinner style={styles.spinnerFoto} />}
-              <TouchableOpacity onPress={handleFotoChange}>
-                <MaterialIcons
-                  style={styles.iconoEditarFoto}
-                  name="photo-camera"
-                  size={24}
-                  color={Color.blanco}
-                />
-              </TouchableOpacity>
-            </TouchableOpacity>
-          </View>
-          <Divisor />
-          <TextInput
-            placeholder="Nombre"
-            placeholderTextColor={Color.gris}
-            style={styles.input}
-            value={perfil.nombre}
-            onChangeText={(text) => handleChange("nombre", text)}
-          />
-          <Divisor />
-          <TextInput
-            style={[styles.input, !fechaEsValida && styles.inputError]}
-            placeholder="Fecha de Nacimiento (DD/MM/YYYY)"
-            placeholderTextColor={Color.gris}
-            value={String(perfil.fechaDeNacimiento)}
-            onChangeText={handleChangeFechaNacimiento}
-          />
-          <Divisor />
-          <NacionalidadSelect
-            onSelect={(nacionalidad) => handleChange("nacionalidad", nacionalidad)}
-            selectedCountry={perfil.nacionalidad}
-          />
-          <Divisor />
-          <TextInput
-            placeholder="Discord"
-            placeholderTextColor={Color.gris}
-            style={styles.input}
-            value={perfil.discord}
-            onChangeText={(text) => handleChange("discord", text)}
-          />
-          <Divisor />
+              {errors.nombre && touched.nombre && (
+                <Parrafo variante="error">{errors.nombre}</Parrafo>
+              )}
 
-          <Parrafo variante="grisS" style={styles.misJuegos}>
-            Mis Juegos
-          </Parrafo>
-          <InputPredictivo
-            style={styles.input}
-            value={inputJuego}
-            onChangeText={handleInputChangeJuegos}
-            onOpcionClick={handleAgregarJuego}
-            opciones={juegos}
-          />
-
-          <ListaDePildoras
-            style={styles.pildoras}
-            borrable
-            items={
-              perfil?.juegosPreferidos?.map((juego) => ({
-                id: juego,
-                contenido: juego,
-              })) || []
-            }
-            onPress={handleQuitarJuego}
-          />
-
-          <Parrafo variante="grisS" style={styles.misPlataformas}>
-            Mis Plataformas
-          </Parrafo>
-          <InputPredictivo
-            style={styles.input}
-            value={inputPlataforma}
-            onChangeText={handleInputChangePlataformas}
-            onOpcionClick={handleAgregarPlataforma}
-            opciones={plataformas.map((plataforma) => ({
-              id: plataforma,
-              nombre: plataforma,
-            }))}
-          />
-          <ListaDePildoras
-            style={styles.pildoras}
-            borrable
-            items={
-              perfil?.plataformas?.map((plataforma) => ({
-                id: plataforma,
-                contenido: plataforma,
-              })) || []
-            }
-            onPress={handleQuitarPlataforma}
-          />
-
-          <Parrafo variante="grisS" style={styles.misHorarios}>
-            Mis Horarios
-          </Parrafo>
-          <View style={styles.containerTable}>
-            {perfil.diasHorariosPreferidos && (
-              <TablaHorarios
-                horarios={getHorariosPreferidos(perfil.diasHorariosPreferidos)}
-                onHorarioChange={handleHorarioChange}
+              <TextInput
+                style={[
+                  styles.input,
+                  errors.fechaDeNacimiento &&
+                    touched.fechaDeNacimiento &&
+                    styles.inputError,
+                ]}
+                placeholder="Fecha de Nacimiento (DD/MM/YYYY)"
+                value={values.fechaDeNacimiento}
+                onChangeText={handleChange("fechaDeNacimiento")}
               />
-            )}
-          </View>
+              {errors.fechaDeNacimiento && touched.fechaDeNacimiento && (
+                <Parrafo variante="error">{errors.fechaDeNacimiento}</Parrafo>
+              )}
+
+              <NacionalidadSelect
+                onSelect={(nacionalidad) =>
+                  handleChange("nacionalidad")(nacionalidad)
+                }
+                selectedCountry={values.nacionalidad}
+              />
+              {errors.nacionalidad && touched.nacionalidad && (
+                <Parrafo variante="error">{errors.nacionalidad}</Parrafo>
+              )}
+
+              <TextInput
+                placeholder="Discord"
+                placeholderTextColor={Color.gris}
+                style={[
+                  styles.input,
+                  errors.discord && touched.discord && styles.inputError,
+                ]}
+                value={values.discord} // Cambia a 'values.discord' para que Formik maneje el valor
+                onChangeText={handleChange("discord")} // Usar 'handleChange' para actualizar el valor
+              />
+              {errors.discord && touched.discord && (
+                <Parrafo variante="error">{errors.discord}</Parrafo>
+              )}
+              
+            </View>
+
+            <View style={styles.footer}>
+              <Boton style={styles.botonGuardar} onPress={handleSubmit}>
+                Guardar
+              </Boton>
+            </View>
+          </ScrollView>
         </View>
-        <View style={styles.footer}>
-          <Boton
-            style={[
-              styles.botonGuardar,
-              !formularioEsValido && styles.botonDeshabilitado,
-            ]}
-            disabled={!formularioEsValido}
-            onPress={handleGuardar}
-          >
-            Guardar
-          </Boton>
-        </View>
-      </ScrollView>
-    </View>
+      )}
+    </Formik>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Color.neutro,
-    width: "100%",
-    height: "100%",
-  },
-  scrollView: {
-    paddingBottom: 64,
-  },
-  fotoDePerfil: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-  contenedorFoto: {
-    position: "relative",
-  },
-  iconoEditarFoto: {
-    position: "absolute",
-    right: 0,
-    bottom: 0,
-  },
-  spinnerFoto: {
-    position: "absolute",
-    borderRadius: 100,
-    height: "100%",
-    width: "100%",
-    backgroundColor: hexToRgba(Color.neutro, 0.5),
-  },
-  informacionUsuario: {
-    padding: 5,
-  },
+  container: { backgroundColor: Color.neutro, flex: 1 },
+  scrollView: { paddingBottom: 64 },
+  informacionUsuario: { padding: 5 },
   input: {
     borderWidth: 1,
     borderColor: Color.gris,
-    borderRadius: 5,
     padding: 10,
     marginVertical: 10,
     color: Color.blanco,
   },
-  inputError: {
-    borderColor: Color.error,
-    color: Color.error,
-  },
-  footer: {
-    paddingTop: 96,
-    paddingHorizontal: 32,
-    alignItems: "center"
-  },
+  inputError: { borderColor: Color.error, color: Color.error },
+  footer: { paddingTop: 32, paddingHorizontal: 32, alignItems: "center" },
   botonGuardar: {
     width: "100%",
     backgroundColor: Color.secundario,
-    position: "absolute",
-    bottom: 16,
     paddingVertical: 16,
     alignItems: "center",
-  },
-  botonDeshabilitado: {
-    backgroundColor: Color.gris,
-  },
-  containerTable: {
-    marginBottom: 16,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  misJuegos: {
-    marginTop: 16,
-  },
-  misHorarios: {
-    marginBottom: 16,
-  },
-  pildoras: {
-    marginVertical: 16,
   },
 });
 
