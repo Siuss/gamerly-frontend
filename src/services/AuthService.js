@@ -4,6 +4,7 @@ import { BASE_URL } from "./requestConfig";
 const SesionEndpoints = {
   CREAR_CUENTA: "/auth/user",
   LOGIN: "/auth/login",
+  OAUTH: "/auth/oauth",
 };
 
 const signUp = async (nuevoUsuario) => {
@@ -29,7 +30,16 @@ const login = async (credenciales) => {
   }
 };
 
+const oAuthLogin = async (usuario) => {
+  const response = await axios.post(
+    `${BASE_URL}${SesionEndpoints.OAUTH}`,
+    usuario
+  );
+  return response.data;
+};
+
 export const AuthService = {
   signUp,
   login,
+  oAuthLogin,
 };

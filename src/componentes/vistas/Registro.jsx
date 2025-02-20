@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { SesionService } from "../../services/SesionService";
+import { AuthService } from "../../services/AuthService";
 import {
   StyleSheet,
   Text,
@@ -156,7 +156,7 @@ export const Registro = () => {
         nacionalidad,
       };
 
-      await SesionService.signUp(nuevoUsuario);
+      await AuthService.signUp(nuevoUsuario);
       navigation.navigate(rutas.login);
     } catch {
       show("error", "Error inesperado intentalo mas tarde");

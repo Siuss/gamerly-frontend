@@ -15,7 +15,7 @@ import { useToast } from "../../hooks/useToast";
 import useStore from "../../hooks/useStore";
 import { NotificacionesService } from "../../services/NotificacionesService";
 import { jwtDecode } from 'jwt-decode';
-
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -23,6 +23,7 @@ export const Login = () => {
   const navigation = useNavigation();
   const { show } = useToast();
   const { getToken, setUsuarioLogueado } = useStore();
+  const { loginWithPopup, logout, user, getAccessTokenSilently } = useAuth0();
 
   const formularioEstaVacio = useMemo(
     () => !credenciales.email && !credenciales.password,
@@ -70,6 +71,41 @@ export const Login = () => {
   const registro = () => {
     navigation.navigate(rutas.registro);
   };
+
+  const fetchUserData = async () => {
+    await loginWithPopup()
+  }
+
+  const loginOAuth = async () => {
+    try {
+      await fetchUserData()
+      const token = await getAccessTokenSilently()
+      const email = user.email
+      const password = token.slice(0, 63)
+      const nombre = user.nickname
+      const fechaNacimiento = user.birthdate || "01/01/1970"
+      const discord = "N/A"
+      const nacionalidad = user.locale || "Localidad Desconocida"
+      const nuevoUsuario = {
+        nombre,
+        fechaNacimiento,
+        email,
+        password,
+        discord,
+        nacionalidad,
+      };
+      await AuthService.oAuthLogin(nuevoUsuario);
+
+      /*const usuario = {
+        email,
+        password
+      }
+      setCredenciales(usuario)
+      await iniciarSesion()*/
+    } catch (error) {
+      show("error", "error de registro");
+    }
+  }
 
   const handleRecuperarContrasenia = () => {
     navigation.navigate(rutas.recuperarContrasena);
@@ -142,6 +178,18 @@ export const Login = () => {
           onPress={registro}
         >
           <Text style={styles.buttonText}>Registrarse</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button]}
+          onPress={() => {loginOAuth()}}
+        >
+          <Text style={styles.buttonText}>Ingresar con Google</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button]}
+          onPress={logout}
+        >
+          <Text style={styles.buttonText}>salir</Text>
         </TouchableOpacity>
       </View>
     </View>
