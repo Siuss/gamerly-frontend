@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,37 +8,31 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Color } from "../../estilos/colores";
-import { useNavigation , useFocusEffect } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { AuthService } from "../../services/AuthService";
 import { rutas } from "../rutas/rutas";
-import { useToast } from "../../hooks/useToast";
 import useStore from "../../hooks/useStore";
-import { NotificacionesService } from "../../services/NotificacionesService";
 import { jwtDecode } from 'jwt-decode';
+import useToastStore from "../../hooks/useToastStore";
+import { Formik } from "formik";
+import {NotificacionesService} from "../../services/NotificacionesService";
+import { loginValidationSchema } from "../../utils/validators";
 import { useAuth0 } from '@auth0/auth0-react';
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [credenciales, setCredenciales] = useState({ email: "", password: "" });
   const navigation = useNavigation();
-  const { show } = useToast();
-  const { getToken, setUsuarioLogueado } = useStore();
+  const { setUsuarioLogueado } = useStore();
   const { loginWithPopup, logout, user, getAccessTokenSilently } = useAuth0();
+  const { show } = useToastStore()
 
-  const formularioEstaVacio = useMemo(
-    () => !credenciales.email && !credenciales.password,
-    [credenciales]
-  );
-  const handleCredencialesChange = (campo, valor) => {
-    setCredenciales({ ...credenciales, [campo]: valor });
-  };
+  const navigateJuegos = () => { navigation.navigate(rutas.juegos) }
 
-  const iniciarSesion = async () => {
+
+  const iniciarSesion = async (values, { setSubmitting }) => {
     try {
 
-      const tokenUsuario = await AuthService.login({
-        ...credenciales,
-      });
+      const tokenUsuario = await AuthService.login(values);
 
 
       /*
@@ -57,14 +51,13 @@ export const Login = () => {
       */
       await setUsuarioLogueado(usuario, tokenUsuario);
 
-      navigation.navigate(rutas.juegos);
-    } catch (error) {
-      if (error.response?.status === 401) {
-        show("error", "Credenciales invalidas");
-        return
-      }
+      // await NotificacionesService.obtenerTokenDeNotificaciones(usuario.id);
 
-      show("error", "Hubo un error inesperado intentalo mas tarde");
+      navigateJuegos()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setSubmitting(false)
     }
   };
 
@@ -111,75 +104,75 @@ export const Login = () => {
     navigation.navigate(rutas.recuperarContrasena);
   };
 
-  const rellenarEmail = async () => {
-    handleCredencialesChange("email", (await getToken()).email);
-  };
-
-  useFocusEffect(
-    useCallback(() => {
-      rellenarEmail();
-
-      return () => {
-        setCredenciales({email: '', password: ''})
-      };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-  );
-
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={[styles.input, { color: Color.secundario }]}
-        onChangeText={(value) =>
-          handleCredencialesChange("email", value.toLowerCase())
-        }
-        placeholder="Email"
-        placeholderTextColor={Color.secundario}
-        value={credenciales.email}
-      />
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={[styles.passwordInput, { color: Color.secundario }]}
-          onChangeText={(value) => handleCredencialesChange("password", value)}
-          placeholder="Contraseña"
-          placeholderTextColor={Color.secundario}
-          secureTextEntry={!passwordVisible}
-          value={credenciales.password}
-        />
-        <TouchableOpacity
-          style={styles.eyeIcon}
-          onPress={() => setPasswordVisible(!passwordVisible)}
-        >
-          <Ionicons
-            name={passwordVisible ? "eye-off" : "eye"}
-            size={24}
-            color="gray"
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={loginValidationSchema}
+      onSubmit={iniciarSesion}
+    >
+      {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => (
+        <View style={styles.container}>
+          <Text style={styles.title}>Login</Text>
+          <TextInput
+            style={[styles.input, errors.email && touched.email && styles.errorInput]}
+            placeholder="Email"
+            placeholderTextColor={Color.secundario}
+            onChangeText={handleChange("email")}
+            onBlur={handleBlur("email")}
+            value={values.email}
           />
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
-        style={styles.forgotPasswordContainer}
-        onPress={handleRecuperarContrasenia}
-      >
-        <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
-      </TouchableOpacity>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          disabled={formularioEstaVacio}
-          style={[styles.button, formularioEstaVacio && styles.deshabilitado]}
-          onPress={iniciarSesion}
-        >
-          <Text style={styles.buttonText}>Iniciar sesión</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.registerButton]}
-          onPress={registro}
-        >
-          <Text style={styles.buttonText}>Registrarse</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          {errors.email && touched.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[
+                styles.passwordInput,
+                { color: Color.secundario },
+                errors.password && touched.password && styles.errorInput
+              ]}
+              placeholder="Contraseña"
+              placeholderTextColor={Color.secundario}
+              secureTextEntry={!passwordVisible}
+              onChangeText={handleChange("password")}
+              onBlur={handleBlur("password")}
+              value={values.password}
+            />
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={() => setPasswordVisible(!passwordVisible)}
+            >
+              <Ionicons
+                name={passwordVisible ? "eye-off" : "eye"}
+                size={24}
+                color="gray"
+              />
+            </TouchableOpacity>
+          </View>
+          {errors.password && touched.password && <Text style={styles.errorText}>{errors.password}</Text>}
+
+          <TouchableOpacity
+            style={styles.forgotPasswordContainer}
+            onPress={handleRecuperarContrasenia}
+          >
+            <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
+          </TouchableOpacity>
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              disabled={isSubmitting}
+              style={[styles.button, isSubmitting && styles.deshabilitado]}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Iniciar sesión</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.registerButton]}
+              onPress={registro}
+            >
+              <Text style={styles.buttonText}>Registrarse</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
           style={[styles.button]}
           onPress={() => {loginOAuth()}}
         >
@@ -192,7 +185,9 @@ export const Login = () => {
           <Text style={styles.buttonText}>salir</Text>
         </TouchableOpacity>
       </View>
-    </View>
+        </View>
+      )}
+    </Formik>
   );
 };
 
@@ -215,18 +210,18 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: Color.secundario,
     borderWidth: 1,
-    marginBottom: 16,
+    marginBottom: 10,
     paddingLeft: 8,
     borderRadius: 4,
+    color: Color.secundario,
   },
   passwordContainer: {
     width: "90%",
-    height: 40,
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
     borderRadius: 4,
-    marginBottom: 16,
+    marginBottom: 10,
     borderColor: Color.secundario,
   },
   passwordInput: {
@@ -236,7 +231,6 @@ const styles = StyleSheet.create({
   },
   eyeIcon: {
     padding: 8,
-    color: Color.secundario,
   },
   forgotPasswordContainer: {
     width: "90%",
@@ -271,5 +265,15 @@ const styles = StyleSheet.create({
   },
   deshabilitado: {
     opacity: 0.4,
+  },
+  errorInput: {
+    borderColor: "red",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    marginBottom: 10,
+    alignSelf: "flex-start",
+    marginLeft: "5%",
   },
 });
