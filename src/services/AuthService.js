@@ -15,18 +15,15 @@ const signUp = async (nuevoUsuario) => {
 };
 
 const login = async (credenciales) => {
-  try {
-    const response = await axios.post(
-      `${BASE_URL}${SesionEndpoints.LOGIN}`,
-      credenciales,
-      {
-        timeout: 5000, // Aumenté el timeout para evitar problemas de conexión
-      }
-    );
-    return response.data; // Asumiendo que el backend devuelve el token directamente
-  } catch (error) {
-    throw error;
-  }
+  const response = await axios.post(
+    `${BASE_URL}${SesionEndpoints.LOGIN}`,
+    credenciales,
+    {
+      timeout: 5000, // Aumenté el timeout para evitar problemas de conexión
+    }
+  );
+  return response.data; // Asumiendo que el backend devuelve el token directamente
+
 };
 
 export const AuthService = {

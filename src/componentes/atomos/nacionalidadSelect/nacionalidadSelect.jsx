@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import {
   Modal,
   TouchableOpacity,
@@ -11,19 +11,23 @@ import { useCountries } from "use-react-countries";
 import { Ionicons } from "@expo/vector-icons";
 import { Color } from "../../../estilos/colores";
 
-const NacionalidadSelect = ({ onSelect }) => {
+const NacionalidadSelect = ({ onSelect, selectedCountry }) => {
   const { countries } = useCountries();
   const [visible, setVisible] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selected, setSelected] = useState(selectedCountry); // Estado interno
+
+  // Actualiza el estado interno cuando cambia la prop selectedCountry
+  useEffect(() => {
+    setSelected(selectedCountry);
+  }, [selectedCountry]);
 
   const sortedCountries = useMemo(() => {
     return [...countries].sort((a, b) => a.name.localeCompare(b.name));
   }, [countries]);
 
-
   const handleSelect = (country) => {
-    setSelectedCountry(country.name);
-    onSelect(country.name);
+    setSelected(country.name); // Actualiza el estado interno
+    onSelect(country.name); // Notifica al componente padre
     setVisible(false);
   };
 
@@ -39,18 +43,17 @@ const NacionalidadSelect = ({ onSelect }) => {
     [handleSelect]
   );
 
-
   return (
     <View style={styles.inputContainer}>
       <TouchableOpacity
         onPress={() => setVisible(true)}
         style={[
           styles.selectInput,
-          selectedCountry ? styles.inputFilled : styles.inputPlaceholder,
+          selected ? styles.inputFilled : styles.inputPlaceholder,
         ]}
       >
         <Text style={styles.inputText}>
-          {selectedCountry || "Selecciona tu nacionalidad"}
+          {selected || "Selecciona tu nacionalidad"}
         </Text>
         <Ionicons name="chevron-down" size={20} color={Color.secundario} />
       </TouchableOpacity>
@@ -83,7 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    height: 40, // Mantiene el tamaño de los otros inputs
+    height: 40,
     borderWidth: 1,
     borderColor: Color.secundario,
     borderRadius: 4,
