@@ -21,6 +21,7 @@ import { getHorariosPreferidos } from "../../utils/diasMapper";
 import { rutas } from "../rutas/rutas";
 import { ReseniaService } from "../../services/ReseniaService";
 import { JugadoresService } from "../../services/JugadoresService";
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const VistaMiPerfil = () => {
   const { show } = useToast();
@@ -30,7 +31,8 @@ export const VistaMiPerfil = () => {
   const [perfil, setPerfil] = useState({});
   const [ultimasResenias, setUltimasResenias] = useState([]);
   const [reseniasPendientes, setReseniasPendientes] = useState([]);
-  const { logout,  getIdUsuarioLogueado } = useStore();
+  const { logoutStorage,  getIdUsuarioLogueado } = useStore();
+  const { logout } = useAuth0();
   const { id } = route.params;
 
   const navigation = useNavigation();
@@ -116,9 +118,9 @@ export const VistaMiPerfil = () => {
   };
 
   const handleLogout = async () => {
-    await logout();
+    await logoutStorage();
     setPerfil({});
-    navigation.navigate(rutas.login);
+    logout();
   };
 
   const handleEliminarCuenta = async () => {

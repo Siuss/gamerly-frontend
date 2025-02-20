@@ -34,7 +34,7 @@ const useStore = create((set) => ({
         }
     },
 
-    logout: async () => {
+    logoutStorage: async () => {
         await AsyncStorage.removeItem("usuario");
         await AsyncStorage.removeItem("token");
         set({ isLoggedIn: false, user: null, token: null });

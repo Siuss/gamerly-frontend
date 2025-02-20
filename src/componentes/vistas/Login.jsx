@@ -31,35 +31,35 @@ export const Login = () => {
 
   const iniciarSesion = async (values, { setSubmitting }) => {
     try {
-
       const tokenUsuario = await AuthService.login(values);
-
-
-      /*
-      Descencripta el token y extrae el id y el email del usuario
-      
-      */
-      const decodedToken = jwtDecode(tokenUsuario);
-
-      const usuario = {
-        id: decodedToken.id,
-        email: decodedToken.email
-      };
-
-      /*
-      guardo el usuario y el token en el store
-      */
-      await setUsuarioLogueado(usuario, tokenUsuario);
-
-      // await NotificacionesService.obtenerTokenDeNotificaciones(usuario.id);
-
-      navigateJuegos()
+      tokenDecode(tokenUsuario)
     } catch (error) {
       console.log(error)
     } finally {
       setSubmitting(false)
     }
   };
+
+  const tokenDecode = async (token) => {
+    /*
+    Descencripta el token y extrae el id y el email del usuario
+    */
+    const decodedToken = jwtDecode(token);
+
+    const usuario = {
+      id: decodedToken.id,
+      email: decodedToken.email
+    };
+
+    /*
+    guardo el usuario y el token en el store
+    */
+    await setUsuarioLogueado(usuario, token);
+
+    // await NotificacionesService.obtenerTokenDeNotificaciones(usuario.id);
+
+    navigateJuegos()
+  }
 
   const registro = () => {
     navigation.navigate(rutas.registro);
@@ -87,14 +87,11 @@ export const Login = () => {
         discord,
         nacionalidad,
       };
-      await AuthService.oAuthLogin(nuevoUsuario);
 
-      /*const usuario = {
-        email,
-        password
-      }
-      setCredenciales(usuario)
-      await iniciarSesion()*/
+      const usuarioToken = await AuthService.oAuthLogin(nuevoUsuario);
+      console.log(usuarioToken)
+      tokenDecode(usuarioToken)
+
     } catch (error) {
       show("error", "error de registro");
     }
@@ -177,12 +174,6 @@ export const Login = () => {
           onPress={() => {loginOAuth()}}
         >
           <Text style={styles.buttonText}>Ingresar con Google</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button]}
-          onPress={logout}
-        >
-          <Text style={styles.buttonText}>salir</Text>
         </TouchableOpacity>
       </View>
         </View>
