@@ -34,7 +34,8 @@ export const rutas = {
   crearNuevaClave: "crearNuevaClave",
   mensajes: "mensajes",
   chat: "chat",
-  editarMiPerfil: "editarMiPerfil"
+  editarMiPerfil: "editarMiPerfil",
+  configuracion: "configuracion"
 };
 
 export const mostrarBotonDeVolver = [

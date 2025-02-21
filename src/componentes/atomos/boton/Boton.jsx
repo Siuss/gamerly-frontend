@@ -1,16 +1,20 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Color } from "../../../estilos/colores";
+import useThemeStore from "../../../hooks/useThemeStore";
 
 export const Boton = (props) => {
   const { style, textStyle, outline, disabled, subrayado, variante = "primario", ...restProps } = props;
+  const {theme} = useThemeStore()
+
+  const dynamicTextColor = theme === "dark" ? Color.gris : Color.neutro;
   return (
     <TouchableOpacity
       disabled={disabled}
       style={[styles.boton, styles[variante], outline && styles.outline[outline], disabled && styles.disabled, style]}
       {...restProps}
     >
-      <Text style={[styles.texto, subrayado && styles.subrayado, textStyle]} subrayado={subrayado}>{props.children}</Text>
+      <Text style={[styles.texto, {color: dynamicTextColor }, subrayado && styles.subrayado, textStyle]} subrayado={subrayado}>{props.children}</Text>
     </TouchableOpacity>
   );
 };

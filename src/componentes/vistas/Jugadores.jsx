@@ -8,6 +8,7 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useToast } from "../../hooks/useToast";
 import { Spinner } from "../atomos/spinner/Spinner";
 import useStore from "../../hooks/useStore";
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const Jugadores = () => {
   const { show } = useToast();
@@ -16,6 +17,7 @@ export const Jugadores = () => {
   const [cargando, setCargando] = useState(true);
   const route = useRoute();
   const { getIdUsuarioLogueado } = useStore()
+  const {theme} = useThemeStore()
 
   const params = route.params;
 
@@ -95,7 +97,10 @@ export const Jugadores = () => {
   );
 
   return (
-    <View style={styles.containerExterior}>
+    <View sstyle={[
+          styles.containerExterior,
+          { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
+        ]}>
       <ScrollView contentContainerStyle={styles.container}>
         <Busqueda
           mostrarFiltro
@@ -125,7 +130,6 @@ export const Jugadores = () => {
 const styles = StyleSheet.create({
   containerExterior: {
     height: "100%",
-    backgroundColor: Color.neutro,
   },
   texto: {
     color: Color.blanco,

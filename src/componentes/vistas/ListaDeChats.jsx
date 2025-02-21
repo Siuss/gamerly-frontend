@@ -9,14 +9,16 @@ import { rutas } from "../rutas/rutas";
 import { BotonFlotante } from "../atomos/botonFlotante/BotonFlotante";
 import { ModalNuevoChat } from "../bloques/ModalNuevoChat";
 import useStore from "../../hooks/useStore";
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const ListaDeChats = () => {
   const { show } = useToast();
   const [chats, setChats] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-  const { getIdUsuarioLogueado} = useStore()
-  
+  const { getIdUsuarioLogueado } = useStore()
+  const { theme } = useThemeStore();
+
 
   const handleVisibilidadModal = () => {
     setModalVisible((esVisible) => !esVisible);
@@ -84,7 +86,10 @@ export const ListaDeChats = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
+    ]}>
       <FlatList
         contentContainerStyle={styles.flatContainer}
         data={chats}

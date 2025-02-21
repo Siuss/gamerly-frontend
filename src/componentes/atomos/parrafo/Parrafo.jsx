@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
     color: Color.gris,
     fontSize: 14,
   },
+  negroS:{
+    color: Color.neutro,
+    fontSize: 14
+  },
   subrayado: {
     textDecorationLine: "underline",
   },

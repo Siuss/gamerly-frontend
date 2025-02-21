@@ -8,6 +8,7 @@ import { useState, useCallback } from "react";
 import { JugadoresService } from "../../services/JugadoresService";
 import { SolicitudService } from "../../services/SolicitudService";
 import { useToast } from "../../hooks/useToast";
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const Amigos = (props) => {
   const { show } = useToast();
@@ -15,6 +16,7 @@ export const Amigos = (props) => {
   const { params } = navigation.getState().routes.at(-1);
   const [amigos, setAmigos] = useState([]);
   const [solicitudes, setSolicitudes] = useState([]);
+  const { theme } = useThemeStore();
 
   const traerAmigos = async () => {
     try {
@@ -71,7 +73,10 @@ export const Amigos = (props) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
+    ]}>
       <ListaDeAmigos
         amigos={amigos}
         onAmigoClick={handleAmigoClick}

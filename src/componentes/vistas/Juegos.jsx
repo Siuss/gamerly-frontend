@@ -6,12 +6,13 @@ import Busqueda from "../bloques/Busqueda";
 import { JuegosService } from "../../services/JuegosService";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { rutas } from "../rutas/rutas";
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const Juegos = () => {
   const [juegos, setJuegos] = useState([]);
   const [searchText, setSearchText] = useState("");
   const navigation = useNavigation();
-
+  const { theme } = useThemeStore();
   const handleJuegoPress = async (juego) => {
     navigation.navigate(rutas.jugadores, { idJuego: juego.id, juego: juego.nombre });
   };
@@ -43,7 +44,10 @@ export const Juegos = () => {
   };
 
   return (
-    <View style={styles.containerExterior}>
+    <View style={[
+          styles.containerExterior,
+          { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco  }
+        ]}>
       <Busqueda
         placeholder="Buscar..."
         text={searchText}
@@ -68,7 +72,6 @@ export const Juegos = () => {
 const styles = StyleSheet.create({
   containerExterior: {
     height: "100%",
-    backgroundColor: Color.neutro,
     padding: 8,
   },
   container: {

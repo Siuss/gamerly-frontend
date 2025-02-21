@@ -14,6 +14,7 @@ import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
 import { Ionicons } from "@expo/vector-icons";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import useStore from "../../hooks/useStore";
+import useThemeStore from "../../hooks/useThemeStore";
 
 const REFRESCO_CHAT_MS = 500;
 
@@ -24,8 +25,8 @@ const ChatScreen = () => {
   const [perfilAmigo, setPerfilAmigo] = useState({});
   const [inputMensaje, setInputMensaje] = useState("");
   const { params: idChat } = navigation.getState().routes.at(-1);
-  const {getIdUsuarioLogueado } = useStore();
-
+  const { getIdUsuarioLogueado } = useStore();
+  const { theme } = useThemeStore();
   const [mensajes, setMensajes] = useState([]);
 
   const handleNavigateBack = () => {
@@ -85,7 +86,10 @@ const ChatScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
+    ]}>
       <View style={styles.header}>
         <TouchableOpacity
           onPress={handleNavigateBack}
@@ -130,7 +134,6 @@ const ChatScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.neutro,
   },
   header: {
     flexDirection: "row",

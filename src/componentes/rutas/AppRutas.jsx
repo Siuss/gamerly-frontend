@@ -29,6 +29,7 @@ import { Toast } from "../bloques/Toast.jsx";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Amigos } from "../vistas/Amigos.jsx";
 import { EditarMiPerfil } from "../vistas/EditarMiPerfil.jsx";
+import TemaConfig from "../vistas/TemaConfig.jsx";
 
 const Stack = createStackNavigator();
 
@@ -161,6 +162,7 @@ const AppRutas = () => {
             name={rutas.editarMiPerfil}
             component={EditarMiPerfil}
           />
+          <Stack.Screen name={rutas.configuracion} component={TemaConfig} titulo={rutas.configuracion} />
         </Stack.Navigator>
         <NavBar style={styles.navBar} />
       </NavigationContainer>

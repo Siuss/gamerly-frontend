@@ -22,6 +22,9 @@ import { rutas } from "../rutas/rutas";
 import { ReseniaService } from "../../services/ReseniaService";
 import { JugadoresService } from "../../services/JugadoresService";
 import { useAuth0 } from '@auth0/auth0-react';
+import { IconButton } from "react-native-paper";
+import useThemeStore from "../../hooks/useThemeStore";
+
 
 export const VistaMiPerfil = () => {
   const { show } = useToast();
@@ -31,9 +34,10 @@ export const VistaMiPerfil = () => {
   const [perfil, setPerfil] = useState({});
   const [ultimasResenias, setUltimasResenias] = useState([]);
   const [reseniasPendientes, setReseniasPendientes] = useState([]);
-  const { logoutStorage,  getIdUsuarioLogueado } = useStore();
+  const { logoutStorage, getIdUsuarioLogueado } = useStore();
   const { logout } = useAuth0();
   const { id } = route.params;
+  const { theme } = useThemeStore();
 
   const navigation = useNavigation();
 
@@ -43,7 +47,7 @@ export const VistaMiPerfil = () => {
   );
 
   const traerPerfil = async () => {
-    const idUsuarioLogueado = await  getIdUsuarioLogueado();
+    const idUsuarioLogueado = await getIdUsuarioLogueado();
 
     try {
       if (idUsuarioLogueado === undefined) {
@@ -72,7 +76,7 @@ export const VistaMiPerfil = () => {
   };
 
   const traerReseniasPendientes = async () => {
-    const idUsuarioLogueado = await  getIdUsuarioLogueado();
+    const idUsuarioLogueado = await getIdUsuarioLogueado();
     const resenias = await ReseniaService.getReseniasPendientes(
       idUsuarioLogueado
     );
@@ -129,7 +133,18 @@ export const VistaMiPerfil = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco  }
+    ]}>
+      <View style={styles.header}>
+        <IconButton
+          icon="cog"
+          size={24}
+          color={Color.blanco}
+          onPress={() => navigation.navigate("configuracion")}
+        />
+      </View>
       <ScrollView
         style={{ flex: 1 }}
         onScroll={handleScroll}
@@ -140,24 +155,24 @@ export const VistaMiPerfil = () => {
             <FotoDePerfil width={100} height={100} src={perfil.fileName} />
           </View>
           <Divisor />
-          <Parrafo variante="grisXS" style={styles.descripcionUsuario}>
+          <Parrafo variante={theme === "dark" ? "grisS":"negroS"  } style={styles.descripcionUsuario}>
             {perfil.nombre}
           </Parrafo>
           <Divisor />
-          <Parrafo variante="grisXS" style={styles.descripcionUsuario}>
+          <Parrafo variante={theme === "dark" ? "grisS":"negroS"} style={styles.descripcionUsuario}>
             {perfil.edad} Años
           </Parrafo>
           <Divisor />
-          <Parrafo variante="grisXS" style={styles.descripcionUsuario}>
+          <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionUsuario}>
             {perfil.nacionalidad}
           </Parrafo>
           <Divisor />
-          <Parrafo variante="grisXS" style={styles.descripcionUsuario}>
+          <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionUsuario}>
             {perfil.discord}
           </Parrafo>
           <Divisor />
 
-          <Parrafo variante="grisXS" style={styles.descripcionplataformas}>
+          <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionplataformas}>
             Mis Plataformas
           </Parrafo>
           <View style={styles.pildora1}>
@@ -166,15 +181,15 @@ export const VistaMiPerfil = () => {
               items={
                 perfil.plataformas
                   ? perfil.plataformas.map((plataforma, index) => ({
-                      id: index,
-                      contenido: plataforma,
-                    }))
+                    id: index,
+                    contenido: plataforma,
+                  }))
                   : []
               }
             />
           </View>
 
-          <Parrafo variante="grisXS" style={styles.descripcionplataformas}>
+          <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionplataformas}>
             Mis Juegos
           </Parrafo>
           <View style={styles.pildora1}>
@@ -183,15 +198,15 @@ export const VistaMiPerfil = () => {
               items={
                 perfil.juegosPreferidos
                   ? perfil.juegosPreferidos.map((juego, index) => ({
-                      id: index,
-                      contenido: juego,
-                    }))
+                    id: index,
+                    contenido: juego,
+                  }))
                   : []
               }
             />
           </View>
           <View style={styles.conatainerEditarJuego}>
-            <Parrafo variante="grisXS" style={styles.descripcionplataformas}>
+            <Parrafo variante={theme === "dark" ? "grisS":"negroS"} style={styles.descripcionplataformas}>
               Mis Horarios
             </Parrafo>
           </View>
@@ -205,7 +220,7 @@ export const VistaMiPerfil = () => {
           </View>
 
           <View style={styles.reseniasHeader}>
-            <Parrafo variante="grisXS" style={styles.descripcionplataformas}>
+            <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionplataformas}>
               Mis Reseñas
             </Parrafo>
 
@@ -271,7 +286,6 @@ export const VistaMiPerfil = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.neutro,
     width: "100%",
     height: "100%",
   },

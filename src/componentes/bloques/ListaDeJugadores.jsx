@@ -2,10 +2,13 @@ import { StyleSheet, View } from "react-native";
 import { Card } from "./Card";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { useMemo } from 'react'
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugeridos = true, juego, ...restProps }) => {
 
   const busquedaActiva = searchText !== ""
+
+  const {theme} = useThemeStore()
 
   const jugadoresFinal = useMemo(() => {
     if (busquedaActiva) {
@@ -19,7 +22,7 @@ export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugerido
   return (
 
     <>
-      {!busquedaActiva && mostrarSugeridos && <Parrafo style={styles.text} variante="blancoM">Jugadores sugeridos:</Parrafo>}
+      {!busquedaActiva && mostrarSugeridos && <Parrafo style={styles.text} variante={theme === "dark" ? "grisS":"negroS"  }>Jugadores sugeridos:</Parrafo>}
       <View style={[styles.contenedor, style]} {...restProps}>
         {jugadoresFinal.map((jugador) => (
           <Card
