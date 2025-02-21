@@ -49,7 +49,7 @@ export const Resenias = (props) => {
       {resenias.length > 0 && perfilJugador ? (
         <ListaDeResenias
           resenias={resenias}
-          foto={perfilJugador.foto}
+          foto={perfilJugador.fileName}
           nombreUsuario={perfilJugador.nombre}
         />
       ) : (

@@ -1,32 +1,57 @@
 import axios from "axios";
 import {CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_CLOUD_NAME} from "@env";
+import { Platform } from "react-native";
 
-const subirImagenACloudinary = async (imageUri) => {
-  const data = new FormData();
+const prepareImageForUpload = (imageSource) => {
+  // Handle web platform
+  if (Platform.OS === 'web') {
+    // If imageSource is already a File object (from web input), return as is
+    if (imageSource instanceof File) {
+      return imageSource;
+    }
+    
+    // If it's a blob URL or other web format, create a file
+    return {
+      uri: imageSource,
+      type: 'image/jpeg',
+      name: 'upload.jpg'
+    };
+  }
   
-  data.append("file", {
-    uri: imageUri,
-    type: "image/jpeg", // Ajusta según el formato de imagen
-    name: "upload.jpg",
-  });
+  // Handle mobile platform
+  return {
+    uri: imageSource,
+    type: 'image/jpeg',
+    name: 'upload.jpg'
+  };
+};
 
-  data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET); // 👈 Cambia esto por tu preset de Cloudinary
-  data.append("cloud_name", CLOUDINARY_CLOUD_NAME); // 👈 Cambia esto por tu nombre de Cloudinary
+const subirImagenACloudinary = async (imageSource) => {
+  const data = new FormData();
+  const file = prepareImageForUpload(imageSource);
+  
+  data.append("file", file);
+  data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  data.append("cloud_name", CLOUDINARY_CLOUD_NAME);
 
   try {
     const response = await axios.post(
       `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
       data,
-      { headers: { "Content-Type": "multipart/form-data" } }
+      { 
+        headers: { 
+          "Content-Type": "multipart/form-data"
+        }
+      }
     );
 
     console.log("Imagen subida:", response.data.secure_url);
-    return response.data.secure_url; // Devuelve la URL de la imagen
+    return response.data.secure_url;
   } catch (error) {
     console.error("Error subiendo imagen:", error);
+    throw error; // Re-throw the error to handle it in the component
   }
 };
-
 
 export const FileServerService = {
   subirImagenACloudinary,

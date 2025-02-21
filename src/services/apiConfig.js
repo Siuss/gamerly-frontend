@@ -1,9 +1,8 @@
 import axios from "axios";
-import { BASE_URL } from "../services/requestConfig";
 import useStore from "./../hooks/useStore";
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: process.env.EXPO_PUBLIC_BASE_URL,
 });
 
 api.interceptors.request.use(async (config) => {

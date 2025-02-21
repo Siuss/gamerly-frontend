@@ -91,7 +91,7 @@ export const ReseniaJugador = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FotoDePerfil src={jugador.foto} height={64} width={64} />
+        <FotoDePerfil src={jugador.fileName} height={64} width={64} />
         <Parrafo variante="blancoM">{jugador.nombre}</Parrafo>
       </View>
       <View style={styles.espaciador}>

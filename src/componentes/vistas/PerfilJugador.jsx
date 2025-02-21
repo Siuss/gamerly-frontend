@@ -175,7 +175,7 @@ export const PerfilJugador = (props) => {
           <CardFotoPerfil
             style={styles.cardFotoPerfil}
             nombreUsuario={perfilInfo.nombre}
-            foto={perfilInfo.foto}
+            foto={perfilInfo.fileName}
           />
           <View style={styles.cardDetalles}>
             <View style={styles.cardHeader}>

@@ -37,7 +37,7 @@ export const SolicitudesPendientes = () => {
             idSolicitud={solicitud.idSolicitud}
             idUsuario={solicitud.idUsuario}
             nombre={solicitud.nombre}
-            foto={solicitud.foto}
+            foto={solicitud.fileName}
             mensaje={solicitud.mensaje}
             onAceptar={handleRefrescarPeticiones}
             onRechazar={handleRefrescarPeticiones}

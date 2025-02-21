@@ -92,7 +92,7 @@ export const ListaDeChats = () => {
             key={item.id}
             nombre={item.nombre}
             ultimoMensaje={item.ultimoMensaje}
-            foto={item.foto}
+            foto={item.fileName}
             noLeidos={item.noLeidos}
             onChatClick={() => handleCardClick(item.id)}
           />

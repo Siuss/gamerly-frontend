@@ -59,7 +59,7 @@ export const ModalNuevoChat = ({ chats, visible, onOcultar, ...props }) => {
           onChatClick={handleChatClick}
           style={styles.cardChat}
           nombre={amigo.nombre}
-          foto={amigo.foto}
+          foto={amigo.fileName}
         />
       ))}
       <View style={styles.boton}>

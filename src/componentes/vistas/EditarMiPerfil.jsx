@@ -30,7 +30,7 @@ import NacionalidadSelect from "../atomos/nacionalidadSelect/nacionalidadSelect.
 import { Spinner } from "../atomos/spinner/Spinner";
 import * as ImagePicker from 'expo-image-picker';
 import { FileServerService } from "../../services/FileServerService";
-
+import { Platform } from "react-native";
 
 const validationSchema = Yup.object().shape({
   nombre: Yup.string()
@@ -71,7 +71,7 @@ export const EditarMiPerfil = () => {
   const { id } = route.params;
   const { show } = useToast();
   const navigation = useNavigation();
-
+  
   const traerPerfil = async () => {
     const idUsuarioLogueado = await getIdUsuarioLogueado();
     console.log("ID del usuario logueado:", idUsuarioLogueado); // Verifica que el ID se obtiene correctamente
@@ -105,29 +105,170 @@ export const EditarMiPerfil = () => {
     }
   };
 
-  const handleFotoChange = async () => {
+  // const handleFotoChange = async () => {
+  //   try {
+  //     setCargandoFoto(true);
+
+  //     if (Platform.OS === 'web') {
+  //       // Create and trigger file input for web
+  //       const input = document.createElement('input');
+  //       input.type = 'file';
+  //       input.accept = 'image/*';
+
+  //       // Handle file selection
+  //       input.onchange = async (e) => {
+  //         const file = e.target.files[0];
+  //         if (file) {
+  //           try {
+  //             const imgResponse = await FileServerService.subirImagenACloudinary(file);
+  //             setPerfilInicial(prev => ({
+  //               ...prev,
+  //               fileName: imgResponse
+  //             }));
+  //             show("success", "Imagen actualizada correctamente.");
+  //           } catch (error) {
+  //             console.error('Error al subir la imagen:', error);
+  //             show('error', 'Error al subir la imagen. Inténtalo más tarde.');
+  //           }
+  //         }
+  //       };
+
+  //       input.click();
+  //     } else {
+  //       // Mobile handling
+  //       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //       if (status !== 'granted') {
+  //         alert('Se necesitan permisos para acceder a la galería.');
+  //         return;
+  //       }
+
+  //       const result = await ImagePicker.launchImageLibraryAsync({
+  //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //         allowsEditing: true,
+  //         aspect: [1, 1],
+  //         quality: 1,
+  //       });
+
+  //       if (!result.canceled) {
+  //         const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
+  //         setPerfilInicial(prev => ({
+  //           ...prev,
+  //           fileName: imgResponse
+  //         }));
+  //         show("success", "Imagen actualizada correctamente.");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error al seleccionar o subir la imagen:', error);
+  //     show('error', 'Hubo un error inesperado. Inténtalo más tarde.');
+  //   } finally {
+  //     setCargandoFoto(false);
+  //   }
+  // };
+
+  // const handleFotoChange = async (setFieldValue) => {
+  //   try {
+  //     setCargandoFoto(true);
+  
+  //     if (Platform.OS === 'web') {
+  //       const input = document.createElement('input');
+  //       input.type = 'file';
+  //       input.accept = 'image/*';
+  
+  //       input.onchange = async (e) => {
+  //         const file = e.target.files[0];
+  //         if (file) {
+  //           try {
+  //             const imgResponse = await FileServerService.subirImagenACloudinary(file);
+  //             setFieldValue('fileName', imgResponse); // Marca el formulario como "sucio"
+  //             show("success", "Imagen actualizada correctamente.");
+  //           } catch (error) {
+  //             console.error('Error al subir la imagen:', error);
+  //             show('error', 'Error al subir la imagen. Inténtalo más tarde.');
+  //           }
+  //         }
+  //       };
+  
+  //       input.click();
+  //     } else {
+  //       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //       if (status !== 'granted') {
+  //         alert('Se necesitan permisos para acceder a la galería.');
+  //         return;
+  //       }
+  
+  //       const result = await ImagePicker.launchImageLibraryAsync({
+  //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //         allowsEditing: true,
+  //         aspect: [1, 1],
+  //         quality: 1,
+  //       });
+  
+  //       if (!result.canceled) {
+  //         const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
+  //         setFieldValue('fileName', imgResponse); // Marca el formulario como "sucio"
+  //         show("success", "Imagen actualizada correctamente.");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error al seleccionar o subir la imagen:', error);
+  //     show('error', 'Hubo un error inesperado. Inténtalo más tarde.');
+  //   } finally {
+  //     setCargandoFoto(false);
+  //   }
+  // };
+
+  const handleFotoChange = async (setFieldValue) => {
     try {
       setCargandoFoto(true);
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Se necesitan permisos para acceder a la galería.');
-        return;
-      }
-
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'],
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      });
-
-      if (!result.canceled) {
-        const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
-        setPerfilInicial(prev => ({
-          ...prev,
-          fileName: imgResponse
-        }));
-        show("success", "Imagen actualizada correctamente.");
+  
+      if (Platform.OS === 'web') {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+  
+        input.onchange = async (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            try {
+              const imgResponse = await FileServerService.subirImagenACloudinary(file);
+              setPerfilInicial(prev => ({
+                ...prev,
+                fileName: imgResponse,
+              }));
+              setFieldValue('fileName', imgResponse); // Actualiza el campo en Formik
+              show("success", "Imagen actualizada correctamente.");
+            } catch (error) {
+              console.error('Error al subir la imagen:', error);
+              show('error', 'Error al subir la imagen. Inténtalo más tarde.');
+            }
+          }
+        };
+  
+        input.click();
+      } else {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Se necesitan permisos para acceder a la galería.');
+          return;
+        }
+  
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+  
+        if (!result.canceled) {
+          const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
+          setPerfilInicial(prev => ({
+            ...prev,
+            fileName: imgResponse,
+          }));
+          setFieldValue('fileName', imgResponse); // Actualiza el campo en Formik
+          show("success", "Imagen actualizada correctamente.");
+        }
       }
     } catch (error) {
       console.error('Error al seleccionar o subir la imagen:', error);
@@ -172,19 +313,19 @@ export const EditarMiPerfil = () => {
   return (
     <View style={styles.container}>
       <Formik
-       enableReinitialize
-       initialValues={{
-         nombre: perfilInicial.nombre || '',
-         fechaDeNacimiento: perfilInicial.fechaDeNacimiento || '',
-         nacionalidad: perfilInicial.nacionalidad || '',
-         discord: perfilInicial.discord || '',
-         juegosPreferidos: perfilInicial.juegosPreferidos || [],
-         plataformas: perfilInicial.plataformas || [],
-         diasHorariosPreferidos: perfilInicial.diasHorariosPreferidos || [],
-         fileName: perfilInicial.fileName || ''
-       }}
-       validationSchema={validationSchema}
-       onSubmit={handleGuardar}
+        enableReinitialize
+        initialValues={{
+          nombre: perfilInicial.nombre || '',
+          fechaDeNacimiento: perfilInicial.fechaDeNacimiento || '',
+          nacionalidad: perfilInicial.nacionalidad || '',
+          discord: perfilInicial.discord || '',
+          juegosPreferidos: perfilInicial.juegosPreferidos || [],
+          plataformas: perfilInicial.plataformas || [],
+          diasHorariosPreferidos: perfilInicial.diasHorariosPreferidos || [],
+          fileName: perfilInicial.fileName || ''
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleGuardar}
       >
         {({
           handleChange,
@@ -204,7 +345,7 @@ export const EditarMiPerfil = () => {
           >
             <View style={styles.informacionUsuario}>
               <View style={styles.fotoDePerfil}>
-                <TouchableOpacity style={styles.contenedorFoto} onPress={handleFotoChange}>
+                <TouchableOpacity style={styles.contenedorFoto} onPress={() => handleFotoChange(setFieldValue)}>
                   <FotoDePerfil
                     width={100}
                     height={100}
@@ -220,9 +361,9 @@ export const EditarMiPerfil = () => {
                   </TouchableOpacity>
                 </TouchableOpacity>
               </View>
-              
+
               <Divisor />
-              
+
               <TextInput
                 placeholder="Nombre"
                 placeholderTextColor={Color.gris}
@@ -295,7 +436,7 @@ export const EditarMiPerfil = () => {
               <Parrafo variante="grisS" style={styles.misJuegos}>
                 Mis Juegos
               </Parrafo>
-              
+
               <InputPredictivo
                 style={[
                   styles.input,
@@ -324,7 +465,7 @@ export const EditarMiPerfil = () => {
                   contenido: juego,
                 }))}
                 onPress={(juegoABorrar) => {
-                  setFieldValue('juegosPreferidos', 
+                  setFieldValue('juegosPreferidos',
                     values.juegosPreferidos.filter(juego => juego !== juegoABorrar.contenido)
                   );
                 }}
@@ -333,7 +474,7 @@ export const EditarMiPerfil = () => {
               <Parrafo variante="grisS" style={styles.misPlataformas}>
                 Mis Plataformas
               </Parrafo>
-              
+
               <InputPredictivo
                 style={[
                   styles.input,
@@ -365,7 +506,7 @@ export const EditarMiPerfil = () => {
                   contenido: plataforma,
                 }))}
                 onPress={(plataformaABorrar) => {
-                  setFieldValue('plataformas', 
+                  setFieldValue('plataformas',
                     values.plataformas.filter(plataforma => plataforma !== plataformaABorrar.contenido)
                   );
                 }}
@@ -374,7 +515,7 @@ export const EditarMiPerfil = () => {
               <Parrafo variante="grisS" style={styles.misHorarios}>
                 Mis Horarios
               </Parrafo>
-              
+
               <View style={styles.containerTable}>
                 <TablaHorarios
                   horarios={getHorariosPreferidos(values.diasHorariosPreferidos)}
@@ -407,15 +548,15 @@ export const EditarMiPerfil = () => {
             </View>
 
             <View style={styles.footer}>
-              <Boton
+            <Boton
                 style={[
                   styles.botonGuardar,
-                  (!isValid || !dirty) && styles.botonDeshabilitado,
+                  (!isValid || (!dirty && !cargandoFoto)) && styles.botonDeshabilitado,
                 ]}
-                disabled={!isValid || !dirty}
+                disabled={!isValid || (!dirty && !cargandoFoto)}
                 onPress={handleSubmit}
               >
-                Guardar
+                Guardar cambios
               </Boton>
             </View>
           </ScrollView>

@@ -62,7 +62,7 @@ export const ListaDeAmigos = (props) => {
           key={amigo.nombre}
           style={styles.card}
           bloqueado={amigo.bloqueado}
-          foto={amigo.foto}
+          foto={amigo.fileName}
           nombreUsuario={amigo.nombre}
           plataforma={amigo.plataformas[0]}
           juego={amigo.juegosPreferidos[0]}

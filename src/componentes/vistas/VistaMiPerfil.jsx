@@ -229,7 +229,7 @@ export const VistaMiPerfil = () => {
                   key={index}
                   style={styles.cardResenia}
                   puntaje={resenia.puntaje}
-                  foto={resenia.foto}
+                  foto={resenia.fileName}
                   resenia={resenia.comentario}
                   verificada={resenia.verificada}
                 />

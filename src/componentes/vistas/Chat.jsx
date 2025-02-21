@@ -93,7 +93,7 @@ const ChatScreen = () => {
         >
           <Ionicons name="arrow-back" size={24} color={Color.blanco} />
         </TouchableOpacity>
-        <FotoDePerfil src={perfilAmigo.foto} height={48} width={48} />
+        <FotoDePerfil src={perfilAmigo.fileName} height={48} width={48} />
         <Parrafo variante="blancoM" style={styles.nombre}>
           {perfilAmigo.nombre}
         </Parrafo>

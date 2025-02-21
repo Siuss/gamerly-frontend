@@ -49,7 +49,9 @@
     "extra": {
       "eas": {
         "projectId": "645bffe1-49a4-41cd-b12d-6f3dd531f276"
-      }
+      },
+      "EXPO_PUBLIC_AUTH0_DOMAIN": "dev-1pljdi65rakmf8sh.us.auth0.com",
+      "EXPO_PUBLIC_AUTH0_CLIENT_ID": "j7mIyfGfVHXKG54YKyg15dEjKnits9DA"
     },
     "owner": "stephaniepazos"
   }

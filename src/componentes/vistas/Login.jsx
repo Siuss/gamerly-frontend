@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,19 +8,20 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Color } from "../../estilos/colores";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { AuthService } from "../../services/AuthService";
 import { rutas } from "../rutas/rutas";
 import useStore from "../../hooks/useStore";
 import { jwtDecode } from 'jwt-decode';
 import useToastStore from "../../hooks/useToastStore";
 import { Formik } from "formik";
-import {NotificacionesService} from "../../services/NotificacionesService";
 import { loginValidationSchema } from "../../utils/validators";
 import { useAuth0 } from '@auth0/auth0-react';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isOAuthLoading, setIsOAuthLoading] = useState(false);
   const navigation = useNavigation();
   const { setUsuarioLogueado } = useStore();
   const { loginWithPopup, logout, user, getAccessTokenSilently } = useAuth0();
@@ -56,7 +57,6 @@ export const Login = () => {
     */
     await setUsuarioLogueado(usuario, token);
 
-    // await NotificacionesService.obtenerTokenDeNotificaciones(usuario.id);
 
     navigateJuegos()
   }
@@ -71,31 +71,47 @@ export const Login = () => {
 
   const loginOAuth = async () => {
     try {
-      await fetchUserData()
-      const token = await getAccessTokenSilently()
-      const email = user.email
-      const password = token.slice(0, 63)
-      const nombre = user.nickname
-      const fechaNacimiento = user.birthdate || "01/01/1970"
-      const discord = "N/A"
-      const nacionalidad = user.locale || "Localidad Desconocida"
-      const nuevoUsuario = {
-        nombre,
-        fechaNacimiento,
-        email,
-        password,
-        discord,
-        nacionalidad,
+      setIsOAuthLoading(true);
+      await loginWithPopup();
+    } catch (error) {
+      show("error", "Error de autenticación con Google");
+      setIsOAuthLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      const fetchTokenAndLogin = async () => {
+        try {
+          const token = await getAccessTokenSilently();
+          const email = user.email;
+          const password = token.slice(0, 63);
+          const nombre = user.nickname;
+          const fechaNacimiento = user.birthdate || "01/01/1970";
+          const discord = "N/A";
+          const nacionalidad = user.locale || "Localidad Desconocida";
+          const nuevoUsuario = {
+            nombre,
+            fechaNacimiento,
+            email,
+            password,
+            discord,
+            nacionalidad,
+          };
+
+          const usuarioToken = await AuthService.oAuthLogin(nuevoUsuario);
+          tokenDecode(usuarioToken);
+        } catch (error) {
+          show("error", "Error de registro");
+        } finally {
+          setIsOAuthLoading(false);
+        }
       };
 
-      const usuarioToken = await AuthService.oAuthLogin(nuevoUsuario);
-      console.log(usuarioToken)
-      tokenDecode(usuarioToken)
-
-    } catch (error) {
-      show("error", "error de registro");
+      fetchTokenAndLogin();
     }
-  }
+  }, [user]);
+
 
   const handleRecuperarContrasenia = () => {
     navigation.navigate(rutas.recuperarContrasena);
@@ -164,18 +180,18 @@ export const Login = () => {
               <Text style={styles.buttonText}>Iniciar sesión</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              style={[styles.buttonGoogle, isOAuthLoading && styles.deshabilitado]}
+              onPress={loginOAuth}
+            >
+              <Text style={styles.buttonText}> <AntDesign name="google" size={16} color="white" /> Ingresar con Google</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               style={[styles.button, styles.registerButton]}
               onPress={registro}
             >
               <Text style={styles.buttonText}>Registrarse</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-          style={[styles.button]}
-          onPress={() => {loginOAuth()}}
-        >
-          <Text style={styles.buttonText}>Ingresar con Google</Text>
-        </TouchableOpacity>
-      </View>
+          </View>
         </View>
       )}
     </Formik>
@@ -244,6 +260,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  buttonGoogle: {
+    backgroundColor: Color.googleButton,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   registerButton: {
     backgroundColor: Color.neutro,
     borderWidth: 1,
@@ -253,6 +277,7 @@ const styles = StyleSheet.create({
     color: Color.blanco,
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "center"
   },
   deshabilitado: {
     opacity: 0.4,
