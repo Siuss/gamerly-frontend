@@ -31,6 +31,7 @@ import { Spinner } from "../atomos/spinner/Spinner";
 import * as ImagePicker from 'expo-image-picker';
 import { FileServerService } from "../../services/FileServerService";
 import { Platform } from "react-native";
+import useThemeStore from "../../hooks/useThemeStore.jsx";
 
 const validationSchema = Yup.object().shape({
   nombre: Yup.string()
@@ -71,7 +72,8 @@ export const EditarMiPerfil = () => {
   const { id } = route.params;
   const { show } = useToast();
   const navigation = useNavigation();
-  
+  const {theme} = useThemeStore()
+
   const traerPerfil = async () => {
     const idUsuarioLogueado = await getIdUsuarioLogueado();
     console.log("ID del usuario logueado:", idUsuarioLogueado); // Verifica que el ID se obtiene correctamente
@@ -92,7 +94,7 @@ export const EditarMiPerfil = () => {
       await JugadoresService.actualizarPerfil({
         ...values,
         id: idUsuarioLogueado,
-        fileName: perfilInicial.fileName // Mantenemos la foto existente
+        fileName: perfilInicial.fileName 
       });
       console.log("Valores enviados:", values);
 
@@ -105,128 +107,16 @@ export const EditarMiPerfil = () => {
     }
   };
 
-  // const handleFotoChange = async () => {
-  //   try {
-  //     setCargandoFoto(true);
-
-  //     if (Platform.OS === 'web') {
-  //       // Create and trigger file input for web
-  //       const input = document.createElement('input');
-  //       input.type = 'file';
-  //       input.accept = 'image/*';
-
-  //       // Handle file selection
-  //       input.onchange = async (e) => {
-  //         const file = e.target.files[0];
-  //         if (file) {
-  //           try {
-  //             const imgResponse = await FileServerService.subirImagenACloudinary(file);
-  //             setPerfilInicial(prev => ({
-  //               ...prev,
-  //               fileName: imgResponse
-  //             }));
-  //             show("success", "Imagen actualizada correctamente.");
-  //           } catch (error) {
-  //             console.error('Error al subir la imagen:', error);
-  //             show('error', 'Error al subir la imagen. Inténtalo más tarde.');
-  //           }
-  //         }
-  //       };
-
-  //       input.click();
-  //     } else {
-  //       // Mobile handling
-  //       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-  //       if (status !== 'granted') {
-  //         alert('Se necesitan permisos para acceder a la galería.');
-  //         return;
-  //       }
-
-  //       const result = await ImagePicker.launchImageLibraryAsync({
-  //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //         allowsEditing: true,
-  //         aspect: [1, 1],
-  //         quality: 1,
-  //       });
-
-  //       if (!result.canceled) {
-  //         const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
-  //         setPerfilInicial(prev => ({
-  //           ...prev,
-  //           fileName: imgResponse
-  //         }));
-  //         show("success", "Imagen actualizada correctamente.");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error al seleccionar o subir la imagen:', error);
-  //     show('error', 'Hubo un error inesperado. Inténtalo más tarde.');
-  //   } finally {
-  //     setCargandoFoto(false);
-  //   }
-  // };
-
-  // const handleFotoChange = async (setFieldValue) => {
-  //   try {
-  //     setCargandoFoto(true);
-  
-  //     if (Platform.OS === 'web') {
-  //       const input = document.createElement('input');
-  //       input.type = 'file';
-  //       input.accept = 'image/*';
-  
-  //       input.onchange = async (e) => {
-  //         const file = e.target.files[0];
-  //         if (file) {
-  //           try {
-  //             const imgResponse = await FileServerService.subirImagenACloudinary(file);
-  //             setFieldValue('fileName', imgResponse); // Marca el formulario como "sucio"
-  //             show("success", "Imagen actualizada correctamente.");
-  //           } catch (error) {
-  //             console.error('Error al subir la imagen:', error);
-  //             show('error', 'Error al subir la imagen. Inténtalo más tarde.');
-  //           }
-  //         }
-  //       };
-  
-  //       input.click();
-  //     } else {
-  //       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-  //       if (status !== 'granted') {
-  //         alert('Se necesitan permisos para acceder a la galería.');
-  //         return;
-  //       }
-  
-  //       const result = await ImagePicker.launchImageLibraryAsync({
-  //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //         allowsEditing: true,
-  //         aspect: [1, 1],
-  //         quality: 1,
-  //       });
-  
-  //       if (!result.canceled) {
-  //         const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
-  //         setFieldValue('fileName', imgResponse); // Marca el formulario como "sucio"
-  //         show("success", "Imagen actualizada correctamente.");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error al seleccionar o subir la imagen:', error);
-  //     show('error', 'Hubo un error inesperado. Inténtalo más tarde.');
-  //   } finally {
-  //     setCargandoFoto(false);
-  //   }
-  // };
 
   const handleFotoChange = async (setFieldValue) => {
     try {
       setCargandoFoto(true);
-  
+
       if (Platform.OS === 'web') {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
-  
+
         input.onchange = async (e) => {
           const file = e.target.files[0];
           if (file) {
@@ -244,7 +134,7 @@ export const EditarMiPerfil = () => {
             }
           }
         };
-  
+
         input.click();
       } else {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -252,14 +142,14 @@ export const EditarMiPerfil = () => {
           alert('Se necesitan permisos para acceder a la galería.');
           return;
         }
-  
+
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           aspect: [1, 1],
           quality: 1,
         });
-  
+
         if (!result.canceled) {
           const imgResponse = await FileServerService.subirImagenACloudinary(result.assets[0].uri);
           setPerfilInicial(prev => ({
@@ -307,11 +197,17 @@ export const EditarMiPerfil = () => {
   );
 
   if (!perfilInicial) {
-    return <View style={styles.container}><Spinner /></View>;
+    return <View style={[
+      styles.container,
+      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
+    ]}><Spinner /></View>;
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
+    ]}>
       <Formik
         enableReinitialize
         initialValues={{
@@ -366,9 +262,9 @@ export const EditarMiPerfil = () => {
 
               <TextInput
                 placeholder="Nombre"
-                placeholderTextColor={Color.gris}
+                placeholderTextColor={theme === "dark" ? Color.gris : Color.secundario}
                 style={[
-                  styles.input,
+                  styles.input, { color: theme === "dark" ? Color.blanco : Color.neutro },
                   touched.nombre && errors.nombre && styles.inputError
                 ]}
                 value={values.nombre}
@@ -385,10 +281,10 @@ export const EditarMiPerfil = () => {
 
               <TextInput
                 placeholder="Fecha de Nacimiento (DD/MM/YYYY)"
-                placeholderTextColor={Color.gris}
+                placeholderTextColor={theme === "dark" ? Color.gris : Color.secundario}
                 style={[
-                  styles.input,
-                  touched.fechaDeNacimiento && errors.fechaDeNacimiento && styles.inputError
+                  styles.input, { color: theme === "dark" ? Color.blanco : Color.neutro },
+                  touched.nombre && errors.nombre && styles.inputError
                 ]}
                 value={values.fechaDeNacimiento}
                 onChangeText={handleChange('fechaDeNacimiento')}
@@ -416,9 +312,10 @@ export const EditarMiPerfil = () => {
 
               <TextInput
                 placeholder="Discord"
-                placeholderTextColor={Color.gris}
+                placeholderTextColor={theme === "dark" ? Color.gris: Color.secundario}
                 style={[
                   styles.input,
+                  { color: theme === "dark" ? Color.blanco : Color.neutro },
                   touched.discord && errors.discord && styles.inputError
                 ]}
                 value={values.discord}
@@ -433,13 +330,14 @@ export const EditarMiPerfil = () => {
 
               <Divisor />
 
-              <Parrafo variante="grisS" style={styles.misJuegos}>
+              <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.misJuegos}>
                 Mis Juegos
               </Parrafo>
 
               <InputPredictivo
                 style={[
                   styles.input,
+                  { color: theme === "dark" ? Color.blanco : Color.neutro },
                   touched.juegosPreferidos && errors.juegosPreferidos && styles.inputError
                 ]}
                 value={inputJuego}
@@ -471,13 +369,14 @@ export const EditarMiPerfil = () => {
                 }}
               />
 
-              <Parrafo variante="grisS" style={styles.misPlataformas}>
+              <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.misPlataformas}>
                 Mis Plataformas
               </Parrafo>
 
               <InputPredictivo
                 style={[
                   styles.input,
+                  { color: theme === "dark" ? Color.blanco : Color.neutro },
                   touched.plataformas && errors.plataformas && styles.inputError
                 ]}
                 value={inputPlataforma}
@@ -512,7 +411,7 @@ export const EditarMiPerfil = () => {
                 }}
               />
 
-              <Parrafo variante="grisS" style={styles.misHorarios}>
+              <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.misHorarios}>
                 Mis Horarios
               </Parrafo>
 
@@ -548,7 +447,7 @@ export const EditarMiPerfil = () => {
             </View>
 
             <View style={styles.footer}>
-            <Boton
+              <Boton
                 style={[
                   styles.botonGuardar,
                   (!isValid || (!dirty && !cargandoFoto)) && styles.botonDeshabilitado,
@@ -597,7 +496,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginVertical: 10,
-    color: Color.blanco,
   },
   footer: {
     paddingTop: 96,

@@ -10,13 +10,14 @@ import {
 import { useCountries } from "use-react-countries";
 import { Ionicons } from "@expo/vector-icons";
 import { Color } from "../../../estilos/colores";
+import useThemeStore from "../../../hooks/useThemeStore";
 
 const NacionalidadSelect = ({ onSelect, selectedCountry }) => {
   const { countries } = useCountries();
   const [visible, setVisible] = useState(false);
-  const [selected, setSelected] = useState(selectedCountry); // Estado interno
+  const [selected, setSelected] = useState(selectedCountry); 
+  const { theme } = useThemeStore();
 
-  // Actualiza el estado interno cuando cambia la prop selectedCountry
   useEffect(() => {
     setSelected(selectedCountry);
   }, [selectedCountry]);
@@ -26,21 +27,33 @@ const NacionalidadSelect = ({ onSelect, selectedCountry }) => {
   }, [countries]);
 
   const handleSelect = (country) => {
-    setSelected(country.name); // Actualiza el estado interno
-    onSelect(country.name); // Notifica al componente padre
+    setSelected(country.name);
+    onSelect(country.name);
     setVisible(false);
   };
 
   const renderItemListo = useCallback(
     ({ item }) => (
       <TouchableOpacity
-        style={styles.countryItem}
+        style={[
+          styles.countryItem,
+          {
+            borderBottomColor: theme === "dark" ? Color.gris : Color.grisSuave,
+          },
+        ]}
         onPress={() => handleSelect(item)}
       >
-        <Text style={styles.countryText}>{item.name}</Text>
+        <Text
+          style={[
+            styles.countryText,
+            { color: theme === "dark" ? Color.blanco : Color.neutro },
+          ]}
+        >
+          {item.name}
+        </Text>
       </TouchableOpacity>
     ),
-    [handleSelect]
+    [handleSelect, theme]
   );
 
   return (
@@ -49,17 +62,34 @@ const NacionalidadSelect = ({ onSelect, selectedCountry }) => {
         onPress={() => setVisible(true)}
         style={[
           styles.selectInput,
-          selected ? styles.inputFilled : styles.inputPlaceholder,
+          {
+            backgroundColor: theme === "dark" ? Color.neutro : Color.blanco,
+            borderColor: Color.secundario,
+          },
         ]}
       >
-        <Text style={styles.inputText}>
+        <Text
+          style={[
+            styles.inputText,
+            { color: selected ? (theme === "dark" ? Color.blanco : Color.negro) : Color.secundario },
+          ]}
+        >
           {selected || "Selecciona tu nacionalidad"}
         </Text>
-        <Ionicons name="chevron-down" size={20} color={Color.secundario} />
+        <Ionicons 
+          name="chevron-down" 
+          size={20} 
+          color={Color.secundario} 
+        />
       </TouchableOpacity>
 
       <Modal visible={visible} animationType="slide">
-        <View style={styles.modalContainer}>
+        <View
+          style={[
+            styles.modalContainer,
+            { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco },
+          ]}
+        >
           <FlatList
             data={sortedCountries}
             keyExtractor={(item) => item.code}
@@ -69,7 +99,7 @@ const NacionalidadSelect = ({ onSelect, selectedCountry }) => {
             onPress={() => setVisible(false)}
             style={styles.closeButton}
           >
-            <Text style={styles.closeText}>Cerrar</Text>
+            <Text style={[styles.closeText, { color: Color.error }]}>Cerrar</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -88,38 +118,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: 40,
     borderWidth: 1,
-    borderColor: Color.secundario,
     borderRadius: 4,
     paddingHorizontal: 10,
   },
-  inputText: {
-    color: Color.blanco,
-  },
-  inputPlaceholder: {
-    color: Color.secundario,
-  },
-  inputFilled: {
-    color: Color.blanco,
-  },
   modalContainer: {
     flex: 1,
-    backgroundColor: Color.neutro,
     padding: 16,
   },
   countryItem: {
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: Color.secundario,
-  },
-  countryText: {
-    color: Color.blanco,
   },
   closeButton: {
     padding: 12,
     alignItems: "center",
   },
   closeText: {
-    color: Color.error,
     fontWeight: "bold",
   },
 });

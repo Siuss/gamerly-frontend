@@ -17,6 +17,7 @@ export const InputPredictivo = ({
   maximoOpciones = 6,
   onChangeText,
   onOpcionClick,
+  theme
 }) => {
   return (
     <View style={styles.contenedor}>

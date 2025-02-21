@@ -23,6 +23,7 @@ import Icon from "@expo/vector-icons/FontAwesome6.js";
 import { ModalReportarUsuario } from "../bloques/ModalReportarUsuario.jsx";
 import { urlImagenPerfilDesconocido } from "../../utils/perfilDesconocido.js";
 import useStore from "../../hooks/useStore.jsx";
+import useThemeStore from "../../hooks/useThemeStore.jsx";
 
 export const PerfilJugador = (props) => {
   const { show } = useToast();
@@ -37,7 +38,7 @@ export const PerfilJugador = (props) => {
   const [tieneResenia, setTieneResenia] = useState(false);
   const [modalReportarUsuarioEsVisible, setModalReportarUsuarioEsVisible] =
     useState(false);
-
+  const {theme} = useThemeStore()
   const navigation = useNavigation();
 
   const { params: id } = navigation.getState().routes.at(-1);
@@ -170,7 +171,10 @@ export const PerfilJugador = (props) => {
         visible={modalReportarUsuarioEsVisible}
         onOcultar={handleOcultarModalReporte}
       />
-      <ScrollView style={styles.contenedor} {...props}>
+      <ScrollView  style={[
+            styles.contenedor,
+            { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco  }
+          ]}{...props}>
         <View style={styles.perfilJugador}>
           <CardFotoPerfil
             style={styles.cardFotoPerfil}
@@ -294,7 +298,7 @@ export const PerfilJugador = (props) => {
             <Boton
               style={styles.boton}
               textStyle={styles.textoBoton}
-              variante="primario"
+              variante="secundario"
               onPress={handleOnVerReseniasClick}
             >
               Ver reseñas

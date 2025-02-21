@@ -22,7 +22,7 @@ export const ListaDeJugadores = ({ style, searchText, jugadores, mostrarSugerido
   return (
 
     <>
-      {!busquedaActiva && mostrarSugeridos && <Parrafo style={styles.text} variante={theme === "dark" ? "grisS":"negroS"  }>Jugadores sugeridos:</Parrafo>}
+      {!busquedaActiva && mostrarSugeridos && <Parrafo style={styles.text} variante={theme === "dark" ? "grisS" :"negroS"  }>Jugadores sugeridos:</Parrafo>}
       <View style={[styles.contenedor, style]} {...restProps}>
         {jugadoresFinal.map((jugador) => (
           <Card

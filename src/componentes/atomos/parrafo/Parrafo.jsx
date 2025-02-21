@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { Color } from "../../../estilos/colores";
 
-export const Parrafo = ({ style, subrayado, variante="blancoS", ...props }) => {
+export const Parrafo = ({ style, subrayado, variante = "blancoS", ...props }) => {
   return (
     <Text
       style={[
@@ -34,6 +34,10 @@ const styles = StyleSheet.create({
     color: Color.blanco,
     fontSize: 16,
   },
+  negroM: {
+    color: Color.neutro,
+    fontSize: 16,
+  },
   grisSuaveXS: {
     color: Color.grisSuave,
     fontSize: 11,
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
     color: Color.gris,
     fontSize: 14,
   },
-  negroS:{
+  negroS: {
     color: Color.neutro,
     fontSize: 14
   },

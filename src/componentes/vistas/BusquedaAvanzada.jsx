@@ -9,6 +9,7 @@ import { ListaDePildoras } from "../bloques/ListaDePildoras";
 import { Color } from "../../estilos/colores";
 import dias from "../../data/dias.json";
 import momentosDelDia from "../../data/momentosDelDia.json";
+import useThemeStore from "../../hooks/useThemeStore";
 
 const filtrosIniciales = {
   momentosDelDia: momentosDelDia.map((contenido, index) => ({
@@ -27,7 +28,7 @@ const filtrosIniciales = {
 export const BusquedaAvanzada = () => {
   const navigation = useNavigation();
   const { params: filtrosParam } = navigation.getState().routes.at(-1);
-
+  const {theme} = useThemeStore()
   const [filtros, setFiltros] = useState({
     ...filtrosIniciales,
     ...filtrosParam,
@@ -82,10 +83,10 @@ export const BusquedaAvanzada = () => {
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[, { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco  }]}>
       <View style={styles.espaciador}>
         <View style={styles.espaciador}>
-          <Parrafo variante="blancoM">Reseña</Parrafo>
+          <Parrafo variante={theme === "dark" ? "blancoM" : "negroM" }>Reseña</Parrafo>
         </View>
         <View style={styles.contenedorSlider}>
           <Slider
@@ -99,16 +100,16 @@ export const BusquedaAvanzada = () => {
             value={filtros.resenia}
           />
         </View>
-        <Parrafo style={styles.parrafoCentrado} variante="blancoM">
+        <Parrafo style={styles.parrafoCentrado} variante={theme === "dark" ? "blancoM" : "negroM" }>
           {filtros.resenia || 0}
         </Parrafo>
       </View>
       <Divisor />
       <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Disponibilidad horaria</Parrafo>
+        <Parrafo variante={theme === "dark" ? "blancoM" : "negroM" }>Disponibilidad horaria</Parrafo>
       </View>
       <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Días de la semana</Parrafo>
+        <Parrafo variante={theme === "dark" ? "blancoM" : "negroM" }>Días de la semana</Parrafo>
         <View style={styles.espaciador}>
           <ListaDePildoras
             style={styles.espacioPildoras}
@@ -121,7 +122,7 @@ export const BusquedaAvanzada = () => {
         </View>
       </View>
       <View style={styles.espaciador}>
-        <Parrafo variante="blancoM">Horario</Parrafo>
+        <Parrafo variante={theme === "dark" ? "blancoM" : "negroM" }>Horario</Parrafo>
         <View style={[styles.espaciador, styles.separacion]}>
           <ListaDePildoras
             onPress={handleMomentoToggle}
@@ -147,7 +148,6 @@ export const BusquedaAvanzada = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.neutro,
     width: "100%",
     height: "100%",
     paddingVertical: 10,

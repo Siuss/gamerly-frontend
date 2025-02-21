@@ -97,7 +97,7 @@ export const Jugadores = () => {
   );
 
   return (
-    <View sstyle={[
+    <View style={[
           styles.containerExterior,
           { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
         ]}>
@@ -118,7 +118,7 @@ export const Jugadores = () => {
               juego={params.juego}
             />
           ) : (
-            <Text style={styles.texto}>
+            <Text style={[{ color: theme === "dark" ? Color.gris : Color.neutro}]}>
               Parece que no hay usuarios que jueguen a ese juego
             </Text>
           ))}
@@ -130,9 +130,6 @@ export const Jugadores = () => {
 const styles = StyleSheet.create({
   containerExterior: {
     height: "100%",
-  },
-  texto: {
-    color: Color.blanco,
   },
   container: {
     display: "flex",

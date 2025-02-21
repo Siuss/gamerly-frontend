@@ -5,10 +5,11 @@ import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { SolicitudService } from "../../services/SolicitudService";
 import { useState, useCallback } from "react";
 import { CardInvitacion } from "../bloques/CardInvitacion";
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const SolicitudesPendientes = () => {
   const navigation = useNavigation();
-
+  const { theme } = useThemeStore()
   const { params: id } = navigation.getState().routes.at(-1);
   const [solicitudes, setSolicitudes] = useState([]);
 
@@ -28,7 +29,10 @@ export const SolicitudesPendientes = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
+    ]}>
       {solicitudes.length > 0 ? (
         solicitudes.map((solicitud) => (
           <CardInvitacion
@@ -44,7 +48,7 @@ export const SolicitudesPendientes = () => {
           />
         ))
       ) : (
-        <Parrafo variante="blancoM">
+        <Parrafo variante={theme === "dark" ? "grisS" : "negroS"}>
           Parece que no tenes solicitudes de amistad pendientes
         </Parrafo>
       )}
