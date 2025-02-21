@@ -135,16 +135,17 @@ export const VistaMiPerfil = () => {
   return (
     <View style={[
       styles.container,
-      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco  }
+      { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }
     ]}>
-      <View style={styles.header}>
-        <IconButton
-          icon="cog"
-          size={24}
-          color={Color.blanco}
-          onPress={() => navigation.navigate("configuracion")}
-        />
-      </View>
+        <View style={styles.headerContent}>
+          <IconButton
+            icon="cog"
+            size={24}
+            color={Color.blanco}
+            onPress={() => navigation.navigate("configuracion")}
+            style={styles.configIcon}
+          />
+        </View>
       <ScrollView
         style={{ flex: 1 }}
         onScroll={handleScroll}
@@ -155,24 +156,24 @@ export const VistaMiPerfil = () => {
             <FotoDePerfil width={100} height={100} src={perfil.fileName} />
           </View>
           <Divisor />
-          <Parrafo variante={theme === "dark" ? "grisS":"negroS"  } style={styles.descripcionUsuario}>
+          <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.descripcionUsuario}>
             {perfil.nombre}
           </Parrafo>
           <Divisor />
-          <Parrafo variante={theme === "dark" ? "grisS":"negroS"} style={styles.descripcionUsuario}>
+          <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.descripcionUsuario}>
             {perfil.edad} Años
           </Parrafo>
           <Divisor />
-          <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionUsuario}>
+          <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.descripcionUsuario}>
             {perfil.nacionalidad}
           </Parrafo>
           <Divisor />
-          <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionUsuario}>
+          <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.descripcionUsuario}>
             {perfil.discord}
           </Parrafo>
           <Divisor />
 
-          <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionplataformas}>
+          <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.descripcionplataformas}>
             Mis Plataformas
           </Parrafo>
           <View style={styles.pildora1}>
@@ -189,7 +190,7 @@ export const VistaMiPerfil = () => {
             />
           </View>
 
-          <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionplataformas}>
+          <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.descripcionplataformas}>
             Mis Juegos
           </Parrafo>
           <View style={styles.pildora1}>
@@ -206,7 +207,7 @@ export const VistaMiPerfil = () => {
             />
           </View>
           <View style={styles.conatainerEditarJuego}>
-            <Parrafo variante={theme === "dark" ? "grisS":"negroS"} style={styles.descripcionplataformas}>
+            <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.descripcionplataformas}>
               Mis Horarios
             </Parrafo>
           </View>
@@ -220,7 +221,7 @@ export const VistaMiPerfil = () => {
           </View>
 
           <View style={styles.reseniasHeader}>
-            <Parrafo variante={theme === "dark" ? "grisS":"negroS" } style={styles.descripcionplataformas}>
+            <Parrafo variante={theme === "dark" ? "grisS" : "negroS"} style={styles.descripcionplataformas}>
               Mis Reseñas
             </Parrafo>
 
@@ -372,5 +373,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     alignItems: "center",
+  },
+  headerContent: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  configIcon: {
+    marginLeft: "auto"
   },
 });

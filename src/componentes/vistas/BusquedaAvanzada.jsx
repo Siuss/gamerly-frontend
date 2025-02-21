@@ -83,7 +83,7 @@ export const BusquedaAvanzada = () => {
   );
 
   return (
-    <ScrollView style={[, { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco  }]}>
+    <ScrollView style={[style.container, { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco  }]}>
       <View style={styles.espaciador}>
         <View style={styles.espaciador}>
           <Parrafo variante={theme === "dark" ? "blancoM" : "negroM" }>Reseña</Parrafo>

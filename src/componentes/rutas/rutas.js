@@ -12,7 +12,8 @@ export const titlesConfig = {
   reseniasPendientes: "Reseñas Pendientes",
   mensajes: "Lista de mensajes",
   chat: "Chat",
-  editarMiPerfil: "Editar Perfil"
+  editarMiPerfil: "Editar Perfil",
+  configuracion: "Configuración"
 };
 
 export const rutas = {
@@ -47,7 +48,8 @@ export const mostrarBotonDeVolver = [
   rutas.chat,
   rutas.editarMiPerfil,
   rutas.reseniaJugador,
-  rutas.resenias
+  rutas.resenias,
+  rutas.configuracion
 ];
 
 

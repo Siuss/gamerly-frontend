@@ -8,12 +8,14 @@ import { useState, useCallback } from "react";
 
 import { JugadoresService } from "../../services/JugadoresService";
 import useStore from "../../hooks/useStore";
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const Resenias = (props) => {
   const route = useRoute();
   const [resenias, setResenias] = useState([]);
   const [perfilJugador, setPerfilJugador] = useState(null);
   const {  getIdUsuarioLogueado } = useStore()
+  const {theme} = useThemeStore()
 
   const { id } = route.params;
 
@@ -45,7 +47,7 @@ export const Resenias = (props) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }]}>
       {resenias.length > 0 && perfilJugador ? (
         <ListaDeResenias
           resenias={resenias}
@@ -53,7 +55,7 @@ export const Resenias = (props) => {
           nombreUsuario={perfilJugador.nombre}
         />
       ) : (
-        <Parrafo variante="blancoM">
+        <Parrafo variante={theme === "dark" ? "blancoM" : "negroM"}>
           Parece que todavia no tenes reseñas
         </Parrafo>
       )}

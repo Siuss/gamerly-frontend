@@ -15,6 +15,7 @@ import { JugadoresService } from "../../services/JugadoresService";
 import { ReseniaService } from "../../services/ReseniaService";
 import useStore from "../../hooks/useStore";
 import { useToast } from "../../hooks/useToast";
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const ReseniaJugador = () => {
   const { show } = useToast();
@@ -22,6 +23,7 @@ export const ReseniaJugador = () => {
   const { getIdUsuarioLogueado } = useStore();
   const { id: jugadorId } = route.params;
   const navigation = useNavigation();
+  const {theme} = useThemeStore()
 
   const [jugador, setJugador] = useState({});
   const [puntaje, setPuntaje] = useState(1);
@@ -89,14 +91,14 @@ export const ReseniaJugador = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco  }]}>
       <View>
         <FotoDePerfil src={jugador.fileName} height={64} width={64} />
-        <Parrafo variante="blancoM">{jugador.nombre}</Parrafo>
+        <Parrafo variante={theme === "dark" ? "blancoM" : "negroM"}>{jugador.nombre}</Parrafo>
       </View>
       <View style={styles.espaciador}>
         <View style={styles.puntuacion}>
-          <Parrafo variante="blancoM" style={styles.textoPuntuacion}>
+          <Parrafo variante={theme === "dark" ? "blancoM" : "negroM"} style={styles.textoPuntuacion}>
             Puntuación:
           </Parrafo>
           <View style={dynamicStyle.contenedorSlider}>
@@ -107,13 +109,13 @@ export const ReseniaJugador = () => {
               maximumValue={5}
               step={1}
             />
-            <Parrafo style={styles.parrafoCentrado} variante="blancoM">
+            <Parrafo style={styles.parrafoCentrado} variante={theme === "dark" ? "blancoM" : "negroM"}>
               {puntaje || 1}
             </Parrafo>
           </View>
         </View>
         <View style={styles.espaciador}>
-          <Parrafo style={styles.dejarResenia} variante="blancoM">
+          <Parrafo style={styles.dejarResenia} variante={theme === "dark" ? "blancoM" : "negroM"}>
             Dejar una reseña:
           </Parrafo>
           <TextArea
@@ -137,7 +139,6 @@ export const ReseniaJugador = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.neutro,
     width: "100%",
     height: "100%",
     paddingVertical: 12,

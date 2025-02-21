@@ -7,12 +7,14 @@ import { CardReseniaPendiente } from "../bloques/CardReseniaPendiente";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { useToast } from "../../hooks/useToast";
 import useStore from "../../hooks/useStore";
+import useThemeStore from "../../hooks/useThemeStore";
 
 export const ReseniasPendientes = () => {
   const { show } = useToast();
   const navigation = useNavigation();
   const [resenias, setResenias] = useState([]);
   const { getIdUsuarioLogueado } = useStore()
+  const {theme} = useThemeStore()
 
   const traerResenias = useCallback(async () => {
     try {
@@ -73,8 +75,8 @@ export const ReseniasPendientes = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <Parrafo variante="blancoM">
+    <View style={[styles.container, { backgroundColor: theme === "dark" ? Color.neutro : Color.blanco }]}>
+      <Parrafo variante={theme === "dark" ? "blancoM" : "negroM"}>
         Selecciona si jugaste con estos jugadores
       </Parrafo>
       {resenias.map((resenia) => (
@@ -94,7 +96,6 @@ export const ReseniasPendientes = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: Color.neutro,
     width: "100%",
     height: "100%",
     gap: 16,
