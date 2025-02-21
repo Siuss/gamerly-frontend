@@ -15,7 +15,8 @@ export const ListaDeChats = () => {
   const [chats, setChats] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-  const { getIdUsuarioLogueado } = useStore()
+  const { getIdUsuarioLogueado} = useStore()
+  
 
   const handleVisibilidadModal = () => {
     setModalVisible((esVisible) => !esVisible);
@@ -65,6 +66,7 @@ export const ListaDeChats = () => {
       });
 
       setChats(listaChatsAdaptada);
+
     } catch {
       show("error", "Hubo un error inesperado intentalo mas tarde");
     }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_CLOUD_NAME} from "@env";
+import {EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET, EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME} from "@env";
 import { Platform } from "react-native";
 
 const prepareImageForUpload = (imageSource) => {
@@ -31,12 +31,12 @@ const subirImagenACloudinary = async (imageSource) => {
   const file = prepareImageForUpload(imageSource);
   
   data.append("file", file);
-  data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-  data.append("cloud_name", CLOUDINARY_CLOUD_NAME);
+  data.append("upload_preset", EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+  data.append("cloud_name", EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME);
 
   try {
     const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      `https://api.cloudinary.com/v1_1/${EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
       data,
       { 
         headers: { 

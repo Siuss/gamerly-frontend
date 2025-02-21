@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { Color } from "../../estilos/colores";
 import { Parrafo } from "../atomos/parrafo/Parrafo";
 import { FotoDePerfil } from "../atomos/fotoDePerfil/FotoDePerfil";
+import { IndicatorMessage } from "../atomos/indicatorMessage/indicatorMessage";
 
 export const CardChat = ({
   style,
@@ -31,7 +32,7 @@ export const CardChat = ({
         )}
       </View>
 
-      {!!noLeidos && <Parrafo>{noLeidos}</Parrafo>}
+      {!!noLeidos && <IndicatorMessage cantidad={noLeidos} />}
     </TouchableOpacity>
   );
 };

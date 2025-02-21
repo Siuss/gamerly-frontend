@@ -5,17 +5,28 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Color } from "../../estilos/colores";
 import { rutas, ocultarNavbar } from "../rutas/rutas";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useStore from "../../hooks/useStore";
+import { IndicatorNavbarMesassage } from "../atomos/indicatorNavbarMessage/indicatorNavbarMessage";
 
 const NavBar = (props) => {
   const { style, ...restProps } = props;
   const navigation = useNavigation();
   const state = useNavigationState((state) => state);
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
+
+  const {getUnreadMessagesCount} = useStore();
 
   const currentRouteName = state?.routes?.[state.index]?.name;
 
   useEffect(() => {
     setActiveButton(currentRouteName);
-  }, [currentRouteName]);
+    const fetchUnreadMessagesCount = async () => {
+      const count = getUnreadMessagesCount();
+      setUnreadMessagesCount(count);
+    };
+
+    fetchUnreadMessagesCount();
+  }, [currentRouteName, getUnreadMessagesCount]);
 
   const [activeButton, setActiveButton] = useState(currentRouteName);
 
@@ -84,6 +95,7 @@ const NavBar = (props) => {
           size={24}
           color={activeButton === rutas.chats ? Color.neutro : Color.blanco}
         />
+           <IndicatorNavbarMesassage cantidad={unreadMessagesCount} />
       </Pressable>
       <Pressable
         style={() => [

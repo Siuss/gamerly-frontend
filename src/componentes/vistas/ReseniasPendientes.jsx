@@ -82,7 +82,7 @@ export const ReseniasPendientes = () => {
           key={resenia.id}
           discord={resenia.discord}
           nombre={resenia.nombre}
-          foto={resenia.foto}
+          foto={resenia.fileName}
           onAceptar={() => handleAceptar(resenia.id)}
           onRechazar={() => handleRechazar(resenia.id)}
         />

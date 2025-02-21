@@ -14,10 +14,10 @@ export const ListaDeResenias = (props) => {
       />
       {props.resenias.map((resenia) => (
         <CardResenia
-          key={resenia.foto}
+          key={resenia.fileName}
           style={styles.card}
           puntaje={resenia.puntaje}
-          foto={resenia.foto}
+          foto={resenia.fileName}
           resenia={resenia.comentario}
           verificada={resenia.verificada}
         />
