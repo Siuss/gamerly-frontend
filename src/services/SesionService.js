@@ -11,25 +11,6 @@ const SesionEndpoints = {
   NUEVA_CLAVE: "/nueva-clave"
 };
 
-// const signUp = async (nuevoUsuario) => {
-//   const response = await api.post(
-//     `${SesionEndpoints.CREAR_CUENTA}`,
-//     nuevoUsuario
-//   );
-
-//   return response.data;
-// };
-
-// const login = async (credenciales) => {
-//   const response = await api.post(
-//     `${SesionEndpoints.LOGIN}`,
-//     credenciales,{
-//       timeout: 500 //ms
-//     }
-//   );
-
-//   return response.data;
-// };
 
 const eliminarCuenta = async (id) => {
   const response = await api.delete(
